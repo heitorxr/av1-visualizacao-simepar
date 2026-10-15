@@ -31,34 +31,34 @@ eixos <- function(x, y) {
 
 frente <- function() {
   pagina()
-  texto(12, 284, "O mesmo dia, cinco tempos", 23, negrito = TRUE)
-  texto(12, 271, "Cinco estações do Paraná | 14/10, 19h a 15/10/2026, 19h", 10.5)
+  texto(12, 284, "Paraná em 24 horas", 26, negrito = TRUE)
+  texto(12, 272, "Temperatura, umidade e vento em cinco estações do SIMEPAR", 10.5)
+  texto(12, 262, "14/10/2026, 19h a 15/10/2026, 19h", 9.5, cor = "#596470")
   maior_amplitude <- r[which.max(r$amplitude_c), ]
   maior_vento <- r[which.max(r$vento_medio), ]
-  texto(12, 258, paste0(maior_amplitude$estacao, ": maior amplitude térmica (", fmt(maior_amplitude$amplitude_c), " °C)."), 11, negrito = TRUE)
-  texto(12, 250, paste0(maior_vento$estacao, ": vento médio mais intenso (", fmt(maior_vento$vento_medio), " km/h)."), 11, negrito = TRUE)
-  texto(12, 238, sprintf("%d registros analisados  /  %d horários comuns  /  %d estações",
-                         nrow(a), length(unique(a$instante)), nrow(r)), 10, cor = "#596470")
+  texto(12, 250, paste0(maior_amplitude$estacao, ": maior amplitude (", fmt(maior_amplitude$amplitude_c),
+                        " °C)  |  ", maior_vento$estacao, ": maior vento médio (", fmt(maior_vento$vento_medio), " km/h)"),
+        10, negrito = TRUE)
   # A mesma cor e o mesmo simbolo sempre identificam a mesma estacao.
   xpos <- c(12, 47, 97, 131, 165)
   for (i in seq_along(cores)) {
-    points(xpos[i], 227, pch = simbolos[i], col = cores[i], cex = 0.7)
-    texto(xpos[i] + 3, 227, names(cores)[i], 8.5)
+    points(xpos[i], 238, pch = simbolos[i], col = cores[i], cex = 0.7)
+    texto(xpos[i] + 3, 238, names(cores)[i], 8.5)
   }
-  texto(12, 215, "1  Curitiba começa mais fria e varia mais", 11, negrito = TRUE)
-  texto(12, 208, "Temperatura (°C), 122 registros. Tracejado: intervalo sem dado; pontos: medições.", 8.5, cor = "#596470")
-  texto(12, 143, "2  Ar mais quente, em geral menos úmido", 10, negrito = TRUE)
-  texto(116, 143, "3  O vento separa as estações", 10, negrito = TRUE)
+  texto(12, 224, "1  Temperatura horária (°C)", 11, negrito = TRUE)
+  texto(12, 217, "Pontos: medições; tracejado: intervalo sem dado.", 8.5, cor = "#596470")
+  texto(12, 143, "2  Calor e umidade", 11, negrito = TRUE)
+  texto(116, 143, "3  Vento entre estações", 11, negrito = TRUE)
   texto(12, 136, "Um ponto = uma estação em um horário.", 8, cor = "#596470")
-  texto(116, 136, "Linha: mínimo–máximo; ponto: média.", 8, cor = "#596470")
-  texto(12, 77, "4  Em todas as estações, a tarde é o turno mais quente", 10.5, negrito = TRUE)
-  texto(12, 70, "Temperatura média (°C) por turno; cor e número mostram a mesma medida.", 8.5, cor = "#596470")
-  texto(12, 16, "Fonte: SIMEPAR, páginas públicas das estações; coleta em 15/10/2026.", 7.7, cor = "#596470")
-  texto(12, 10, "G1: 122 registros; G2–G4: 110, nos mesmos 22 horários. Recorte do tempo, não do clima.", 7.7, cor = "#596470")
+  texto(116, 136, "Ponto: média; linha: mínimo–máximo.", 8, cor = "#596470")
+  texto(12, 77, "4  A tarde foi o turno mais quente", 11, negrito = TRUE)
+  texto(12, 70, "Temperatura média (°C); n = horários por estação.", 8.5, cor = "#596470")
+  texto(12, 16, "SIMEPAR | coleta: 15/10/2026 | G1: 122 registros; G2–G4: 110 em 22 horários comuns.", 7.7, cor = "#596470")
+  texto(12, 10, "Horário de Brasília adotado. Recorte de 24h, sem interpretação climática.", 7.7, cor = "#596470")
 
   # 1. Preserva TODAS as temperaturas publicadas, sem preencher valores ausentes.
   # Ligacoes tracejadas indicam os intervalos sem observacao; nao sao medicoes.
-  painel(c(0.04, 0.97, 0.515, 0.697), c(2.4, 3.2, 0.2, 0.6))
+  painel(c(0.04, 0.97, 0.505, 0.72), c(2.4, 3.2, 0.2, 0.6))
   inicio <- min(obj$dados$instante)
 
   plot(NA, xlim = c(0, 24), ylim = c(14, 28), axes = FALSE, xlab = "", ylab = "")
@@ -122,53 +122,48 @@ frente <- function() {
 # Verso na mesma folha; identificacao fica em branco para preenchimento manual.
 verso <- function() {
   pagina()
-  texto(14, 282, "Construção da visualização", 21, negrito = TRUE)
+  texto(14, 282, "Escolha dos dados e construção", 20, negrito = TRUE)
   texto(14, 269, "CE303 — AV1 | UFPR | 2026.2", 10)
   texto(14, 256, "Nome completo: __________________________________________________", 11)
   bloco <- function(y, titulo, linhas) {
     texto(14, y, titulo, 12, negrito = TRUE)
     for (i in seq_along(linhas)) texto(14, y - 8 - (i - 1) * 5.2, linhas[i], 9.3)
   }
-  bloco(242, "Base de dados e recorte", c(
-    "Uma observação corresponde a uma estação em um horário publicado.",
-    sprintf("A coleta contém %d registros; a grade completa teria %d (5 estações x 25 horários).", nrow(obj$dados), nrow(obj$auditoria)),
-    "Maringá não publicou três horários do recorte. Para comparar as cidades na mesma",
-    sprintf("base temporal, foram usados %d horários comuns: %d observações, sem interpolação.", length(unique(a$instante)), nrow(a)),
-    "Período: 14/10/2026, 19h a 15/10/2026, 19h, com os dois extremos incluídos.",
-    "Adotou-se o horário de Brasília; a página não explicita o fuso dos registros."
+  bloco(242, "Escolha e recorte", c(
+    "Escolhi esta base por já ter trabalhado com ela durante meu período no SIMEPAR.",
+    "Janela: 14/10/2026, 19h a 15/10/2026, 19h; horário de Brasília adotado.",
+    "Uma observação = uma estação em um horário. Coleta: 122 registros.",
+    "Gráfico 1: todos os valores publicados; tracejados ligam intervalos sem medição.",
+    "Gráficos 2–4: 110 registros nos 22 horários comuns às cinco estações.",
+    "Maringá tem três horários ausentes; não há preenchimento de valores."
   ))
-  bloco(194, "Variáveis e organização", c(
-    "Quantitativas: temperatura média do ar (°C), umidade relativa (%) e vento (km/h).",
-    "Qualitativas: estação (original) e turno do dia (categoria derivada do horário).",
-    "Turnos: madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h.",
-    "Horas de uma mesma estação são dependentes; a análise é somente descritiva.",
-    "As médias por turno usam os horários disponíveis em comum, não dias completos."
+  bloco(194, "Variáveis", c(
+    "Quantitativas: temperatura do ar (°C), umidade relativa (%) e velocidade do vento (km/h).",
+    "Qualitativas: estação e turno, derivado do relógio.",
+    "Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h.",
+    "Análise descritiva: horas dependentes, sem inferência causal ou climática."
   ))
-  bloco(153, "Por que estes quatro gráficos?", c(
-    "1. Linhas com escala comum mostram evolução e amplitude térmica entre estações.",
-    "2. Dispersão preserva os pares temperatura–umidade, sem sugerir causalidade.",
-    "3. Ponto e intervalo comparam vento médio e extremos observados (não são ICs).",
-    "4. Matriz de calor resume as duas categorias; os números permitem leitura precisa.",
-    "Cores e símbolos consistentes reduzem a busca por legendas; escalas têm unidades.",
-    "Tufte: mostrar dados; retirar molduras, fundos e tinta redundante; revisar o resultado.",
-    "Gestalt: proximidade e alinhamento agrupam painéis; não há 3D nem eixo duplo."
+  bloco(155, "Construção e princípios visuais", c(
+    "Linhas: evolução térmica; dispersão: pares temperatura–umidade.",
+    "Vento: ponto = média; linha = mínimo–máximo, não intervalo de confiança.",
+    "Matriz: média por estação e turno; n indica horários por estação.",
+    "Cores e símbolos consistentes; escalas com unidades; sem 3D ou eixo duplo.",
+    "Tufte: tinta a serviço dos dados. Gestalt: proximidade, alinhamento e similaridade."
   ))
-  bloco(101, "Principais comandos R usados", c(
-    "download.file(url, destino)                         # preserva o HTML público",
-    "jsonlite::fromJSON(trecho)                         # lê pares de horário e valor",
-    "as.POSIXct(datahora, format=\"%d/%m/%Y %H:%M\")      # interpreta a data",
-    "table(...); merge(...); aggregate(..., mean)        # alinha e resume",
-    "plot(...); lines(...); points(...); segments(...)   # constrói os gráficos",
-    "cairo_pdf(..., width=210/25.4, height=297/25.4)       # exporta o A4 vetorial"
+  bloco(111, "Principais comandos R", c(
+    "download.file(url, destino); jsonlite::fromJSON(trecho)  # coleta e leitura",
+    "as.POSIXct(datahora, format=\"%d/%m/%Y %H:%M\")           # datas",
+    "table(...); merge(...); aggregate(..., mean)             # seleção e médias",
+    "plot(...); points(...); segments(...); rect(...)         # gráficos",
+    "cairo_pdf(..., width=210/25.4, height=297/25.4)            # A4 vetorial"
   ))
-  bloco(53, "Fontes e reprodução", c(
-    "SIMEPAR, dados públicos das estações. HTML original e endereços completos em",
-    "dados/brutos/ e dados/entrada/fontes.csv. Coleta: 15/10/2026.",
+  bloco(67, "Fontes e reprodução", c(
+    "SIMEPAR, páginas públicas; coleta em 15/10/2026. HTML e URLs preservados no projeto.",
     "stage.simepar.br/prognozweb/simepar/dados_estacoes/{identificador}",
     "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
-    "Ara, A.; Zanluca, A. Introdução à Visualização de Dados Aplicada (viz2025.pdf),",
-    "seções 2.3, 2.5, 2.6 e 3. Reprodução offline: Rscript executar.R tudo.",
-    "Apoio de IA na programação e revisão; conteúdo sujeito à revisão do aluno."
+    "Ara e Zanluca. Introdução à Visualização de Dados Aplicada, seções 2.3, 2.5, 2.6 e 3.",
+    "Reprodução offline: Rscript executar.R tudo. Código e auditoria acompanham a entrega.",
+    "Programação e revisão com apoio de IA; revisão final do aluno."
   ))
 }
 
