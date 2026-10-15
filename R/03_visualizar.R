@@ -2,6 +2,9 @@
 obj <- readRDS(file.path(raiz, "resultados", "analise.rds"))
 a <- obj$analise
 r <- obj$resumo
+pares_correlacao <- a[is.finite(a$temperatura_c) & is.finite(a$umidade_pct), ]
+correlacao <- cor(pares_correlacao$temperatura_c, pares_correlacao$umidade_pct,
+                 method = "pearson")
 saida <- file.path(raiz, "resultados")
 cores <- c("Curitiba" = "#0072B2", "Foz do Iguaçu" = "#D55E00", "Londrina" = "#009E73",
            "Maringá" = "#8B5094", "Paranaguá" = "#9A6500")
@@ -49,7 +52,8 @@ frente <- function() {
   texto(12, 217, "Pontos: medições; tracejado: intervalo sem dado.", 8.5, cor = "#596470")
   texto(12, 143, "2  Calor e umidade", 11, negrito = TRUE)
   texto(116, 143, "3  Vento entre estações", 11, negrito = TRUE)
-  texto(12, 136, "Um ponto = uma estação em um horário.", 8, cor = "#596470")
+  texto(12, 136, paste0("Pearson: r = ", fmt(correlacao, 3),
+                        " (n = ", nrow(pares_correlacao), ")"), 8, cor = "#596470")
   texto(116, 136, "Ponto: média; linha: mínimo–máximo.", 8, cor = "#596470")
   texto(12, 77, "4  A tarde foi o turno mais quente", 11, negrito = TRUE)
   texto(12, 70, "Temperatura média (°C); n = horários por estação.", 8.5, cor = "#596470")
@@ -119,41 +123,42 @@ frente <- function() {
        col = NA, col.ticks = NA, cex.axis = 0.7)
 }
 
-# Verso na mesma folha; identificacao fica em branco para preenchimento manual.
+# Verso na mesma folha, com a identificacao informada pelo aluno.
 verso <- function() {
   pagina()
   texto(14, 282, "Escolha dos dados e construção", 20, negrito = TRUE)
   texto(14, 269, "CE303 — AV1 | UFPR | 2026.2", 10)
-  texto(14, 256, "Nome completo: __________________________________________________", 11)
+  texto(14, 256, "Heitor Cardoso Fernandes", 12, negrito = TRUE)
   bloco <- function(y, titulo, linhas) {
     texto(14, y, titulo, 12, negrito = TRUE)
     for (i in seq_along(linhas)) texto(14, y - 8 - (i - 1) * 5.2, linhas[i], 9.3)
   }
   bloco(242, "Escolha e recorte", c(
-    "Escolhi esta base por já ter trabalhado com ela durante meu período no SIMEPAR.",
-    "Janela: 14/10/2026, 19h a 15/10/2026, 19h; horário de Brasília adotado.",
+    "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR.",
+    "Analisei o período de 14/10/2026, 19h a 15/10/2026, 19h, no horário de Brasília.",
     "Uma observação = uma estação em um horário. Coleta: 122 registros.",
     "Gráfico 1: todos os valores publicados; tracejados ligam intervalos sem medição.",
     "Gráficos 2–4: 110 registros nos 22 horários comuns às cinco estações.",
-    "Maringá tem três horários ausentes; não há preenchimento de valores."
+    "Não preenchi os três horários sem dados de Maringá."
   ))
   bloco(194, "Variáveis", c(
     "Quantitativas: temperatura do ar (°C), umidade relativa (%) e velocidade do vento (km/h).",
-    "Qualitativas: estação e turno, derivado do relógio.",
+    "Qualitativas: estação e turno, definido a partir da hora do registro.",
     "Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h.",
     "Análise descritiva: horas dependentes, sem inferência causal ou climática."
   ))
   bloco(155, "Construção e princípios visuais", c(
-    "Linhas: evolução térmica; dispersão: pares temperatura–umidade.",
+    "As linhas mostram a temperatura ao longo do dia; a dispersão relaciona calor e umidade.",
+    "Pearson reúne as cinco estações (110 pares), sem teste de independência.",
     "Vento: ponto = média; linha = mínimo–máximo, não intervalo de confiança.",
     "Matriz: média por estação e turno; n indica horários por estação.",
     "Cores e símbolos consistentes; escalas com unidades; sem 3D ou eixo duplo.",
-    "Tufte: tinta a serviço dos dados. Gestalt: proximidade, alinhamento e similaridade."
+    "Segui Tufte ao retirar enfeites; usei proximidade e similaridade da Gestalt para agrupar."
   ))
   bloco(111, "Principais comandos R", c(
     "download.file(url, destino); jsonlite::fromJSON(trecho)  # coleta e leitura",
     "as.POSIXct(datahora, format=\"%d/%m/%Y %H:%M\")           # datas",
-    "table(...); merge(...); aggregate(..., mean)             # seleção e médias",
+    "aggregate(..., mean); cor(x, y, method=\"pearson\")       # médias e correlação",
     "plot(...); points(...); segments(...); rect(...)         # gráficos",
     "cairo_pdf(..., width=210/25.4, height=297/25.4)            # A4 vetorial"
   ))
@@ -163,7 +168,7 @@ verso <- function() {
     "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
     "Ara e Zanluca. Introdução à Visualização de Dados Aplicada, seções 2.3, 2.5, 2.6 e 3.",
     "Reprodução offline: Rscript executar.R tudo. Código e auditoria acompanham a entrega.",
-    "Programação e revisão com apoio de IA; revisão final do aluno."
+    "Usei IA como apoio na programação e na revisão."
   ))
 }
 
@@ -178,5 +183,9 @@ for (nome in c("frente", "verso")) {
   if (nome == "frente") frente() else verso()
   dev.off()
 }
+write.csv(data.frame(n = nrow(pares_correlacao), r_pearson = correlacao,
+                     amostra = "cinco estacoes nos mesmos 22 horarios"),
+          file.path(saida, "correlacao_temperatura_umidade.csv"),
+          row.names = FALSE, fileEncoding = "UTF-8")
 writeLines(capture.output(sessionInfo()), file.path(saida, "sessao_R.txt"))
 message("PDF A4 e duas previas gerados.")
