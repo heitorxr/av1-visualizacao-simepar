@@ -2,6 +2,8 @@
 
 Projeto da disciplina CE303 (UFPR, 2026.2), baseado em `AV1.pdf` e no material de Anderson Ara e Amanda Zanluca, salvo como `viz2025.pdf`.
 
+Autor: Heitor Cardoso Fernandes.
+
 ## Escopo
 
 - Uma observação: uma estação em um horário publicado pelo SIMEPAR.
@@ -23,7 +25,7 @@ Commits correspondem às etapas reais de organização, coleta, análise e compo
 
 ## Entrega
 
-- `resultados/AV1_frente_verso_A4.pdf`: duas páginas para impressão frente e verso **na mesma folha**, colorida, em A4 retrato. Use tamanho real/100% e virada pela borda longa; não use duas páginas por face. Preencha seu nome no verso.
+- `resultados/AV1_frente_verso_A4.pdf`: duas páginas para impressão frente e verso **na mesma folha**, colorida, em A4 retrato. Use tamanho real/100% e virada pela borda longa; não use duas páginas por face. Nome completo incluído no verso.
 - `resultados/AV1_frente.png` e `AV1_verso.png`: prévias.
 - `GUIA_DO_CODIGO.md`: explicação para estudar antes da apresentação.
 - `dados/brutos/`: cinco HTMLs originais, sem alteração ou preenchimento de medidas.
@@ -45,6 +47,7 @@ Etapas isoladas: `analisar`, `renderizar` e `verificar`. `coletar` só funciona 
 - A fonte publicou 122 registros de 125 possíveis. Maringá não aparece às 22h de 14/10, 05h e 13h de 15/10.
 - O gráfico 1 mostra todas as 122 temperaturas publicadas. Somente três ligações de Maringá são tracejadas para indicar intervalos sem dado; nenhum valor ou ponto é criado nesses horários.
 - Os gráficos 2–4 usam 110 observações: cinco estações nos mesmos 22 horários. As 12 observações publicadas fora desses horários comuns continuam preservadas e constam na auditoria.
+- O gráfico 2 informa Pearson: r = -0,767 (110 pares). O resultado reúne as cinco estações; não é uma correlação calculada separadamente por cidade nem um teste de causalidade. Valor completo em `resultados/correlacao_temperatura_umidade.csv`, conferido por cálculo independente em Python.
 - Não há imputação ou suavização. A grade comparativa conserva NA nos horários excluídos; ela não é a fonte do gráfico 1.
 - `resultados/verificacoes.txt`: 401 verificações da coleta congelada, incluindo comparação de cada medida com o HTML original e recálculo dos resumos.
 - O PDF foi inspecionado visualmente nas duas páginas e validado com PyMuPDF: duas páginas de aproximadamente 210 x 297 mm. PyMuPDF foi ferramenta de revisão, não é dependência para executar o projeto.

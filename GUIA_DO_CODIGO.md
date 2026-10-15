@@ -6,7 +6,7 @@ Cada linha representa **uma estação em um horário**. O gráfico 1 mostra toda
 
 ## Por que escolhi esta base
 
-Escolhi esta base por já ter trabalhado com ela durante meu período no SIMEPAR.
+Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR.
 
 ## Ordem para estudar
 
@@ -39,6 +39,7 @@ No gráfico 1, as quatro estações completas mantêm suas 25 temperaturas e Mar
 - **`mean(x)`**: soma os valores e divide pela quantidade de observações. A média de vento resume os 22 horários comuns de cada estação.
 - **`min(x)` e `max(x)`**: menor e maior valor observados no recorte analisado.
 - **Amplitude**: máximo menos mínimo de temperatura. Não é desvio-padrão nem amplitude climatológica.
+- **Pearson**: `cor(temperatura_c, umidade_pct, method = "pearson")` mede a associação linear entre as duas variáveis. No gráfico 2, r = -0,767: valores mais altos de temperatura tendem a acompanhar umidades menores neste conjunto de 110 pares. O cálculo reúne as cinco estações; não representa uma estimativa separada por cidade. Como horas sucessivas são dependentes, não foi acrescentado um teste de significância ou uma interpretação causal.
 - **`aggregate(..., mean)`**: separa os registros por estação e turno e calcula uma média em cada grupo.
 - **`table(...)`**: conta registros por categoria ou por horário.
 - **`merge(...)`**: junta tabelas por uma chave, como estação e horário. Não significa preencher dados ausentes.
