@@ -1,21 +1,22 @@
-Escolha e recorte
-Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR.
-Analisei o período de 14/10/2026, 19h a 15/10/2026, 19h, no horário de Brasília.
-Uma observação = uma estação em um horário. Coleta: 122 registros.
-Gráfico 1: todos os valores publicados; tracejados ligam intervalos sem medição.
-Gráficos 2–4: 110 registros nos 22 horários comuns às cinco estações.
-Não preenchi os três horários sem dados de Maringá.
+A base e o recorte
+Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR. Usei o recorte
+de 14/10/2026, 19h, a 15/10/2026, 19h, adotando o horário de Brasília.
 
-Variáveis
-Quantitativas: temperatura do ar (°C), umidade relativa (%) e velocidade do vento (km/h).
-Qualitativas: estação e turno, definido a partir da hora do registro.
-Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h.
-Análise descritiva: horas dependentes, sem inferência causal ou climática.
+São 122 registros: cada um corresponde a uma estação em um horário. Comparei temperatura
+(°C), umidade relativa (%) e vento (km/h). As qualitativas são a estação e o turno: madrugada
+(00–05h), manhã (06–11h), tarde (12–17h) e noite (18–23h).
 
-Construção e princípios visuais
-As linhas mostram a temperatura ao longo do dia; a dispersão relaciona calor e umidade.
-Pearson reúne as cinco estações (110 pares), sem teste de independência.
-Vento: ponto = média; linha = mínimo–máximo, não intervalo de confiança.
-Matriz: média por estação e turno; n indica horários por estação.
-Cores e símbolos consistentes; escalas com unidades; sem 3D ou eixo duplo.
-Segui Tufte ao retirar enfeites; usei proximidade e similaridade da Gestalt para agrupar.
+Maringá tem três horários sem dados. Mantive todas as temperaturas no gráfico 1 e indiquei
+as faltas com tracejados. Nos gráficos 2–4, usei os 22 horários comuns: 110 registros, sem
+preencher valores ausentes.
+
+Como montei os gráficos
+Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação de Pearson
+foi −0,767 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.
+
+No vento, o ponto mostra a média; a linha liga mínimo e máximo, não limites de confiança.
+Na matriz, comparei as temperaturas médias por estação e turno.
+
+Deixei o fundo branco e reduzi a decoração, como sugere Tufte. As cores e os símbolos das
+estações se repetem nos três primeiros gráficos, aplicando a similaridade da Gestalt.
+

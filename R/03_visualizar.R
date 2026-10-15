@@ -12,6 +12,47 @@ simbolos <- setNames(c(16, 17, 15, 18, 8), names(cores))
 fmt <- function(x, casas = 1) formatC(x, digits = casas, format = "f", decimal.mark = ",")
 fonte <- "Arial"
 
+# A explicacao e a amostra para revisao saem da mesma fonte, sem copias manuais.
+secoes_verso <- list(
+  list(y = 242, titulo = "A base e o recorte", linhas = c(
+    "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR. Usei o recorte",
+    "de 14/10/2026, 19h, a 15/10/2026, 19h, adotando o horário de Brasília.",
+    "",
+    "São 122 registros: cada um corresponde a uma estação em um horário. Comparei temperatura",
+    "(°C), umidade relativa (%) e vento (km/h). As qualitativas são a estação e o turno: madrugada",
+    "(00–05h), manhã (06–11h), tarde (12–17h) e noite (18–23h).",
+    "",
+    "Maringá tem três horários sem dados. Mantive todas as temperaturas no gráfico 1 e indiquei",
+    "as faltas com tracejados. Nos gráficos 2–4, usei os 22 horários comuns: 110 registros, sem",
+    "preencher valores ausentes."
+  )),
+  list(y = 173, titulo = "Como montei os gráficos", linhas = c(
+    "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação de Pearson",
+    "foi −0,767 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
+    "",
+    "No vento, o ponto mostra a média; a linha liga mínimo e máximo, não limites de confiança.",
+    "Na matriz, comparei as temperaturas médias por estação e turno.",
+    "",
+    "Deixei o fundo branco e reduzi a decoração, como sugere Tufte. As cores e os símbolos das",
+    "estações se repetem nos três primeiros gráficos, aplicando a similaridade da Gestalt."
+  )),
+  list(y = 111, titulo = "Principais comandos R", linhas = c(
+    "download.file(url, destino); jsonlite::fromJSON(trecho)  # coleta e leitura",
+    "as.POSIXct(datahora, format=\"%d/%m/%Y %H:%M\")           # datas",
+    "aggregate(..., mean); cor(x, y, method=\"pearson\")       # médias e correlação",
+    "plot(...); points(...); segments(...); rect(...)         # gráficos",
+    "cairo_pdf(..., width=210/25.4, height=297/25.4)            # A4 vetorial"
+  )),
+  list(y = 67, titulo = "Fontes e reprodução", linhas = c(
+    "SIMEPAR, páginas públicas; coleta em 15/10/2026. HTML e URLs preservados no projeto.",
+    "stage.simepar.br/prognozweb/simepar/dados_estacoes/{identificador}",
+    "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
+    "Ara e Zanluca. Introdução à Visualização de Dados Aplicada, seções 2.3, 2.5, 2.6 e 3.",
+    "Reprodução offline: Rscript executar.R tudo. Código e auditoria acompanham a entrega.",
+    "Usei IA como apoio na programação e na revisão."
+  ))
+)
+
 # Coordenadas da pagina em milimetros; o restante usa eixos estatisticos usuais.
 pagina <- function() {
   par(fig = c(0, 1, 0, 1), mar = c(0, 0, 0, 0), oma = c(0, 0, 0, 0),
@@ -133,43 +174,7 @@ verso <- function() {
     texto(14, y, titulo, 12, negrito = TRUE)
     for (i in seq_along(linhas)) texto(14, y - 8 - (i - 1) * 5.2, linhas[i], 9.3)
   }
-  bloco(242, "Escolha e recorte", c(
-    "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR.",
-    "Analisei o período de 14/10/2026, 19h a 15/10/2026, 19h, no horário de Brasília.",
-    "Uma observação = uma estação em um horário. Coleta: 122 registros.",
-    "Gráfico 1: todos os valores publicados; tracejados ligam intervalos sem medição.",
-    "Gráficos 2–4: 110 registros nos 22 horários comuns às cinco estações.",
-    "Não preenchi os três horários sem dados de Maringá."
-  ))
-  bloco(194, "Variáveis", c(
-    "Quantitativas: temperatura do ar (°C), umidade relativa (%) e velocidade do vento (km/h).",
-    "Qualitativas: estação e turno, definido a partir da hora do registro.",
-    "Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h.",
-    "Análise descritiva: horas dependentes, sem inferência causal ou climática."
-  ))
-  bloco(155, "Construção e princípios visuais", c(
-    "As linhas mostram a temperatura ao longo do dia; a dispersão relaciona calor e umidade.",
-    "Pearson reúne as cinco estações (110 pares), sem teste de independência.",
-    "Vento: ponto = média; linha = mínimo–máximo, não intervalo de confiança.",
-    "Matriz: média por estação e turno; n indica horários por estação.",
-    "Cores e símbolos consistentes; escalas com unidades; sem 3D ou eixo duplo.",
-    "Segui Tufte ao retirar enfeites; usei proximidade e similaridade da Gestalt para agrupar."
-  ))
-  bloco(111, "Principais comandos R", c(
-    "download.file(url, destino); jsonlite::fromJSON(trecho)  # coleta e leitura",
-    "as.POSIXct(datahora, format=\"%d/%m/%Y %H:%M\")           # datas",
-    "aggregate(..., mean); cor(x, y, method=\"pearson\")       # médias e correlação",
-    "plot(...); points(...); segments(...); rect(...)         # gráficos",
-    "cairo_pdf(..., width=210/25.4, height=297/25.4)            # A4 vetorial"
-  ))
-  bloco(67, "Fontes e reprodução", c(
-    "SIMEPAR, páginas públicas; coleta em 15/10/2026. HTML e URLs preservados no projeto.",
-    "stage.simepar.br/prognozweb/simepar/dados_estacoes/{identificador}",
-    "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
-    "Ara e Zanluca. Introdução à Visualização de Dados Aplicada, seções 2.3, 2.5, 2.6 e 3.",
-    "Reprodução offline: Rscript executar.R tudo. Código e auditoria acompanham a entrega.",
-    "Usei IA como apoio na programação e na revisão."
-  ))
+  for (secao in secoes_verso) bloco(secao$y, secao$titulo, secao$linhas)
 }
 
 cairo_pdf(file.path(saida, "AV1_frente_verso_A4.pdf"), width = 210 / 25.4, height = 297 / 25.4,
@@ -187,5 +192,8 @@ write.csv(data.frame(n = nrow(pares_correlacao), r_pearson = correlacao,
                      amostra = "cinco estacoes nos mesmos 22 horarios"),
           file.path(saida, "correlacao_temperatura_umidade.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
+writeLines(unlist(lapply(secoes_verso[1:2], function(secao) {
+  c(secao$titulo, secao$linhas, "")
+})), file.path(saida, "texto_para_verificacao.txt"), useBytes = TRUE)
 writeLines(capture.output(sessionInfo()), file.path(saida, "sessao_R.txt"))
 message("PDF A4 e duas previas gerados.")
