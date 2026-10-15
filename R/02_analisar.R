@@ -23,7 +23,8 @@ stopifnot(nrow(analise) >= 80L, length(unique(analise$estacao)) == 5L,
           length(unique(analise$turno)) == 4L)
 analise <- analise[order(analise$estacao, analise$instante), ]
 
-# Grade horaria explicita: NA impede que linhas atravessem horarios excluidos.
+# Grade comparativa explicita: NA registra exclusoes dos horarios comuns.
+# O grafico temporal usa dados publicados, nao esta grade comparativa.
 grade <- expand.grid(estacao = unique(dados$estacao),
                      instante = seq(min(dados$instante), max(dados$instante), by = "hour"))
 grade <- merge(grade, analise[c("estacao", "instante", variaveis)],

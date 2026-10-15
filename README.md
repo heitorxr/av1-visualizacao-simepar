@@ -8,6 +8,7 @@ Projeto da disciplina CE303 (UFPR, 2026.2), baseado em `AV1.pdf` e no material d
 - Cinco estações: Curitiba, Paranaguá, Londrina, Maringá e Foz do Iguaçu.
 - Quantitativas: temperatura média (°C), umidade relativa (%) e velocidade do vento (km/h).
 - Qualitativas: estação (original) e turno (derivado do horário: madrugada 00–05h, manhã 06–11h, tarde 12–17h, noite 18–23h).
+- Motivação: escolhi esta base por já ter trabalhado com ela durante meu período no SIMEPAR.
 - Recorte descritivo curto, sem inferência sobre o clima, causalidade ou independência entre horas consecutivas.
 - Entrega: frente com quatro gráficos; verso com identificação, fontes, principais códigos e explicação. Imprimir as duas páginas na mesma folha A4, colorida.
 
@@ -42,10 +43,13 @@ Etapas isoladas: `analisar`, `renderizar` e `verificar`. `coletar` só funciona 
 
 - Janela preservada: 14/10/2026 às 19h até 15/10/2026 às 19h, extremos incluídos; 25 horários na grade.
 - A fonte publicou 122 registros de 125 possíveis. Maringá não aparece às 22h de 14/10, 05h e 13h de 15/10.
-- Todos os quatro gráficos usam 110 observações: cinco estações nos mesmos 22 horários. As 12 observações publicadas fora desses horários comuns continuam preservadas e constam na auditoria.
-- Não há interpolação ou suavização; a grade dos gráficos conserva NA nos horários excluídos.
+- O gráfico 1 mostra todas as 122 temperaturas publicadas. Somente três ligações de Maringá são tracejadas para indicar intervalos sem dado; nenhum valor ou ponto é criado nesses horários.
+- Os gráficos 2–4 usam 110 observações: cinco estações nos mesmos 22 horários. As 12 observações publicadas fora desses horários comuns continuam preservadas e constam na auditoria.
+- Não há imputação ou suavização. A grade comparativa conserva NA nos horários excluídos; ela não é a fonte do gráfico 1.
 - `resultados/verificacoes.txt`: 401 verificações da coleta congelada, incluindo comparação de cada medida com o HTML original e recálculo dos resumos.
 - O PDF foi inspecionado visualmente nas duas páginas e validado com PyMuPDF: duas páginas de aproximadamente 210 x 297 mm. PyMuPDF foi ferramenta de revisão, não é dependência para executar o projeto.
+
+Regressão do gráfico temporal: `Rscript testes/testar_grafico1.R`. Revisão automatizada do PDF: `uv run --with pymupdf python testes/testar_pdf.py` (opcional; exige uv). Os testes confirmam todas as temperaturas publicadas, os três tracejados de Maringá, o título, a justificativa pessoal e os limites de texto/margem.
 
 **Limites:** o fuso de Brasília foi adotado, pois a página não o declara explicitamente. Turno é uma categoria derivada: confirme com o professor caso ele exija duas qualitativas originais. O recorte é descritivo e não permite conclusões sobre o clima ou causalidade. Dados acessados em endereço público do próprio domínio SIMEPAR com subdomínio `stage`; a procedência exata está documentada, sem apresentá-lo como API histórica oficial.
 

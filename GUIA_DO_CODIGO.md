@@ -2,7 +2,11 @@
 
 ## A ideia em uma frase
 
-Cada linha representa **uma estação em um horário**. Usamos os mesmos horários nas cinco estações para contar como temperatura, umidade e vento variaram nesse recorte, sem transformar uma janela de 24 horas em uma conclusão sobre o clima.
+Cada linha representa **uma estação em um horário**. O gráfico 1 mostra todas as temperaturas publicadas; os gráficos 2–4 comparam os mesmos horários nas cinco estações. Uma janela de 24 horas não permite concluir como é o clima.
+
+## Por que escolhi esta base
+
+Escolhi esta base por já ter trabalhado com ela durante meu período no SIMEPAR.
 
 ## Ordem para estudar
 
@@ -19,14 +23,16 @@ Cada linha representa **uma estação em um horário**. Usamos os mesmos horári
 | `dados` | 122 observações realmente publicadas nas cinco páginas |
 | `completo` | vetor lógico indicando linhas com as três medidas finitas |
 | `horarios_comuns` | 22 horários com medidas nas cinco estações |
-| `analise` | 110 observações utilizadas em todos os gráficos |
+| `analise` | 110 observações utilizadas nos gráficos comparativos 2–4 |
 | `turno` | categoria criada a partir da hora: madrugada, manhã, tarde e noite |
-| `grade` | 125 posições estação–hora; 15 têm NA porque não entram no recorte comum |
+| `grade` | 125 posições estação–hora; 15 têm NA porque não entram no recorte comparativo; não alimenta o gráfico 1 |
 | `resumo` | uma linha por estação com mínimos, médias, máximos e amplitude |
 | `por_turno` | uma linha por combinação estação–turno, com média e quantidade |
 | `auditoria` | explica quais posições entraram e quais foram excluídas |
 
-A grade tem 25 horários porque inclui os dois extremos: 19h do dia 14 e 19h do dia 15. Há três horários sem publicação em Maringá: 14/10 às 22h, 15/10 às 05h e 15/10 às 13h. Para a comparação comum, as outras quatro estações também deixam de contribuir nesses três horários. Portanto, **3 lacunas reais + 12 exclusões de alinhamento = 15 posições fora dos gráficos**. Não são 15 falhas do SIMEPAR.
+A grade tem 25 horários porque inclui os dois extremos: 19h do dia 14 e 19h do dia 15. Há três horários sem publicação em Maringá: 14/10 às 22h, 15/10 às 05h e 15/10 às 13h. Para os gráficos 2–4, as outras quatro estações também deixam de contribuir nesses três horários. Portanto, **3 lacunas reais + 12 exclusões de alinhamento = 15 posições fora da comparação comum**. Não são 15 falhas do SIMEPAR.
+
+No gráfico 1, as quatro estações completas mantêm suas 25 temperaturas e Maringá mantém suas 22. Apenas os três intervalos sem publicação de Maringá têm ligação tracejada, distinguindo-os das linhas contínuas. Não há ponto nem valor calculado nos horários ausentes. O tracejado serve à leitura da trajetória, não é uma medição ou imputação. As médias e estatísticas dos gráficos 2–4 continuam restritas aos 22 horários comuns.
 
 ## Como ler os cálculos
 
@@ -36,7 +42,7 @@ A grade tem 25 horários porque inclui os dois extremos: 19h do dia 14 e 19h do 
 - **`aggregate(..., mean)`**: separa os registros por estação e turno e calcula uma média em cada grupo.
 - **`table(...)`**: conta registros por categoria ou por horário.
 - **`merge(...)`**: junta tabelas por uma chave, como estação e horário. Não significa preencher dados ausentes.
-- **`NA`**: ausência de um valor na grade analítica. Em `lines()`, interrompe a linha, evitando inventar continuidade visual.
+- **`NA`**: ausência de um valor na grade comparativa; preserva a distinção entre medição disponível e exclusão analítica.
 
 ## Como os gráficos são desenhados
 
@@ -44,7 +50,7 @@ O R cria um dispositivo de saída: `cairo_pdf()` para PDF vetorial ou `png()` pa
 
 - `par(fig=...)` reserva um retângulo da página para um gráfico.
 - `plot()` cria o sistema de eixos.
-- `lines()` liga somente pontos consecutivos presentes na grade.
+- `segments()` liga os pontos observados do gráfico 1: linha contínua entre horas consecutivas; tracejada quando há um intervalo sem dado, sem calcular observações intermediárias.
 - `points()` representa observações ou médias.
 - `segments()` mostra o intervalo mínimo–máximo do vento — **não um intervalo de confiança**.
 - `rect()` colore cada célula da matriz estação–turno.

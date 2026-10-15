@@ -25,7 +25,7 @@ checar(sum(obj$auditoria$motivo == "sem as tres medidas publicadas") == 3L &&
 checar(all(obj$grade$temperatura_c[!complete.cases(obj$grade[c("temperatura_c", "umidade_pct", "vento_kmh")])] |> is.na()),
        "grade mantem NA nas lacunas")
 checar(nrow(obj$grade) == 125L && sum(is.na(obj$grade$temperatura_c)) == 15L,
-       "linhas nao atravessam os tres horarios excluidos")
+       "grade comparativa registra as quinze posicoes fora dos horarios comuns")
 for (i in seq_len(nrow(fontes))) {
   arquivo <- file.path(raiz, fontes$arquivo[i])
   checar(unname(tools::md5sum(arquivo)) == fontes$md5[i],

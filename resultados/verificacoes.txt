@@ -9,7 +9,7 @@ OK: mesmo peso temporal por estacao
 OK: snapshot congelado: 122 registros publicados e 110 analisados
 OK: tres lacunas de publicacao e doze exclusoes para comparacao comum
 OK: grade mantem NA nas lacunas
-OK: linhas nao atravessam os tres horarios excluidos
+OK: grade comparativa registra as quinze posicoes fora dos horarios comuns
 OK: HTML original preservado: Curitiba
 OK: HTML original preservado: Paranaguá
 OK: HTML original preservado: Londrina
