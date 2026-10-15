@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="pt-br"> <!--<![endif]-->
+    <head>
+        <title>SIMEPAR - Dados das Esta&ccedil;&otilde;es</title>
+
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+                            <meta http-equiv="Cache-Control" content="no-cache">
+            <meta http-equiv="Cache-Control" content="no-store">
+            <meta http-equiv="Expires" content="0">
+            <meta http-equiv="Pragma" content="no-cache">
+                <!-- Disable link to phone on Safari -->
+        <!-- <meta name="format-detection" content="telephone=no"> -->
+
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="https://stage.simepar.br/prognozweb/img/icons/favicon.png?v202503211150" />
+        <link rel="shortcut icon" href="https://stage.simepar.br/prognozweb/img/icons/favicon.ico?v202503211150">
+
+        <!-- CSS Global Compulsory -->
+        <link rel="stylesheet" href="https://stage.simepar.br/prognozweb/css/main-min.css">
+
+        <!--CSS Page Style-->
+        <link href="https://stage.simepar.br/prognozweb/css/webtemplate-min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stage.simepar.br/prognozweb/css/themes/simepar.css">
+        <link rel="stylesheet" href="https://stage.simepar.br/prognozweb/css/header-default.css">
+        <!-- header-default ainda está sendo modificado -->
+
+        <link href="https://stage.simepar.br/prognozweb/plugins/jquery-ui/jquery-ui.min.css" media="screen" type="text/css" rel="stylesheet">
+
+        
+<link href="https://stage.simepar.br/prognozweb/plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<style type="text/css">
+    @media (max-width: 992px) {
+      .dadosEstacaoContainer {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .dadosEstacaoContainer .col-md-8 {
+        /* width: 100%; */
+        order: 2;
+      }
+
+      .dadosEstacaoContainer .col-md-4 {
+        /* width: 100%; */
+        order: 1;
+      }
+      .hidden-br{
+        display: none;
+      }
+      .current_conditions .item-bottom{
+        border-left: 1px dotted #ccc;
+      }
+      .current_conditions{
+        height: 200px !important;
+      }
+    }
+    .hr{
+        border-top: 1px dotted #ccc;
+        padding-bottom: 10px;
+    }
+    .current_conditions {
+        height: 300px;
+        background: rgb(253, 248, 236);
+        padding: 30px 30px 0px;
+    }
+    .current_conditions p {
+        margin: 0px -10px;
+    }
+    .current_conditions .cont-flex{
+
+        align-items: center;
+        align-content: center;
+        padding: 10px !important;
+    }
+    .current_conditions .cont-flex:first-of-type {
+        padding-top: 0px !important;
+    }
+    .current_conditions .cont-flex:first-of-type .item-left, .current_conditions .cont-flex:first-of-type .item-right {
+        padding-top: 10px;
+    }
+    .current_conditions .item-left, .current_conditions .item-right{
+        text-align: center;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+    .current_conditions .item-left i , .current_conditions .item-right i {
+        font-size: 2.5em;
+        color: #6c6b6b;
+    }
+    .current_conditions .item-right{
+        border-left: 1px dotted #ccc;
+    }
+
+</style>
+
+        <!-- CSS Customization -->
+        <link rel="stylesheet" href="https://stage.simepar.br/prognozweb/css/custom.css">
+                <!-- custom ainda está sendo modificado -->
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <!--=== Header ===-->
+            <div  class="simepar-header-fixed"  ></div>
+            <div class="header">
+                
+                    <div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-header" style="display: flex; align-items: center;">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="fa fa-bars"></span>
+        </button>
+        <!-- Logo -->
+        <a class="navbar-brand" href="https://stage.simepar.br/prognozweb/simepar">
+            <img id="logo-header" src="https://stage.simepar.br/prognozweb/simepar/logo.jpg" alt="Logo do Simepar" style="display: none; margin-left: 40px;">
+        </a>
+        <!-- End Logo -->
+    </div>
+
+    <div class="collapse navbar-collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+            <li style="margin-top: 2px;">
+                <i class="search fa fa-search search-btn" id="search-nav-toggle-btn"></i>
+                <div class="search-open" id="sim-input-search">
+                    <div class="input-group animated fadeInDown">
+                        <input type="text" class="form-control search-city" placeholder="Procurar cidade...">
+                        <span class="input-group-btn">
+                            <button class="btn-u" type="button"><i class="fa fa-search ww-icon-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </li>
+                                                        <li  >
+                     
+                    <a href="https://stage.simepar.br/prognozweb/simepar/page/13"                     >
+                        Sobre N&oacute;s                     </a>
+
+             
+                         </li>
+
+                                    <li  class="dropdown"   >
+                     
+                    <a href="javascript:void(0);"  class="dropdown-toggle" data-toggle="dropdown"                     >
+                        Tempo                     </a>
+
+             
+                                                             <ul class="dropdown-menu 1">
+                                                <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/page_map_view/MAPA_SIMEPAR_PREVISAO_MUNICIPIOS" >Previs&atilde;o </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/raios_simepar" >Raio </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/radar_msc" >Radar </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/satelite_goes" >Sat&eacute;lite </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/modelos_numericos" >Modelo Num&eacute;rico </a>
+                                 
+                         </li>
+
+                                    <li  class="dropdown-submenu"                                      >
+                                                                <a href="javascript:void(0);" >Telemetria </a>
+                                 
+                                                                                             <li                      style="background:#f3f3f3;"                 >
+                                                                <a style="padding-left:25x;" href="https://stage.simepar.br/prognozweb/simepar/mapa_temp_max" > - Temperatura M&aacute;xima </a>
+                                 
+                         </li>
+
+                                    <li                      style="background:#f3f3f3;"                 >
+                                                                <a style="padding-left:25x;" href="https://stage.simepar.br/prognozweb/simepar/mapa_temp_min" > - Temperatura M&iacute;nima </a>
+                                 
+                         </li>
+
+                                    <li                      style="background:#f3f3f3;"                 >
+                                                                <a style="padding-left:25x;" href="https://stage.simepar.br/prognozweb/simepar/mapa_precipitacao" > - Precipita&ccedil;&atilde;o </a>
+                                 
+                         </li>
+
+                                                 </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/dados_estacoes/25264916" >Dados das Esta&ccedil;&otilde;es </a>
+                                 
+                         </li>
+
+                        </ul>
+                                         </li>
+
+                                    <li  >
+                     
+                    <a href="https://stage.simepar.br/prognozweb/simepar/timeline/boletim_climatologico"                     >
+                        Clima                     </a>
+
+             
+                         </li>
+
+                                    <li  class="dropdown"   >
+                     
+                    <a href="https://stage.simepar.br/prognozweb/simepar/page/14"  class="dropdown-toggle" data-toggle="dropdown"                     >
+                        Produtos e Servi&ccedil;os                     </a>
+
+             
+                                                             <ul class="dropdown-menu 1">
+                                                <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/page/14" >&Aacute;reas de Atua&ccedil;&atilde;o </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="http://www.simepar.br/portfolio/portfolio-institucional.pdf"  target="_blank" >Portf&oacute;lio </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="http://www.simepar.br/site_pw/faleconosco#collapse1"  target="_blank" >Laudos </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="http://www.simepar.br/editais"  target="_blank" >Editais </a>
+                                 
+                         </li>
+
+                        </ul>
+                                         </li>
+
+                                    <li  class="dropdown"   >
+                     
+                    <a href="javascript:void(0);"  class="dropdown-toggle" data-toggle="dropdown"                     >
+                        Comunica&ccedil;&atilde;o                     </a>
+
+             
+                                                             <ul class="dropdown-menu 1">
+                                                <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/timeline/noticias" >Not&iacute;cias </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/timeline/simepar_em_tempo" >Simepar em Tempo </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="http://www.simepar.br/site_pw/faleconosco"  target="_blank" >Fale Conosco </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar../../../../extras/servicos_ao_cidadao/carta_de_servicos_simepar_31_08.pdf" >Carta de Servi&ccedil;o </a>
+                                 
+                         </li>
+
+                                    <li                                     >
+                                                                <a href="https://stage.simepar.br/prognozweb/simepar/page/18" >Portal da Transpar&ecirc;ncia </a>
+                                 
+                         </li>
+
+                        </ul>
+                                         </li>
+
+                                        </ul>
+    </div><!--/navbar-collapse-->
+
+</div>
+
+
+                
+            </div>
+            <!--=== End Header ===-->
+
+            <div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Dados das Estações</h1>
+    </div>
+</div>
+
+            <!--=== Content Part ===-->
+            
+            <div class="container">
+                
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Campo de busca -->
+            <div class="searchStation">
+                <div class="input-group"><br>
+                                                    <select class="form-control selectPlugin" name="searchField"><option value="25444869">APPA Antonina</option><option value="23855385">Alt&ocirc;nia</option><option value="25134848">Antonina</option><option value="23515154">Apucarana</option><option value="24235331">Assis Chateubriand -CTA</option><option value="25505367">Baixo Igua&ccedil;u</option><option value="23005002">Cambar&aacute;</option><option value="24075240">Campo Mour&atilde;o</option><option value="24535347">Cand&oacute;i</option><option value="24535333">Cascavel</option><option value="24494915">Cerro Azul</option><option value="23695263">Cianorte</option><option value="23605062">Corn&eacute;lio Proc&oacute;pio</option><option value="25565311">Cruzeiro do Igua&ccedil;u</option><option value="25264916">Curitiba</option><option value="24385115">C&acirc;ndido de Abreu</option><option value="25335129">Entre Rios</option><option value="25654927">Fazenda Gralha Azul-PUC</option><option value="25275035">Fernandes Pinheiro</option><option value="25435458">Foz do Igua&ccedil;u</option><option value="26055305">Francisco Beltr&atilde;o</option><option value="26595148">General Carneiro</option><option value="24045415">Guaira</option><option value="25215130">Guarapuava</option><option value="25324831">Guaratuba</option><option value="24134940">Jaguariaiva</option><option value="25474946">Lapa</option><option value="25425241">Laranjeiras do Sul</option><option value="22915315">Loanda</option><option value="23185109">Londrina</option><option value="23275159">Maring&aacute;</option><option value="25434891">Marumbi Base</option><option value="25454892">Marumbi Pico</option><option value="26285158">Palmas</option><option value="26585152">Palmas - Horizonte</option><option value="24185355">Palotina</option><option value="25534852" selected="selected">Paranagu&aacute;</option><option value="23055226">Paranava&iacute;</option><option value="26075241">Pato Branco</option><option value="25254905">Pinhais</option><option value="25385157">Pinh&atilde;o</option><option value="25135001">Ponta Grossa</option><option value="25174828">Reserva Natural Salto Morato</option><option value="24505420">Santa Helena</option><option value="24905199">Santa Maria do Oeste</option><option value="23255010">Santo Ant&ocirc;nio da Platina</option><option value="25115408">S&atilde;o Miguel do Igua&ccedil;u</option><option value="24205037">Tel&ecirc;maco Borba</option><option value="24475343">Toledo</option><option value="24555296">Ubirat&atilde;</option><option value="23785355">Umuarama</option><option value="26145103">Uni&atilde;o da Vit&oacute;ria</option></select>
+                                        </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30 dadosEstacaoContainer">
+
+        <div class="col-md-8 hidden-xs">
+            <div class="headline"><h2>Estações Meteorológicas do Simepar no Paraná</h2></div>
+            <div id="mapa_estacoes"></div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <!-- Mapa e condições atuais -->
+            <!--<div class="map-and-conditions">-->
+            <meta charset="UTF-8">
+
+    
+        <div class="headline"><h2>Paranaguá</h2></div>
+    
+
+    <div class="current_conditions">
+        <div class="row cont-flex">
+            <div class="col-xs-3 col-md-6 item-left">
+                <!--  Temperatura média (?) -->
+                <i class="wi wi-thermometer de-tooltip-tempAtual" title="Temperatura"></i>
+                <div class="data">
+                
+                    21.3&deg;C
+                
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-6 item-right">
+                <!-- Direção do vento -->
+                
+                    <i class="wi wi-wind wi-from-se de-wind-direction" title="Vento Sudeste"></i><br>
+                
+                <!-- Velocidade do Vento -->
+                <div class="data">
+                
+                    7 km/h
+                
+                </div>
+            </div>
+            <div class="col-md-12 hidden-br hr"></div>   
+            <div class="col-xs-3 col-md-6 item-left item-bottom"><br class="hidden-br">
+                <!-- <i class="wi wi-humidity"></i> -->
+                <span class="de-tooltip-ur" title="Umidade Relativa" style="font-size: 1.7em;color: #6c6b6b;font-weight: bold;">UR</span><br>
+                <!-- Umidade Relativa -->
+                <div class="data">
+                
+                    90%
+                
+                </div>
+            </div>
+
+            <div class="col-xs-3 col-md-6 item-right item-bottom"><br class="hidden-br">
+                <i class="wi wi-raindrop de-tooltip-precipitacao" title="Precipitação"></i>
+                <!-- Precipitação -->
+                <div class="data">
+                
+                    0.0 mm
+                
+                </div>
+            </div>
+        </div><br>
+        
+            <p class="text-center"><i>Atualizado em 19:45 - 15/10/2026 </i></p>
+        
+    </div>
+            <!--</div>-->
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="margin-top-20">
+                    <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">Gráficos da Estação Paranagu&aacute;</h1>
+                </div>
+            </div>
+
+        
+        <div class="margin-bottom-20">
+            <div id="chart1" class="contains-chart" style="min-width: 300px; margin: 0 auto; margin-bottom: 50px;"></div>
+        </div>
+
+        <div class="margin-bottom-20" >
+            <div id="chart2" class="contains-chart" style="min-width: 300px; margin: 0 auto; margin-bottom: 50px;"></div>
+        </div>
+
+        <div class="margin-bottom-20" >
+            <div id="chart3" class="contains-chart" style="min-width: 300px; margin: 0 auto; margin-bottom: 50px;"></div>
+        </div>
+
+        <div class="margin-bottom-20" >
+            <div id="chart4" class="contains-chart" style="min-width: 300px; margin: 0 auto; margin-bottom: 50px;"></div>
+        </div>
+    </div>
+
+            </div>
+
+                
+            <!--=== End Content Part ===-->
+
+
+
+        </div><!--/wrapper-->
+        <!--=== Footer ===-->
+        <div class="footer"  id="simepar_footer" >
+                            <div class="container simepar_container">
+    <div class="row">
+        <div class="col-md-12 md-margin-bottom-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="headline"><h2>Sobre o Simepar</h2></div>
+                                <p class="margin-bottom-20 text-justify">
+                                    O Sistema de Tecnologia e Monitoramento Ambiental do Paraná - SIMEPAR - é uma entidade de direito privado e interesse público, sem fins lucrativos, vinculado à <a target="_blank" href="http://www.sedest.pr.gov.br/" >Secretaria de Estado do Desenvolvimento Sustentável - SEDEST</a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12"><div class="headline"><h2>Localização</h2></div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <address>
+                                <p>
+                                    Centro Politécnico da UFPR - Curitiba - Paraná - Brasil <br/>
+                                    Caixa Postal 19100 - CEP 81531-980 <br/>
+                                    Tel: <a href="tel:+55-41-3320-2000">+55 41 3320 2000</a><br/>
+                                </p>
+                                </address>
+                            </div>
+                            <div class="col-xs-3 sim-location">
+                                <a href="https://stage.simepar.br/prognozweb/simepar/localization" title="Link para a página de localização"><i class="fa fa-map-marker"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="headline"><h2>Permaneça Conectado</h2></div>
+                        <ul class="list-block footer-social-icons">
+                            <li>
+                                <a target="_blank" href="http://facebook.com/simeparparana" ><i class="fa fa-facebook-square"></i>
+                                Simepar Paraná
+                            </a></li>
+                            <li><a target="_blank" href="https://twitter.com/simeparpr" ><i class="fa fa-twitter-square"></i>
+                                SimeparPR
+                            </a></li>
+                            <li><a target="_blank" href="https://www.linkedin.com/company/2196367?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2196367%2Cidx%3A2-1-2%2CtarId%3A1458070187183%2Ctas%3Asimepar" ><i class="fa fa-linkedin-square"></i>
+                                Simepar
+                            </a></li>
+                            <li><a target="_blank" href="https://www.instagram.com/simeparpr/" ><i class="fa fa-square fa-instagram"></i>
+                                SimeparPR
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div><!--/col-md-12-->
+    </div>
+</div>
+                    </div><!--/footer-->
+                    <!--=== Copyright ===-->
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                2026 &copy; SIMEPAR - Todos os Direitos Reservados.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cf_logos pull-right">
+                                <div class="cf_logo_footer">
+                                    <a class="custom_footer_link" href="https://stage.simepar.br/prognozweb/simepar">
+                                        <img class="img-responsive" id="logo-footer" src="https://stage.simepar.br/prognozweb/img/logo-simepar-branco-amarelo.png" alt="SIMEPAR Logo">
+                                    </a>
+                                </div>
+                                <div class="cf_logo_footer">
+                                    <a class="custom_footer_link" target="_blank" href="http://www.parana.pr.gov.br/">
+                                        <img class="img-responsive" id="logo-footer-seti" src="https://stage.simepar.br/prognozweb/img/parana_governo_borderless.png" alt="SETI Logo">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+            <!--=== End Copyright ===-->
+                <!--=== End Footer ===-->
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-L59WNJB5GR"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-L59WNJB5GR');
+	</script>
+        <!-- End Google Analytics -->
+
+        <!-- Hotjar Tracking Code -->
+        
+        <!-- JS Global Compulsory -->
+        <!--jquery.js + bootstrap.js -->
+        <script src="https://stage.simepar.br/prognozweb/js/main-min.js"></script>
+        <script src="https://stage.simepar.br/prognozweb/js/migrate.min.js"></script>
+
+        <!--jquery-ui.js-->
+        <script>var _tooltip = jQuery.fn.tooltip;</script>
+        <script src="https://stage.simepar.br/prognozweb/plugins/jquery-ui/jquery-ui.min.js"></script>
+        <script>jQuery.fn.tooltip = _tooltip;</script>
+
+        <!-- JS Page Level -->
+        <script src="https://stage.simepar.br/prognozweb/js/webtemplate.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                App.init();
+            });
+        </script>
+        <script type="text/javascript">
+
+    function adaptaLogos() {
+        if ($(window).width() > 1335) {
+            var imagePath = "https://stage.simepar.br/prognozweb/simepar/logo.jpg";
+            $('#logo-header').attr("src", imagePath);
+            $('#logo-header').show();
+        }
+        if ($(window).width() <= 1335) {
+            var imagePath = "https://stage.simepar.br/prognozweb/simepar/logo_thumbnail.jpg";
+            $('#logo-header').attr("src", imagePath);
+            $('#logo-header').show();
+        }
+    }
+
+</script>        <script type="text/javascript">
+            adaptaLogos();
+            $(window).resize(function () {
+            adaptaLogos();
+            });
+        </script>
+
+    <script type="text/javascript">
+
+    /********************************************/
+    //accent-folding function
+    var accentMap = {
+        'ẚ': 'a',
+        'Á': 'a',
+        'á': 'a',
+        'À': 'a',
+        'à': 'a',
+        'Ă': 'a',
+        'ă': 'a',
+        'Ắ': 'a',
+        'ắ': 'a',
+        'Ằ': 'a',
+        'ằ': 'a',
+        'Ẵ': 'a',
+        'ẵ': 'a',
+        'Ẳ': 'a',
+        'ẳ': 'a',
+        'Â': 'a',
+        'â': 'a',
+        'Ấ': 'a',
+        'ấ': 'a',
+        'Ầ': 'a',
+        'ầ': 'a',
+        'Ẫ': 'a',
+        'ẫ': 'a',
+        'Ẩ': 'a',
+        'ẩ': 'a',
+        'Ǎ': 'a',
+        'ǎ': 'a',
+        'Å': 'a',
+        'å': 'a',
+        'Ǻ': 'a',
+        'ǻ': 'a',
+        'Ä': 'a',
+        'ä': 'a',
+        'Ǟ': 'a',
+        'ǟ': 'a',
+        'Ã': 'a',
+        'ã': 'a',
+        'Ȧ': 'a',
+        'ȧ': 'a',
+        'Ǡ': 'a',
+        'ǡ': 'a',
+        'Ą': 'a',
+        'ą': 'a',
+        'Ā': 'a',
+        'ā': 'a',
+        'Ả': 'a',
+        'ả': 'a',
+        'Ȁ': 'a',
+        'ȁ': 'a',
+        'Ȃ': 'a',
+        'ȃ': 'a',
+        'Ạ': 'a',
+        'ạ': 'a',
+        'Ặ': 'a',
+        'ặ': 'a',
+        'Ậ': 'a',
+        'ậ': 'a',
+        'Ḁ': 'a',
+        'ḁ': 'a',
+        'Ⱥ': 'a',
+        'ⱥ': 'a',
+        'Ǽ': 'a',
+        'ǽ': 'a',
+        'Ǣ': 'a',
+        'ǣ': 'a',
+        'Ḃ': 'b',
+        'ḃ': 'b',
+        'Ḅ': 'b',
+        'ḅ': 'b',
+        'Ḇ': 'b',
+        'ḇ': 'b',
+        'Ƀ': 'b',
+        'ƀ': 'b',
+        'ᵬ': 'b',
+        'Ɓ': 'b',
+        'ɓ': 'b',
+        'Ƃ': 'b',
+        'ƃ': 'b',
+        'Ć': 'c',
+        'ć': 'c',
+        'Ĉ': 'c',
+        'ĉ': 'c',
+        'Č': 'c',
+        'č': 'c',
+        'Ċ': 'c',
+        'ċ': 'c',
+        'Ç': 'c',
+        'ç': 'c',
+        'Ḉ': 'c',
+        'ḉ': 'c',
+        'Ȼ': 'c',
+        'ȼ': 'c',
+        'Ƈ': 'c',
+        'ƈ': 'c',
+        'ɕ': 'c',
+        'Ď': 'd',
+        'ď': 'd',
+        'Ḋ': 'd',
+        'ḋ': 'd',
+        'Ḑ': 'd',
+        'ḑ': 'd',
+        'Ḍ': 'd',
+        'ḍ': 'd',
+        'Ḓ': 'd',
+        'ḓ': 'd',
+        'Ḏ': 'd',
+        'ḏ': 'd',
+        'Đ': 'd',
+        'đ': 'd',
+        'ᵭ': 'd',
+        'Ɖ': 'd',
+        'ɖ': 'd',
+        'Ɗ': 'd',
+        'ɗ': 'd',
+        'Ƌ': 'd',
+        'ƌ': 'd',
+        'ȡ': 'd',
+        'ð': 'd',
+        'É': 'e',
+        'Ə': 'e',
+        'Ǝ': 'e',
+        'ǝ': 'e',
+        'é': 'e',
+        'È': 'e',
+        'è': 'e',
+        'Ĕ': 'e',
+        'ĕ': 'e',
+        'Ê': 'e',
+        'ê': 'e',
+        'Ế': 'e',
+        'ế': 'e',
+        'Ề': 'e',
+        'ề': 'e',
+        'Ễ': 'e',
+        'ễ': 'e',
+        'Ể': 'e',
+        'ể': 'e',
+        'Ě': 'e',
+        'ě': 'e',
+        'Ë': 'e',
+        'ë': 'e',
+        'Ẽ': 'e',
+        'ẽ': 'e',
+        'Ė': 'e',
+        'ė': 'e',
+        'Ȩ': 'e',
+        'ȩ': 'e',
+        'Ḝ': 'e',
+        'ḝ': 'e',
+        'Ę': 'e',
+        'ę': 'e',
+        'Ē': 'e',
+        'ē': 'e',
+        'Ḗ': 'e',
+        'ḗ': 'e',
+        'Ḕ': 'e',
+        'ḕ': 'e',
+        'Ẻ': 'e',
+        'ẻ': 'e',
+        'Ȅ': 'e',
+        'ȅ': 'e',
+        'Ȇ': 'e',
+        'ȇ': 'e',
+        'Ẹ': 'e',
+        'ẹ': 'e',
+        'Ệ': 'e',
+        'ệ': 'e',
+        'Ḙ': 'e',
+        'ḙ': 'e',
+        'Ḛ': 'e',
+        'ḛ': 'e',
+        'Ɇ': 'e',
+        'ɇ': 'e',
+        'ɚ': 'e',
+        'ɝ': 'e',
+        'Ḟ': 'f',
+        'ḟ': 'f',
+        'ᵮ': 'f',
+        'Ƒ': 'f',
+        'ƒ': 'f',
+        'Ǵ': 'g',
+        'ǵ': 'g',
+        'Ğ': 'g',
+        'ğ': 'g',
+        'Ĝ': 'g',
+        'ĝ': 'g',
+        'Ǧ': 'g',
+        'ǧ': 'g',
+        'Ġ': 'g',
+        'ġ': 'g',
+        'Ģ': 'g',
+        'ģ': 'g',
+        'Ḡ': 'g',
+        'ḡ': 'g',
+        'Ǥ': 'g',
+        'ǥ': 'g',
+        'Ɠ': 'g',
+        'ɠ': 'g',
+        'Ĥ': 'h',
+        'ĥ': 'h',
+        'Ȟ': 'h',
+        'ȟ': 'h',
+        'Ḧ': 'h',
+        'ḧ': 'h',
+        'Ḣ': 'h',
+        'ḣ': 'h',
+        'Ḩ': 'h',
+        'ḩ': 'h',
+        'Ḥ': 'h',
+        'ḥ': 'h',
+        'Ḫ': 'h',
+        'ḫ': 'h',
+        'H': 'h',
+        '̱': 'h',
+        'ẖ': 'h',
+        'Ħ': 'h',
+        'ħ': 'h',
+        'Ⱨ': 'h',
+        'ⱨ': 'h',
+        'Í': 'i',
+        'í': 'i',
+        'Ì': 'i',
+        'ì': 'i',
+        'Ĭ': 'i',
+        'ĭ': 'i',
+        'Î': 'i',
+        'î': 'i',
+        'Ǐ': 'i',
+        'ǐ': 'i',
+        'Ï': 'i',
+        'ï': 'i',
+        'Ḯ': 'i',
+        'ḯ': 'i',
+        'Ĩ': 'i',
+        'ĩ': 'i',
+        'İ': 'i',
+        'i': 'i',
+        'Į': 'i',
+        'į': 'i',
+        'Ī': 'i',
+        'ī': 'i',
+        'Ỉ': 'i',
+        'ỉ': 'i',
+        'Ȉ': 'i',
+        'ȉ': 'i',
+        'Ȋ': 'i',
+        'ȋ': 'i',
+        'Ị': 'i',
+        'ị': 'i',
+        'Ḭ': 'i',
+        'ḭ': 'i',
+        'I': 'i',
+        'ı': 'i',
+        'Ɨ': 'i',
+        'ɨ': 'i',
+        'Ĵ': 'j',
+        'ĵ': 'j',
+        'J': 'j',
+        '̌': 'j',
+        'ǰ': 'j',
+        'ȷ': 'j',
+        'Ɉ': 'j',
+        'ɉ': 'j',
+        'ʝ': 'j',
+        'ɟ': 'j',
+        'ʄ': 'j',
+        'Ḱ': 'k',
+        'ḱ': 'k',
+        'Ǩ': 'k',
+        'ǩ': 'k',
+        'Ķ': 'k',
+        'ķ': 'k',
+        'Ḳ': 'k',
+        'ḳ': 'k',
+        'Ḵ': 'k',
+        'ḵ': 'k',
+        'Ƙ': 'k',
+        'ƙ': 'k',
+        'Ⱪ': 'k',
+        'ⱪ': 'k',
+        'Ĺ': 'a',
+        'ĺ': 'l',
+        'Ľ': 'l',
+        'ľ': 'l',
+        'Ļ': 'l',
+        'ļ': 'l',
+        'Ḷ': 'l',
+        'ḷ': 'l',
+        'Ḹ': 'l',
+        'ḹ': 'l',
+        'Ḽ': 'l',
+        'ḽ': 'l',
+        'Ḻ': 'l',
+        'ḻ': 'l',
+        'Ł': 'l',
+        'ł': 'l',
+        'Ł': 'l',
+        '̣': 'l',
+        'ł': 'l',
+        '̣': 'l',
+        'Ŀ': 'l',
+        'ŀ': 'l',
+        'Ƚ': 'l',
+        'ƚ': 'l',
+        'Ⱡ': 'l',
+        'ⱡ': 'l',
+        'Ɫ': 'l',
+        'ɫ': 'l',
+        'ɬ': 'l',
+        'ɭ': 'l',
+        'ȴ': 'l',
+        'Ḿ': 'm',
+        'ḿ': 'm',
+        'Ṁ': 'm',
+        'ṁ': 'm',
+        'Ṃ': 'm',
+        'ṃ': 'm',
+        'ɱ': 'm',
+        'Ń': 'n',
+        'ń': 'n',
+        'Ǹ': 'n',
+        'ǹ': 'n',
+        'Ň': 'n',
+        'ň': 'n',
+        'Ñ': 'n',
+        'ñ': 'n',
+        'Ṅ': 'n',
+        'ṅ': 'n',
+        'Ņ': 'n',
+        'ņ': 'n',
+        'Ṇ': 'n',
+        'ṇ': 'n',
+        'Ṋ': 'n',
+        'ṋ': 'n',
+        'Ṉ': 'n',
+        'ṉ': 'n',
+        'Ɲ': 'n',
+        'ɲ': 'n',
+        'Ƞ': 'n',
+        'ƞ': 'n',
+        'ɳ': 'n',
+        'ȵ': 'n',
+        'N': 'n',
+        '̈': 'n',
+        'n': 'n',
+        '̈': 'n',
+        'Ó': 'o',
+        'ó': 'o',
+        'Ò': 'o',
+        'ò': 'o',
+        'Ŏ': 'o',
+        'ŏ': 'o',
+        'Ô': 'o',
+        'ô': 'o',
+        'Ố': 'o',
+        'ố': 'o',
+        'Ồ': 'o',
+        'ồ': 'o',
+        'Ỗ': 'o',
+        'ỗ': 'o',
+        'Ổ': 'o',
+        'ổ': 'o',
+        'Ǒ': 'o',
+        'ǒ': 'o',
+        'Ö': 'o',
+        'ö': 'o',
+        'Ȫ': 'o',
+        'ȫ': 'o',
+        'Ő': 'o',
+        'ő': 'o',
+        'Õ': 'o',
+        'õ': 'o',
+        'Ṍ': 'o',
+        'ṍ': 'o',
+        'Ṏ': 'o',
+        'ṏ': 'o',
+        'Ȭ': 'o',
+        'ȭ': 'o',
+        'Ȯ': 'o',
+        'ȯ': 'o',
+        'Ȱ': 'o',
+        'ȱ': 'o',
+        'Ø': 'o',
+        'ø': 'o',
+        'Ǿ': 'o',
+        'ǿ': 'o',
+        'Ǫ': 'o',
+        'ǫ': 'o',
+        'Ǭ': 'o',
+        'ǭ': 'o',
+        'Ō': 'o',
+        'ō': 'o',
+        'Ṓ': 'o',
+        'ṓ': 'o',
+        'Ṑ': 'o',
+        'ṑ': 'o',
+        'Ỏ': 'o',
+        'ỏ': 'o',
+        'Ȍ': 'o',
+        'ȍ': 'o',
+        'Ȏ': 'o',
+        'ȏ': 'o',
+        'Ơ': 'o',
+        'ơ': 'o',
+        'Ớ': 'o',
+        'ớ': 'o',
+        'Ờ': 'o',
+        'ờ': 'o',
+        'Ỡ': 'o',
+        'ỡ': 'o',
+        'Ở': 'o',
+        'ở': 'o',
+        'Ợ': 'o',
+        'ợ': 'o',
+        'Ọ': 'o',
+        'ọ': 'o',
+        'Ộ': 'o',
+        'ộ': 'o',
+        'Ɵ': 'o',
+        'ɵ': 'o',
+        'Ṕ': 'p',
+        'ṕ': 'p',
+        'Ṗ': 'p',
+        'ṗ': 'p',
+        'Ᵽ': 'p',
+        'Ƥ': 'p',
+        'ƥ': 'p',
+        'P': 'p',
+        '̃': 'p',
+        'p': 'p',
+        '̃': 'p',
+        'ʠ': 'q',
+        'Ɋ': 'q',
+        'ɋ': 'q',
+        'Ŕ': 'r',
+        'ŕ': 'r',
+        'Ř': 'r',
+        'ř': 'r',
+        'Ṙ': 'r',
+        'ṙ': 'r',
+        'Ŗ': 'r',
+        'ŗ': 'r',
+        'Ȑ': 'r',
+        'ȑ': 'r',
+        'Ȓ': 'r',
+        'ȓ': 'r',
+        'Ṛ': 'r',
+        'ṛ': 'r',
+        'Ṝ': 'r',
+        'ṝ': 'r',
+        'Ṟ': 'r',
+        'ṟ': 'r',
+        'Ɍ': 'r',
+        'ɍ': 'r',
+        'ᵲ': 'r',
+        'ɼ': 'r',
+        'Ɽ': 'r',
+        'ɽ': 'r',
+        'ɾ': 'r',
+        'ᵳ': 'r',
+        'ß': 's',
+        'Ś': 's',
+        'ś': 's',
+        'Ṥ': 's',
+        'ṥ': 's',
+        'Ŝ': 's',
+        'ŝ': 's',
+        'Š': 's',
+        'š': 's',
+        'Ṧ': 's',
+        'ṧ': 's',
+        'Ṡ': 's',
+        'ṡ': 's',
+        'ẛ': 's',
+        'Ş': 's',
+        'ş': 's',
+        'Ṣ': 's',
+        'ṣ': 's',
+        'Ṩ': 's',
+        'ṩ': 's',
+        'Ș': 's',
+        'ș': 's',
+        'ʂ': 's',
+        'S': 's',
+        '̩': 's',
+        's': 's',
+        '̩': 's',
+        'Þ': 't',
+        'þ': 't',
+        'Ť': 't',
+        'ť': 't',
+        'T': 't',
+        '̈': 't',
+        'ẗ': 't',
+        'Ṫ': 't',
+        'ṫ': 't',
+        'Ţ': 't',
+        'ţ': 't',
+        'Ṭ': 't',
+        'ṭ': 't',
+        'Ț': 't',
+        'ț': 't',
+        'Ṱ': 't',
+        'ṱ': 't',
+        'Ṯ': 't',
+        'ṯ': 't',
+        'Ŧ': 't',
+        'ŧ': 't',
+        'Ⱦ': 't',
+        'ⱦ': 't',
+        'ᵵ': 't',
+        'ƫ': 't',
+        'Ƭ': 't',
+        'ƭ': 't',
+        'Ʈ': 't',
+        'ʈ': 't',
+        'ȶ': 't',
+        'Ú': 'u',
+        'ú': 'u',
+        'Ù': 'u',
+        'ù': 'u',
+        'Ŭ': 'u',
+        'ŭ': 'u',
+        'Û': 'u',
+        'û': 'u',
+        'Ǔ': 'u',
+        'ǔ': 'u',
+        'Ů': 'u',
+        'ů': 'u',
+        'Ü': 'u',
+        'ü': 'u',
+        'Ǘ': 'u',
+        'ǘ': 'u',
+        'Ǜ': 'u',
+        'ǜ': 'u',
+        'Ǚ': 'u',
+        'ǚ': 'u',
+        'Ǖ': 'u',
+        'ǖ': 'u',
+        'Ű': 'u',
+        'ű': 'u',
+        'Ũ': 'u',
+        'ũ': 'u',
+        'Ṹ': 'u',
+        'ṹ': 'u',
+        'Ų': 'u',
+        'ų': 'u',
+        'Ū': 'u',
+        'ū': 'u',
+        'Ṻ': 'u',
+        'ṻ': 'u',
+        'Ủ': 'u',
+        'ủ': 'u',
+        'Ȕ': 'u',
+        'ȕ': 'u',
+        'Ȗ': 'u',
+        'ȗ': 'u',
+        'Ư': 'u',
+        'ư': 'u',
+        'Ứ': 'u',
+        'ứ': 'u',
+        'Ừ': 'u',
+        'ừ': 'u',
+        'Ữ': 'u',
+        'ữ': 'u',
+        'Ử': 'u',
+        'ử': 'u',
+        'Ự': 'u',
+        'ự': 'u',
+        'Ụ': 'u',
+        'ụ': 'u',
+        'Ṳ': 'u',
+        'ṳ': 'u',
+        'Ṷ': 'u',
+        'ṷ': 'u',
+        'Ṵ': 'u',
+        'ṵ': 'u',
+        'Ʉ': 'u',
+        'ʉ': 'u',
+        'Ṽ': 'v',
+        'ṽ': 'v',
+        'Ṿ': 'v',
+        'ṿ': 'v',
+        'Ʋ': 'v',
+        'ʋ': 'v',
+        'Ẃ': 'w',
+        'ẃ': 'w',
+        'Ẁ': 'w',
+        'ẁ': 'w',
+        'Ŵ': 'w',
+        'ŵ': 'w',
+        'W': 'w',
+        '̊': 'w',
+        'ẘ': 'w',
+        'Ẅ': 'w',
+        'ẅ': 'w',
+        'Ẇ': 'w',
+        'ẇ': 'w',
+        'Ẉ': 'w',
+        'ẉ': 'w',
+        'Ẍ': 'x',
+        'ẍ': 'x',
+        'Ẋ': 'x',
+        'ẋ': 'x',
+        'Ý': 'y',
+        'ý': 'y',
+        'Ỳ': 'y',
+        'ỳ': 'y',
+        'Ŷ': 'y',
+        'ŷ': 'y',
+        'Y': 'y',
+        '̊': 'y',
+        'ẙ': 'y',
+        'Ÿ': 'y',
+        'ÿ': 'y',
+        'Ỹ': 'y',
+        'ỹ': 'y',
+        'Ẏ': 'y',
+        'ẏ': 'y',
+        'Ȳ': 'y',
+        'ȳ': 'y',
+        'Ỷ': 'y',
+        'ỷ': 'y',
+        'Ỵ': 'y',
+        'ỵ': 'y',
+        'ʏ': 'y',
+        'Ɏ': 'y',
+        'ɏ': 'y',
+        'Ƴ': 'y',
+        'ƴ': 'y',
+        'Ź': 'z',
+        'ź': 'z',
+        'Ẑ': 'z',
+        'ẑ': 'z',
+        'Ž': 'z',
+        'ž': 'z',
+        'Ż': 'z',
+        'ż': 'z',
+        'Ẓ': 'z',
+        'ẓ': 'z',
+        'Ẕ': 'z',
+        'ẕ': 'z',
+        'Ƶ': 'z',
+        'ƶ': 'z',
+        'Ȥ': 'z',
+        'ȥ': 'z',
+        'ʐ': 'z',
+        'ʑ': 'z',
+        'Ⱬ': 'z',
+        'ⱬ': 'z',
+        'Ǯ': 'z',
+        'ǯ': 'z',
+        'ƺ': 'z',
+
+        // Roman fullwidth ascii equivalents: 0xff00 to 0xff5e
+        '２': '2',
+        '６': '6',
+        'Ｂ': 'B',
+        'Ｆ': 'F',
+        'Ｊ': 'J',
+        'Ｎ': 'N',
+        'Ｒ': 'R',
+        'Ｖ': 'V',
+        'Ｚ': 'Z',
+        'ｂ': 'b',
+        'ｆ': 'f',
+        'ｊ': 'j',
+        'ｎ': 'n',
+        'ｒ': 'r',
+        'ｖ': 'v',
+        'ｚ': 'z',
+        '１': '1',
+        '５': '5',
+        '９': '9',
+        'Ａ': 'A',
+        'Ｅ': 'E',
+        'Ｉ': 'I',
+        'Ｍ': 'M',
+        'Ｑ': 'Q',
+        'Ｕ': 'U',
+        'Ｙ': 'Y',
+        'ａ': 'a',
+        'ｅ': 'e',
+        'ｉ': 'i',
+        'ｍ': 'm',
+        'ｑ': 'q',
+        'ｕ': 'u',
+        'ｙ': 'y',
+        '０': '0',
+        '４': '4',
+        '８': '8',
+        'Ｄ': 'D',
+        'Ｈ': 'H',
+        'Ｌ': 'L',
+        'Ｐ': 'P',
+        'Ｔ': 'T',
+        'Ｘ': 'X',
+        'ｄ': 'd',
+        'ｈ': 'h',
+        'ｌ': 'l',
+        'ｐ': 'p',
+        'ｔ': 't',
+        'ｘ': 'x',
+        '３': '3',
+        '７': '7',
+        'Ｃ': 'C',
+        'Ｇ': 'G',
+        'Ｋ': 'K',
+        'Ｏ': 'O',
+        'Ｓ': 'S',
+        'Ｗ': 'W',
+        'ｃ': 'c',
+        'ｇ': 'g',
+        'ｋ': 'k',
+        'ｏ': 'o',
+        'ｓ': 's',
+        'ｗ': 'w'
+    };
+
+    var normalize = function (term) {
+        var ret = "";
+        for (var i = 0; i < term.length; i++) {
+            ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+        }
+        return ret;
+    };
+
+    function log(message) {
+        $("<div/>").text(message).prependTo("#log");
+        $("#log").scrollTop(0);
+    }
+
+</script>
+
+            <script type="text/javascript">
+           var cities = [{"label":"Abati\u00e1\/PR","value":4100103},{"label":"Adrian\u00f3polis\/PR","value":4100202},{"label":"Agudos do Sul\/PR","value":4100301},{"label":"Almirante Tamandar\u00e9\/PR","value":4100400},{"label":"Altamira do Paran\u00e1\/PR","value":4100459},{"label":"Alt\u00f4nia\/PR","value":4100509},{"label":"Alto Para\u00edso\/PR","value":4128625},{"label":"Alto Paran\u00e1\/PR","value":4100608},{"label":"Alto Piquiri\/PR","value":4100707},{"label":"Alvorada do Sul\/PR","value":4100806},{"label":"Amapor\u00e3\/PR","value":4100905},{"label":"Amp\u00e9re\/PR","value":4101002},{"label":"Anahy\/PR","value":4101051},{"label":"Andir\u00e1\/PR","value":4101101},{"label":"\u00c2ngulo\/PR","value":4101150},{"label":"Antonina\/PR","value":4101200},{"label":"Ant\u00f4nio Olinto\/PR","value":4101309},{"label":"Apucarana\/PR","value":4101408},{"label":"Arapongas\/PR","value":4101507},{"label":"Arapoti\/PR","value":4101606},{"label":"Arapu\u00e3\/PR","value":4101655},{"label":"Araruna\/PR","value":4101705},{"label":"Arauc\u00e1ria\/PR","value":4101804},{"label":"Ariranha do Iva\u00ed\/PR","value":4101853},{"label":"Assa\u00ed\/PR","value":4101903},{"label":"Assis Chateaubriand\/PR","value":4102000},{"label":"Astorga\/PR","value":4102109},{"label":"Atalaia\/PR","value":4102208},{"label":"Balsa Nova\/PR","value":4102307},{"label":"Bandeirantes\/PR","value":4102406},{"label":"Barbosa Ferraz\/PR","value":4102505},{"label":"Barrac\u00e3o\/PR","value":4102604},{"label":"Barra do Jacar\u00e9\/PR","value":4102703},{"label":"Bela Vista da Caroba\/PR","value":4102752},{"label":"Bela Vista do Para\u00edso\/PR","value":4102802},{"label":"Bituruna\/PR","value":4102901},{"label":"Boa Esperan\u00e7a\/PR","value":4103008},{"label":"Boa Esperan\u00e7a do Igua\u00e7u\/PR","value":4103024},{"label":"Boa Ventura de S\u00e3o Roque\/PR","value":4103040},{"label":"Boa Vista da Aparecida\/PR","value":4103057},{"label":"Bocai\u00fava do Sul\/PR","value":4103107},{"label":"Bom Jesus do Sul\/PR","value":4103156},{"label":"Bom Sucesso\/PR","value":4103206},{"label":"Bom Sucesso do Sul\/PR","value":4103222},{"label":"Borraz\u00f3polis\/PR","value":4103305},{"label":"Braganey\/PR","value":4103354},{"label":"Brasil\u00e2ndia do Sul\/PR","value":4103370},{"label":"Cafeara\/PR","value":4103404},{"label":"Cafel\u00e2ndia\/PR","value":4103453},{"label":"Cafezal do Sul\/PR","value":4103479},{"label":"Calif\u00f3rnia\/PR","value":4103503},{"label":"Cambar\u00e1\/PR","value":4103602},{"label":"Camb\u00e9\/PR","value":4103701},{"label":"Cambira\/PR","value":4103800},{"label":"Campina da Lagoa\/PR","value":4103909},{"label":"Campina do Sim\u00e3o\/PR","value":4103958},{"label":"Campina Grande do Sul\/PR","value":4104006},{"label":"Campo Bonito\/PR","value":4104055},{"label":"Campo do Tenente\/PR","value":4104105},{"label":"Campo Largo\/PR","value":4104204},{"label":"Campo Magro\/PR","value":4104253},{"label":"Campo Mour\u00e3o\/PR","value":4104303},{"label":"C\u00e2ndido de Abreu\/PR","value":4104402},{"label":"Cand\u00f3i\/PR","value":4104428},{"label":"Cantagalo\/PR","value":4104451},{"label":"Capanema\/PR","value":4104501},{"label":"Capit\u00e3o Le\u00f4nidas Marques\/PR","value":4104600},{"label":"Carambe\u00ed\/PR","value":4104659},{"label":"Carl\u00f3polis\/PR","value":4104709},{"label":"Cascavel\/PR","value":4104808},{"label":"Castro\/PR","value":4104907},{"label":"Catanduvas\/PR","value":4105003},{"label":"Centen\u00e1rio do Sul\/PR","value":4105102},{"label":"Cerro Azul\/PR","value":4105201},{"label":"C\u00e9u Azul\/PR","value":4105300},{"label":"Chopinzinho\/PR","value":4105409},{"label":"Cianorte\/PR","value":4105508},{"label":"Cidade Ga\u00facha\/PR","value":4105607},{"label":"Clevel\u00e2ndia\/PR","value":4105706},{"label":"Colombo\/PR","value":4105805},{"label":"Colorado\/PR","value":4105904},{"label":"Congonhinhas\/PR","value":4106001},{"label":"Conselheiro Mairinck\/PR","value":4106100},{"label":"Contenda\/PR","value":4106209},{"label":"Corb\u00e9lia\/PR","value":4106308},{"label":"Corn\u00e9lio Proc\u00f3pio\/PR","value":4106407},{"label":"Coronel Domingos Soares\/PR","value":4106456},{"label":"Coronel Vivida\/PR","value":4106506},{"label":"Corumbata\u00ed do Sul\/PR","value":4106555},{"label":"Cruzeiro do Igua\u00e7u\/PR","value":4106571},{"label":"Cruzeiro do Oeste\/PR","value":4106605},{"label":"Cruzeiro do Sul\/PR","value":4106704},{"label":"Cruz Machado\/PR","value":4106803},{"label":"Cruzmaltina\/PR","value":4106852},{"label":"Curitiba\/PR","value":4106902},{"label":"Curi\u00fava\/PR","value":4107009},{"label":"Diamante d'Oeste\/PR","value":4107157},{"label":"Diamante do Norte\/PR","value":4107108},{"label":"Diamante do Sul\/PR","value":4107124},{"label":"Dois Vizinhos\/PR","value":4107207},{"label":"Douradina\/PR","value":4107256},{"label":"Doutor Camargo\/PR","value":4107306},{"label":"Doutor Ulysses\/PR","value":4128633},{"label":"En\u00e9as Marques\/PR","value":4107405},{"label":"Engenheiro Beltr\u00e3o\/PR","value":4107504},{"label":"Entre Rios do Oeste\/PR","value":4107538},{"label":"Esperan\u00e7a Nova\/PR","value":4107520},{"label":"Espig\u00e3o Alto do Igua\u00e7u\/PR","value":4107546},{"label":"Farol\/PR","value":4107553},{"label":"Faxinal\/PR","value":4107603},{"label":"Fazenda Rio Grande\/PR","value":4107652},{"label":"F\u00eanix\/PR","value":4107702},{"label":"Fernandes Pinheiro\/PR","value":4107736},{"label":"Figueira\/PR","value":4107751},{"label":"Flora\u00ed\/PR","value":4107801},{"label":"Flor da Serra do Sul\/PR","value":4107850},{"label":"Floresta\/PR","value":4107900},{"label":"Florest\u00f3polis\/PR","value":4108007},{"label":"Fl\u00f3rida\/PR","value":4108106},{"label":"Formosa do Oeste\/PR","value":4108205},{"label":"Foz do Igua\u00e7u\/PR","value":4108304},{"label":"Foz do Jord\u00e3o\/PR","value":4108452},{"label":"Francisco Alves\/PR","value":4108320},{"label":"Francisco Beltr\u00e3o\/PR","value":4108403},{"label":"General Carneiro\/PR","value":4108502},{"label":"Godoy Moreira\/PR","value":4108551},{"label":"Goioer\u00ea\/PR","value":4108601},{"label":"Goioxim\/PR","value":4108650},{"label":"Grandes Rios\/PR","value":4108700},{"label":"Gua\u00edra\/PR","value":4108809},{"label":"Guaira\u00e7\u00e1\/PR","value":4108908},{"label":"Guamiranga\/PR","value":4108957},{"label":"Guapirama\/PR","value":4109005},{"label":"Guaporema\/PR","value":4109104},{"label":"Guaraci\/PR","value":4109203},{"label":"Guarania\u00e7u\/PR","value":4109302},{"label":"Guarapuava\/PR","value":4109401},{"label":"Guaraque\u00e7aba\/PR","value":4109500},{"label":"Guaratuba\/PR","value":4109609},{"label":"Hon\u00f3rio Serpa\/PR","value":4109658},{"label":"Ibaiti\/PR","value":4109708},{"label":"Ibema\/PR","value":4109757},{"label":"Ibipor\u00e3\/PR","value":4109807},{"label":"Icara\u00edma\/PR","value":4109906},{"label":"Iguara\u00e7u\/PR","value":4110003},{"label":"Iguatu\/PR","value":4110052},{"label":"Imba\u00fa\/PR","value":4110078},{"label":"Imbituva\/PR","value":4110102},{"label":"In\u00e1cio Martins\/PR","value":4110201},{"label":"Inaj\u00e1\/PR","value":4110300},{"label":"Indian\u00f3polis\/PR","value":4110409},{"label":"Ipiranga\/PR","value":4110508},{"label":"Ipor\u00e3\/PR","value":4110607},{"label":"Iracema do Oeste\/PR","value":4110656},{"label":"Irati\/PR","value":4110706},{"label":"Iretama\/PR","value":4110805},{"label":"Itaguaj\u00e9\/PR","value":4110904},{"label":"Itaipul\u00e2ndia\/PR","value":4110953},{"label":"Itambarac\u00e1\/PR","value":4111001},{"label":"Itamb\u00e9\/PR","value":4111100},{"label":"Itapejara d'Oeste\/PR","value":4111209},{"label":"Itaperu\u00e7u\/PR","value":4111258},{"label":"Ita\u00fana do Sul\/PR","value":4111308},{"label":"Iva\u00ed\/PR","value":4111407},{"label":"Ivaipor\u00e3\/PR","value":4111506},{"label":"Ivat\u00e9\/PR","value":4111555},{"label":"Ivatuba\/PR","value":4111605},{"label":"Jaboti\/PR","value":4111704},{"label":"Jacarezinho\/PR","value":4111803},{"label":"Jaguapit\u00e3\/PR","value":4111902},{"label":"Jaguaria\u00edva\/PR","value":4112009},{"label":"Jandaia do Sul\/PR","value":4112108},{"label":"Jani\u00f3polis\/PR","value":4112207},{"label":"Japira\/PR","value":4112306},{"label":"Japur\u00e1\/PR","value":4112405},{"label":"Jardim Alegre\/PR","value":4112504},{"label":"Jardim Olinda\/PR","value":4112603},{"label":"Jataizinho\/PR","value":4112702},{"label":"Jesu\u00edtas\/PR","value":4112751},{"label":"Joaquim T\u00e1vora\/PR","value":4112801},{"label":"Jundia\u00ed do Sul\/PR","value":4112900},{"label":"Juranda\/PR","value":4112959},{"label":"Jussara\/PR","value":4113007},{"label":"Kalor\u00e9\/PR","value":4113106},{"label":"Lapa\/PR","value":4113205},{"label":"Laranjal\/PR","value":4113254},{"label":"Laranjeiras do Sul\/PR","value":4113304},{"label":"Le\u00f3polis\/PR","value":4113403},{"label":"Lidian\u00f3polis\/PR","value":4113429},{"label":"Lindoeste\/PR","value":4113452},{"label":"Loanda\/PR","value":4113502},{"label":"Lobato\/PR","value":4113601},{"label":"Londrina\/PR","value":4113700},{"label":"Luiziana\/PR","value":4113734},{"label":"Lunardelli\/PR","value":4113759},{"label":"Lupion\u00f3polis\/PR","value":4113809},{"label":"Mallet\/PR","value":4113908},{"label":"Mambor\u00ea\/PR","value":4114005},{"label":"Mandagua\u00e7u\/PR","value":4114104},{"label":"Mandaguari\/PR","value":4114203},{"label":"Mandirituba\/PR","value":4114302},{"label":"Manfrin\u00f3polis\/PR","value":4114351},{"label":"Mangueirinha\/PR","value":4114401},{"label":"Manoel Ribas\/PR","value":4114500},{"label":"Marechal C\u00e2ndido Rondon\/PR","value":4114609},{"label":"Maria Helena\/PR","value":4114708},{"label":"Marialva\/PR","value":4114807},{"label":"Maril\u00e2ndia do Sul\/PR","value":4114906},{"label":"Marilena\/PR","value":4115002},{"label":"Mariluz\/PR","value":4115101},{"label":"Maring\u00e1\/PR","value":4115200},{"label":"Mari\u00f3polis\/PR","value":4115309},{"label":"Marip\u00e1\/PR","value":4115358},{"label":"Marmeleiro\/PR","value":4115408},{"label":"Marquinho\/PR","value":4115457},{"label":"Marumbi\/PR","value":4115507},{"label":"Matel\u00e2ndia\/PR","value":4115606},{"label":"Matinhos\/PR","value":4115705},{"label":"Mato Rico\/PR","value":4115739},{"label":"Mau\u00e1 da Serra\/PR","value":4115754},{"label":"Medianeira\/PR","value":4115804},{"label":"Mercedes\/PR","value":4115853},{"label":"Mirador\/PR","value":4115903},{"label":"Miraselva\/PR","value":4116000},{"label":"Missal\/PR","value":4116059},{"label":"Moreira Sales\/PR","value":4116109},{"label":"Morretes\/PR","value":4116208},{"label":"Munhoz de Melo\/PR","value":4116307},{"label":"Nossa Senhora das Gra\u00e7as\/PR","value":4116406},{"label":"Nova Alian\u00e7a do Iva\u00ed\/PR","value":4116505},{"label":"Nova Am\u00e9rica da Colina\/PR","value":4116604},{"label":"Nova Aurora\/PR","value":4116703},{"label":"Nova Cantu\/PR","value":4116802},{"label":"Nova Esperan\u00e7a\/PR","value":4116901},{"label":"Nova Esperan\u00e7a do Sudoeste\/PR","value":4116950},{"label":"Nova F\u00e1tima\/PR","value":4117008},{"label":"Nova Laranjeiras\/PR","value":4117057},{"label":"Nova Londrina\/PR","value":4117107},{"label":"Nova Ol\u00edmpia\/PR","value":4117206},{"label":"Nova Prata do Igua\u00e7u\/PR","value":4117255},{"label":"Nova Santa B\u00e1rbara\/PR","value":4117214},{"label":"Nova Santa Rosa\/PR","value":4117222},{"label":"Nova Tebas\/PR","value":4117271},{"label":"Novo Itacolomi\/PR","value":4117297},{"label":"Ortigueira\/PR","value":4117305},{"label":"Ourizona\/PR","value":4117404},{"label":"Ouro Verde do Oeste\/PR","value":4117453},{"label":"Pai\u00e7andu\/PR","value":4117503},{"label":"Palmas\/PR","value":4117602},{"label":"Palmeira\/PR","value":4117701},{"label":"Palmital\/PR","value":4117800},{"label":"Palotina\/PR","value":4117909},{"label":"Para\u00edso do Norte\/PR","value":4118006},{"label":"Paranacity\/PR","value":4118105},{"label":"Paranagu\u00e1\/PR","value":4118204},{"label":"Paranapoema\/PR","value":4118303},{"label":"Paranava\u00ed\/PR","value":4118402},{"label":"Pato Bragado\/PR","value":4118451},{"label":"Pato Branco\/PR","value":4118501},{"label":"Paula Freitas\/PR","value":4118600},{"label":"Paulo Frontin\/PR","value":4118709},{"label":"Peabiru\/PR","value":4118808},{"label":"Perobal\/PR","value":4118857},{"label":"P\u00e9rola\/PR","value":4118907},{"label":"P\u00e9rola d'Oeste\/PR","value":4119004},{"label":"Pi\u00ean\/PR","value":4119103},{"label":"Pinhais\/PR","value":4119152},{"label":"Pinhal\u00e3o\/PR","value":4119202},{"label":"Pinhal de S\u00e3o Bento\/PR","value":4119251},{"label":"Pinh\u00e3o\/PR","value":4119301},{"label":"Pira\u00ed do Sul\/PR","value":4119400},{"label":"Piraquara\/PR","value":4119509},{"label":"Pitanga\/PR","value":4119608},{"label":"Pitangueiras\/PR","value":4119657},{"label":"Planaltina do Paran\u00e1\/PR","value":4119707},{"label":"Planalto\/PR","value":4119806},{"label":"Ponta Grossa\/PR","value":4119905},{"label":"Pontal do Paran\u00e1\/PR","value":4119954},{"label":"Porecatu\/PR","value":4120002},{"label":"Porto Amazonas\/PR","value":4120101},{"label":"Porto Barreiro\/PR","value":4120150},{"label":"Porto Rico\/PR","value":4120200},{"label":"Porto Vit\u00f3ria\/PR","value":4120309},{"label":"Prado Ferreira\/PR","value":4120333},{"label":"Pranchita\/PR","value":4120358},{"label":"Presidente Castelo Branco\/PR","value":4120408},{"label":"Primeiro de Maio\/PR","value":4120507},{"label":"Prudent\u00f3polis\/PR","value":4120606},{"label":"Quarto Centen\u00e1rio\/PR","value":4120655},{"label":"Quatigu\u00e1\/PR","value":4120705},{"label":"Quatro Barras\/PR","value":4120804},{"label":"Quatro Pontes\/PR","value":4120853},{"label":"Quedas do Igua\u00e7u\/PR","value":4120903},{"label":"Quer\u00eancia do Norte\/PR","value":4121000},{"label":"Quinta do Sol\/PR","value":4121109},{"label":"Quitandinha\/PR","value":4121208},{"label":"Ramil\u00e2ndia\/PR","value":4121257},{"label":"Rancho Alegre\/PR","value":4121307},{"label":"Rancho Alegre d'Oeste\/PR","value":4121356},{"label":"Realeza\/PR","value":4121406},{"label":"Rebou\u00e7as\/PR","value":4121505},{"label":"Renascen\u00e7a\/PR","value":4121604},{"label":"Reserva\/PR","value":4121703},{"label":"Reserva do Igua\u00e7u\/PR","value":4121752},{"label":"Ribeir\u00e3o Claro\/PR","value":4121802},{"label":"Ribeir\u00e3o do Pinhal\/PR","value":4121901},{"label":"Rio Azul\/PR","value":4122008},{"label":"Rio Bom\/PR","value":4122107},{"label":"Rio Bonito do Igua\u00e7u\/PR","value":4122156},{"label":"Rio Branco do Iva\u00ed\/PR","value":4122172},{"label":"Rio Branco do Sul\/PR","value":4122206},{"label":"Rio Negro\/PR","value":4122305},{"label":"Rol\u00e2ndia\/PR","value":4122404},{"label":"Roncador\/PR","value":4122503},{"label":"Rondon\/PR","value":4122602},{"label":"Ros\u00e1rio do Iva\u00ed\/PR","value":4122651},{"label":"Sab\u00e1udia\/PR","value":4122701},{"label":"Salgado Filho\/PR","value":4122800},{"label":"Salto do Itarar\u00e9\/PR","value":4122909},{"label":"Salto do Lontra\/PR","value":4123006},{"label":"Santa Am\u00e9lia\/PR","value":4123105},{"label":"Santa Cec\u00edlia do Pav\u00e3o\/PR","value":4123204},{"label":"Santa Cruz de Monte Castelo\/PR","value":4123303},{"label":"Santa F\u00e9\/PR","value":4123402},{"label":"Santa Helena\/PR","value":4123501},{"label":"Santa In\u00eas\/PR","value":4123600},{"label":"Santa Isabel do Iva\u00ed\/PR","value":4123709},{"label":"Santa Izabel do Oeste\/PR","value":4123808},{"label":"Santa L\u00facia\/PR","value":4123824},{"label":"Santa Maria do Oeste\/PR","value":4123857},{"label":"Santa Mariana\/PR","value":4123907},{"label":"Santa M\u00f4nica\/PR","value":4123956},{"label":"Santana do Itarar\u00e9\/PR","value":4124004},{"label":"Santa Tereza do Oeste\/PR","value":4124020},{"label":"Santa Terezinha de Itaipu\/PR","value":4124053},{"label":"Santo Ant\u00f4nio da Platina\/PR","value":4124103},{"label":"Santo Ant\u00f4nio do Caiu\u00e1\/PR","value":4124202},{"label":"Santo Ant\u00f4nio do Para\u00edso\/PR","value":4124301},{"label":"Santo Ant\u00f4nio do Sudoeste\/PR","value":4124400},{"label":"Santo In\u00e1cio\/PR","value":4124509},{"label":"S\u00e3o Carlos do Iva\u00ed\/PR","value":4124608},{"label":"S\u00e3o Jer\u00f4nimo da Serra\/PR","value":4124707},{"label":"S\u00e3o Jo\u00e3o\/PR","value":4124806},{"label":"S\u00e3o Jo\u00e3o do Caiu\u00e1\/PR","value":4124905},{"label":"S\u00e3o Jo\u00e3o do Iva\u00ed\/PR","value":4125001},{"label":"S\u00e3o Jo\u00e3o do Triunfo\/PR","value":4125100},{"label":"S\u00e3o Jorge d'Oeste\/PR","value":4125209},{"label":"S\u00e3o Jorge do Iva\u00ed\/PR","value":4125308},{"label":"S\u00e3o Jorge do Patroc\u00ednio\/PR","value":4125357},{"label":"S\u00e3o Jos\u00e9 da Boa Vista\/PR","value":4125407},{"label":"S\u00e3o Jos\u00e9 das Palmeiras\/PR","value":4125456},{"label":"S\u00e3o Jos\u00e9 dos Pinhais\/PR","value":4125506},{"label":"S\u00e3o Manoel do Paran\u00e1\/PR","value":4125555},{"label":"S\u00e3o Mateus do Sul\/PR","value":4125605},{"label":"S\u00e3o Miguel do Igua\u00e7u\/PR","value":4125704},{"label":"S\u00e3o Pedro do Igua\u00e7u\/PR","value":4125753},{"label":"S\u00e3o Pedro do Iva\u00ed\/PR","value":4125803},{"label":"S\u00e3o Pedro do Paran\u00e1\/PR","value":4125902},{"label":"S\u00e3o Sebasti\u00e3o da Amoreira\/PR","value":4126009},{"label":"S\u00e3o Tom\u00e9\/PR","value":4126108},{"label":"Sapopema\/PR","value":4126207},{"label":"Sarandi\/PR","value":4126256},{"label":"Saudade do Igua\u00e7u\/PR","value":4126272},{"label":"Seng\u00e9s\/PR","value":4126306},{"label":"Serran\u00f3polis do Igua\u00e7u\/PR","value":4126355},{"label":"Sertaneja\/PR","value":4126405},{"label":"Sertan\u00f3polis\/PR","value":4126504},{"label":"Siqueira Campos\/PR","value":4126603},{"label":"Sulina\/PR","value":4126652},{"label":"Tamarana\/PR","value":4126678},{"label":"Tamboara\/PR","value":4126702},{"label":"Tapejara\/PR","value":4126801},{"label":"Tapira\/PR","value":4126900},{"label":"Teixeira Soares\/PR","value":4127007},{"label":"Tel\u00eamaco Borba\/PR","value":4127106},{"label":"Terra Boa\/PR","value":4127205},{"label":"Terra Rica\/PR","value":4127304},{"label":"Terra Roxa\/PR","value":4127403},{"label":"Tibagi\/PR","value":4127502},{"label":"Tijucas do Sul\/PR","value":4127601},{"label":"Toledo\/PR","value":4127700},{"label":"Tomazina\/PR","value":4127809},{"label":"Tr\u00eas Barras do Paran\u00e1\/PR","value":4127858},{"label":"Tunas do Paran\u00e1\/PR","value":4127882},{"label":"Tuneiras do Oeste\/PR","value":4127908},{"label":"Tup\u00e3ssi\/PR","value":4127957},{"label":"Turvo\/PR","value":4127965},{"label":"Ubirat\u00e3\/PR","value":4128005},{"label":"Umuarama\/PR","value":4128104},{"label":"Uni\u00e3o da Vit\u00f3ria\/PR","value":4128203},{"label":"Uniflor\/PR","value":4128302},{"label":"Ura\u00ed\/PR","value":4128401},{"label":"Ventania\/PR","value":4128534},{"label":"Vera Cruz do Oeste\/PR","value":4128559},{"label":"Ver\u00ea\/PR","value":4128609},{"label":"Virmond\/PR","value":4128658},{"label":"Vitorino\/PR","value":4128708},{"label":"Wenceslau Braz\/PR","value":4128500},{"label":"Xambr\u00ea\/PR","value":4128807}];
+            $(".search-city,.search-city-mobile").autocomplete({
+                //source: municipios,
+                maxResults: 15,
+                source: function (request, response) {
+                    var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                    var results = $.grep(cities, function (value) {
+                        value = value.label || value.value || value;
+                        return matcher.test(value) || matcher.test(normalize(value));
+                    });
+                    response(results.slice(0, this.options.maxResults));
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                    $("." + $(this).attr('id')).val(ui.item.label);
+                    window.location = "https://stage.simepar.br/prognozweb/simepar/forecast_by_counties" + "/" + ui.item.value;
+                    return false;
+                },
+                focus: function (event, ui) {
+                    $("." + $(this).attr('id')).val(ui.item.label);
+                    return false;
+                }
+            });
+
+            $("#go_city_desktop,#go_city_mobile").on("click", function () {
+                var search_city = '.search-city';
+                if ($(this).attr('id') == 'go_city_mobile') {
+                    search_city = '.search-city-mobile';
+                }
+                var expr = "^" + normalize($(search_city).val().toLowerCase()) + "$";
+                var matcher = new RegExp(expr, "i");
+                $.grep(cities, function (v) {
+                    var item = normalize(v.label.toLowerCase());
+                    if (matcher.test(item)) {
+                        //            atualizaFragmentos(v.id, v.label);
+                        window.location = "https://stage.simepar.br/prognozweb/simepar/forecast_by_counties" + "/" + v.value;
+                        return false;
+                    }
+                });
+            });
+        </script>
+    
+        	<!-- Highcharts - Highstock (contem highcharts) -->
+    	<script src="https://stage.simepar.br/prognozweb/js/highcharts-stock/highstock.js"></script>
+        <!--Highcharts - WindRose -->
+        <script src="https://stage.simepar.br/prognozweb/js/highcharts-stock/highcharts-more.js"></script>
+    	<!-- <Highcharts - Botão de exportação PNG, JPEG, etc.  -->
+        <script src="https://stage.simepar.br/prognozweb/js/highcharts-stock/modules/data.js"></script>
+    	<script src="https://stage.simepar.br/prognozweb/js/highcharts-stock/modules/exporting.js"></script>
+    	<script src="https://stage.simepar.br/prognozweb/js/highcharts-stock/modules/export-data.js"></script>
+        <script src="https://stage.simepar.br/prognozweb/js/highcharts-stock/modules/accessibility.js"></script>
+    
+    
+            <script type="text/javascript">
+
+var url_img = "https://stage.simepar.br/prognozweb/img/Simepar-PR-3.png";
+
+var feelslike = [];
+
+    feelsLike = {"14\/10\/2026 19:00":21,"14\/10\/2026 20:00":21,"14\/10\/2026 21:00":20,"14\/10\/2026 22:00":20,"14\/10\/2026 23:00":20,"15\/10\/2026 00:00":20,"15\/10\/2026 01:00":20,"15\/10\/2026 02:00":20,"15\/10\/2026 03:00":20,"15\/10\/2026 04:00":19,"15\/10\/2026 05:00":20,"15\/10\/2026 06:00":19,"15\/10\/2026 07:00":19,"15\/10\/2026 08:00":20,"15\/10\/2026 09:00":22,"15\/10\/2026 10:00":23,"15\/10\/2026 11:00":24,"15\/10\/2026 12:00":25,"15\/10\/2026 13:00":25,"15\/10\/2026 14:00":25,"15\/10\/2026 15:00":24,"15\/10\/2026 16:00":22,"15\/10\/2026 17:00":22,"15\/10\/2026 18:00":21,"15\/10\/2026 19:00":21};
+    $('#chart1').highcharts({
+        plotOptions: {
+            series: {
+                connectNulls: true
+            }
+        },
+        chart: {
+            renderTo: 'chart1',
+            events: {
+                load: function() {
+                    this.renderer.image(url_img, 80, 40, 70, 50)
+                        .add();
+                }
+            }
+        },
+        title: {
+            text: 'Temperatura do Ar e Umidade Relativa',
+            x: -20 //center
+        },
+                subtitle: {
+            text: 'Estação: Paranaguá'
+        },
+                xAxis: {
+            categories: ["19:00","20:00","21:00","22:00","23:00","00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"],
+            crosshair: {
+                width: 1,
+                color: '#ccc'
+            }
+        },
+        yAxis: [{// Primary yAxis
+                labels: {
+                    format: '{value} %',
+                    style: {
+                        color: '#7CB5EC'
+                    }
+                },
+                title: {
+                    text: 'Umidade Relativa ( %)',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                min: 0,
+                max: 100
+
+            }, {// Secondary yAxis
+                labels: {
+                    format: '{value}°C',
+                    style: {
+                        color: '#000'
+                    }
+                },
+                title: {
+                    text: 'Temperatura ( °C)',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                opposite: true
+            }],
+        tooltip: {
+            shared: true,
+            formatter: function() {
+                if (typeof this.points[0] !== 'undefined') {
+                    var s = '<b>'+ this.points[0]['key'] +' h</b><br/>';
+                }
+                else {
+                    var s = '<b>'+ this.points[1]['key'] +' h</b><br/>';
+                }
+
+                $.each(this.points, function(i, point) {
+                    s += '- <span style="color:'+point.series.color+'">'+point.series.name+'</span>: <b>'+point.y+'</b> '+' '+ point.series.tooltipOptions.valueSuffix +'<br/>'
+                });
+
+
+                                    s += '- Sensação Térmica: <b>' + feelsLike[this.points[0].key] + '</b> °C';
+                                return s;
+            },
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            borderWidth: 0,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+                name: 'Temperatura Média',
+                type: 'spline',
+                yAxis: 1,
+                data: [["14\/10\/2026 19:00",21.2],["14\/10\/2026 20:00",21],["14\/10\/2026 21:00",20.9],["14\/10\/2026 22:00",20.7],["14\/10\/2026 23:00",20.7],["15\/10\/2026 00:00",20.4],["15\/10\/2026 01:00",20.1],["15\/10\/2026 02:00",19.8],["15\/10\/2026 03:00",19.6],["15\/10\/2026 04:00",19.4],["15\/10\/2026 05:00",19.4],["15\/10\/2026 06:00",19.4],["15\/10\/2026 07:00",19.7],["15\/10\/2026 08:00",20.3],["15\/10\/2026 09:00",22.1],["15\/10\/2026 10:00",23.5],["15\/10\/2026 11:00",24.8],["15\/10\/2026 12:00",25.6],["15\/10\/2026 13:00",25.5],["15\/10\/2026 14:00",25.3],["15\/10\/2026 15:00",24.2],["15\/10\/2026 16:00",22.9],["15\/10\/2026 17:00",22.4],["15\/10\/2026 18:00",21.9],["15\/10\/2026 19:00",21.4]],
+                tooltip: {
+                    valueSuffix: '°C'
+                },
+                color: '#000'
+            }, {
+                name: 'Umidade Relativa',
+                type: 'spline',
+                data: [["14\/10\/2026 19:00",91.8],["14\/10\/2026 20:00",93.8],["14\/10\/2026 21:00",94.5],["14\/10\/2026 22:00",94.7],["14\/10\/2026 23:00",94.8],["15\/10\/2026 00:00",95],["15\/10\/2026 01:00",95.1],["15\/10\/2026 02:00",95.1],["15\/10\/2026 03:00",94.8],["15\/10\/2026 04:00",94.5],["15\/10\/2026 05:00",94.3],["15\/10\/2026 06:00",94.2],["15\/10\/2026 07:00",94.1],["15\/10\/2026 08:00",92.7],["15\/10\/2026 09:00",87.6],["15\/10\/2026 10:00",80.6],["15\/10\/2026 11:00",74],["15\/10\/2026 12:00",74.1],["15\/10\/2026 13:00",76.7],["15\/10\/2026 14:00",77],["15\/10\/2026 15:00",82.1],["15\/10\/2026 16:00",84.8],["15\/10\/2026 17:00",86.3],["15\/10\/2026 18:00",87.4],["15\/10\/2026 19:00",90]],
+                tooltip: {
+                    valueSuffix: '%'
+                }
+            }],
+        credits: {
+            text: 'Simepar.br',
+            href: 'www.simepar.br'
+        }
+    });
+
+    $('#chart2').highcharts({
+        plotOptions: {
+        series: {
+            connectNulls: true
+        }
+        },
+        chart: {
+            renderTo: 'chart2',
+            events: {
+                load: function() {
+                    this.renderer.image(url_img, 80, 40, 70, 50)
+                        .add();
+                }
+            }
+        },
+        title: {
+            text:
+                                    'Precipitação Acumulada e Pressão Atmosférica Reduzida'
+                ,
+            x: -20 //center
+        },
+                    subtitle: {
+                text: 'Estação: Paranaguá'
+            },
+                yAxis: [
+            { // Precipitação
+                labels: {
+                    format: '{value} mm'
+                },
+                title: {
+                    text: 'Precipitação Acumulada ( mm)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1
+                }],
+                min: 0
+            }
+                        ,{ // Pressão Atm
+                labels: {
+                format: '{value} hPa'
+                },
+                title: {
+                    text: 'Pressão Atmosférica ( hPa)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1
+                }],
+                opposite: true
+            }
+                    ],
+        xAxis: {
+            categories: ["19:00","20:00","21:00","22:00","23:00","00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"],
+            crosshair: true
+        },
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            borderWidth: 0,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [
+            {
+                name: 'Precipitação Acumulada',
+                type: 'column',
+                data: [["14\/10\/2026 19:00",5.6],["14\/10\/2026 20:00",1.2],["14\/10\/2026 21:00",0.4],["14\/10\/2026 22:00",0],["14\/10\/2026 23:00",0],["15\/10\/2026 00:00",0],["15\/10\/2026 01:00",0],["15\/10\/2026 02:00",0.2],["15\/10\/2026 03:00",0],["15\/10\/2026 04:00",0],["15\/10\/2026 05:00",0],["15\/10\/2026 06:00",0],["15\/10\/2026 07:00",0],["15\/10\/2026 08:00",0],["15\/10\/2026 09:00",0],["15\/10\/2026 10:00",0],["15\/10\/2026 11:00",0],["15\/10\/2026 12:00",0],["15\/10\/2026 13:00",0],["15\/10\/2026 14:00",0],["15\/10\/2026 15:00",0],["15\/10\/2026 16:00",0],["15\/10\/2026 17:00",0],["15\/10\/2026 18:00",0],["15\/10\/2026 19:00",0]],
+                tooltip: {
+                    valueDecimals: 1,
+                    valueSuffix: ' mm'
+                }
+            }
+                        ,{
+                name: 'Pressão Atmosférica Reduzida',
+                data: [["14\/10\/2026 19:00",1014.5],["14\/10\/2026 20:00",1013.7],["14\/10\/2026 21:00",1013.7],["14\/10\/2026 22:00",1015.6],["14\/10\/2026 23:00",1015.7],["15\/10\/2026 00:00",1015.8],["15\/10\/2026 01:00",1015.8],["15\/10\/2026 02:00",1015.6],["15\/10\/2026 03:00",1014.8],["15\/10\/2026 04:00",1015],["15\/10\/2026 05:00",1015.3],["15\/10\/2026 06:00",1015.9],["15\/10\/2026 07:00",1016],["15\/10\/2026 08:00",1016.6],["15\/10\/2026 09:00",1016.5],["15\/10\/2026 10:00",1016.1],["15\/10\/2026 11:00",1015.5],["15\/10\/2026 12:00",1014.9],["15\/10\/2026 13:00",1013.8],["15\/10\/2026 14:00",1012.9],["15\/10\/2026 15:00",1012.5],["15\/10\/2026 16:00",1012.2],["15\/10\/2026 17:00",1012.3],["15\/10\/2026 18:00",1012.9],["15\/10\/2026 19:00",1013.4]],
+                tooltip: {
+                    valueSuffix: ' hPa'
+                },
+                color: '#0FE',
+                yAxis: 1
+            }
+                    ],
+        credits: {
+            text: 'Simepar',
+            href: 'www.simepar.br'
+        }
+    });
+
+
+$('#chart3').highcharts({
+    plotOptions: {
+        series: {
+            connectNulls: true
+        }
+    },
+    series: [{"name":"Calmo","direction":"N","data":[["N",4],["NE",0],["L",8],["SE",16],["S",4],["SO",0],["O",4],["NO",0]],"_colorIndex":0},{"name":"Fraco","data":[["N",0],["NE",0],["L",0],["SE",12],["S",0],["SO",0],["O",0],["NO",0]],"_colorIndex":1},{"name":"Fraco a moderado","data":[["N",0],["NE",0],["L",0],["SE",0],["S",0],["SO",0],["O",0],["NO",0]],"_colorIndex":2},{"name":"Moderado","data":[["N",0],["NE",0],["L",0],["SE",0],["S",0],["SO",0],["O",0],["NO",0]],"_colorIndex":3},{"name":"Moderado a forte","data":[["N",0],["NE",0],["L",0],["SE",0],["S",0],["SO",0],["O",0],["NO",0]],"_colorIndex":4},{"name":"Forte","data":[["N",0],["NE",0],["L",0],["SE",0],["S",0],["SO",0],["O",0],["NO",0]],"_colorIndex":5},{"name":"Extremo","data":[["N",0],["NE",0],["L",0],["SE",0],["S",0],["SO",0],["O",0],["NO",0]],"_colorIndex":6}],
+    colors: ["#2FBDBD", "#2F6ABD", "#2FBD42", "#DBD825", "#DB8C25", "#C41D1D", "#AD1FA2"],
+    chart: {
+        polar: true,
+        type: 'column',
+        events: {
+            load: function() {
+                this.renderer.image(url_img, 80, 40, 70, 50)
+                    .add();
+            }
+        }
+    },
+    title: {
+        text: 'Rosa dos Ventos - Frequência da Velocidade e Direção do Vento'
+    },
+        subtitle: {
+        text: 'Estação: Paranaguá'
+    },
+        pane: {
+        size: '90%'
+    },
+    legend: {
+        layout: 'horizontal',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderWidth: 0,
+        itemWidth: 210
+    },
+    xAxis: {
+        tickmarkPlacement: 'on',
+        categories: ['N','NE','L','SE','S','SO','O','NO']
+    },
+    yAxis: {
+        min: 0,
+        endOnTick: false,
+        showLastLabel: true,
+        title: {
+            text: 'Frequência (%)'
+        },
+        labels: {
+            formatter: function () {
+                return this.value + ' %';
+            }
+        },
+        reversedStacks: false
+    },
+    tooltip: {
+        valueSuffix: ' %'
+    },
+    plotOptions: {
+        series: {
+            stacking: 'normal',
+            shadow: false,
+            groupPadding: 0,
+            pointPlacement: 'on'
+        }
+    },
+    credits: {
+        text: 'Simepar.br',
+        href: 'www.simepar.br'
+    }
+});
+
+$('#chart4').highcharts({
+    plotOptions: {
+        series: {
+            connectNulls: true
+        }
+    },
+    chart: {
+        events: {
+            load: function() {
+                this.renderer.image(url_img, 85, 5, 70, 50)
+                    .add();
+            }
+        }
+    },
+    title: {
+        text: 'Velocidade e Rajada do Vento (km/h)',
+        x: -20 //center
+    },
+        subtitle: {
+        text: 'Estação: Paranaguá'
+    },
+        xAxis: {
+        categories: ["19:00","20:00","21:00","22:00","23:00","00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"],
+        crosshair: {
+            width: 1,
+            color: '#ccc'
+        }
+    },
+    yAxis: {
+        labels: {
+            format: '{value} km/h'
+        },
+        title: {
+            text: 'Velocidade ( km/h)'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1
+        }],
+        plotBands: [{ // Calmo ( 0 - 10 )
+            from: 0.1,
+            to: 9.9,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                text: 'Calmo',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Fraco ( 10 - 21 )
+            from: 10,
+            to: 20.9,
+            color: 'rgba(0, 0, 0, 0)',
+            label: {
+                text: 'Fraco',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Fraco a Moderado ( 21 - 28 )
+            from: 21,
+            to: 27.9,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                text: 'Fraco a moderado',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Moderado ( 28 - 43 )
+            from: 28,
+            to: 42.9,
+            color: 'rgba(0, 0, 0, 0)',
+            label: {
+                text: 'Moderado',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Moderado a Forte( 43 - 50)
+            from: 43,
+            to: 49.9,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                text: 'Moderado a forte',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Forte ( 50 - 90 )
+            from: 50,
+            to: 89.9,
+            color: 'rgba(0, 0, 0, 0)',
+            label: {
+                text: 'Forte',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Extremo ( > 90 )
+            from: 90,
+            to: 999,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                text: 'Extremo',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }]
+    },
+    tooltip: {
+        valueSuffix: ' km/h',
+        shared: true
+    },
+    legend: {
+        layout: 'horizontal',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderWidth: 0,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+    },
+    series: [{
+            name: 'Velocidade do Vento',
+            data: [["14\/10\/2026 19:00",6.1],["14\/10\/2026 20:00",9.7],["14\/10\/2026 21:00",8.6],["14\/10\/2026 22:00",7.9],["14\/10\/2026 23:00",10.4],["15\/10\/2026 00:00",8.6],["15\/10\/2026 01:00",9.4],["15\/10\/2026 02:00",9],["15\/10\/2026 03:00",7.6],["15\/10\/2026 04:00",2.2],["15\/10\/2026 05:00",3.6],["15\/10\/2026 06:00",2.5],["15\/10\/2026 07:00",2.9],["15\/10\/2026 08:00",4.7],["15\/10\/2026 09:00",2.5],["15\/10\/2026 10:00",4.7],["15\/10\/2026 11:00",4],["15\/10\/2026 12:00",6.5],["15\/10\/2026 13:00",10.1],["15\/10\/2026 14:00",9],["15\/10\/2026 15:00",12.2],["15\/10\/2026 16:00",10.1],["15\/10\/2026 17:00",10.4],["15\/10\/2026 18:00",8.6],["15\/10\/2026 19:00",7.6]],
+            color: '#000'
+        }, {
+            name: 'Rajada do Vento',
+            data: [["14\/10\/2026 19:00",13.7],["14\/10\/2026 20:00",14.8],["14\/10\/2026 21:00",14.4],["14\/10\/2026 22:00",11.9],["14\/10\/2026 23:00",15.8],["15\/10\/2026 00:00",14],["15\/10\/2026 01:00",14.4],["15\/10\/2026 02:00",14.8],["15\/10\/2026 03:00",13.7],["15\/10\/2026 04:00",4.7],["15\/10\/2026 05:00",5.8],["15\/10\/2026 06:00",4],["15\/10\/2026 07:00",4.3],["15\/10\/2026 08:00",7.9],["15\/10\/2026 09:00",6.8],["15\/10\/2026 10:00",10.1],["15\/10\/2026 11:00",10.4],["15\/10\/2026 12:00",14.4],["15\/10\/2026 13:00",15.8],["15\/10\/2026 14:00",15.1],["15\/10\/2026 15:00",17.3],["15\/10\/2026 16:00",14.4],["15\/10\/2026 17:00",14.8],["15\/10\/2026 18:00",11.5],["15\/10\/2026 19:00",11.9]],
+            color: '#990000'
+        }],
+    credits: {
+        text: 'Simepar.br',
+        href: 'www.simepar.br'
+    }
+});
+
+
+</script>
+        <script src="https://stage.simepar.br/prognozweb/plugins/select2/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(".selectPlugin").select2();
+
+        $('[name="searchField"]').on('change', function() {
+            var id = $(this).val();
+            var url = "https://stage.simepar.br/prognozweb/simepar/dados_estacoes" + "/" + id;
+            // console.log(url);
+            window.location.href = url;
+        });
+
+        // MAPA E PARÂMETROS CSS (FIXO)
+        $.ajax({
+            url: "https://stage.simepar.br/prognozweb/simepar/map_partial/mapa_simepar_est_m_pr?css_params=min-height%3Aunset%3Bheight%3A300px",
+            cache: false,
+            async: false,
+            type: "GET",
+            dataType: "html",
+            success: function(data){
+              $("#mapa_estacoes").html(data);
+            }
+        });
+
+        $(function () {
+            $('.de-tooltip-tempAtual').tooltip();
+            $('.de-tooltip-vento').tooltip();
+            $('.de-tooltip-ur').tooltip();
+            $('.de-tooltip-precipitacao').tooltip();
+
+        //Tooltip tabela de dados de estações
+            $('.de-wind-direction').tooltip();
+        });
+    </script>
+
+
+
+
+    <!--[if lt IE 9]>
+        <script src="assets/plugins/respond.js"></script>
+        <script src="assets/plugins/html5shiv.js"></script>
+    <![endif]-->
+
+
+    </body>
+</html>
