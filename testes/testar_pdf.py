@@ -26,7 +26,9 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert rotulo_correlacao in frente, "Falta a correlacao calculada com os pares do grafico 2."
     assert "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR." in verso
     assert "tracejado" in frente.lower() and "122" in frente and "110" in frente
-    assert "Gráficos 2–4" in verso and "22 horários comuns" in verso
+    assert "gráficos 2–4" in verso.lower() and "22 horários comuns" in verso
+    assert "Maringá tem três horários sem dados." in verso, "Falta o relato da organizacao dos dados."
+    assert "A base e o recorte" in verso and "Como montei os gráficos" in verso
     assert len(frente.split()) <= 190, "Enxugar o texto da frente sem retirar unidades."
     assert len(verso.split()) <= 300, "Enxugar o verso sem retirar fonte e metodo."
     for pagina in pdf:
@@ -45,3 +47,9 @@ with (raiz / "resultados/correlacao_temperatura_umidade.csv").open(encoding="utf
 assert len(resumo) == 1 and int(resumo[0]["n"]) == len(pares)
 assert math.isclose(float(resumo[0]["r_pearson"]), r_esperado, rel_tol=1e-12)
 print(f"OK: nome completo e Pearson verificado independentemente: {r_esperado:.8f}.")
+with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
+    pagina = pdf[1].get_text()
+    explicacao = pagina[pagina.index("A base e o recorte"):pagina.index("Principais comandos R")]
+amostra = (raiz / "resultados/texto_para_verificacao.txt").read_text(encoding="utf-8")
+assert "".join(explicacao.split()) == "".join(amostra.split()), "Amostra deve reproduzir o texto do PDF."
+print("OK: amostra textual sincronizada com a explicacao do verso.")
