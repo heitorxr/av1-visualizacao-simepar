@@ -1,0 +1,402 @@
+Verificacoes aprovadas: 401
+OK: minimo de 80 observacoes
+OK: tres variaveis quantitativas
+OK: duas categorias: estacao e turno (derivado)
+OK: nenhum par estacao-horario duplicado
+OK: medidas analisadas finitas
+OK: cinco estacoes em cada horario analisado
+OK: mesmo peso temporal por estacao
+OK: snapshot congelado: 122 registros publicados e 110 analisados
+OK: tres lacunas de publicacao e doze exclusoes para comparacao comum
+OK: grade mantem NA nas lacunas
+OK: linhas nao atravessam os tres horarios excluidos
+OK: HTML original preservado: Curitiba
+OK: HTML original preservado: Paranaguá
+OK: HTML original preservado: Londrina
+OK: HTML original preservado: Maringá
+OK: HTML original preservado: Foz do Iguaçu
+OK: jsonlite disponivel para auditar a fonte
+OK: fonte Curitiba Temperatura Média 14/10/2026 19:00
+OK: fonte Curitiba Temperatura Média 14/10/2026 20:00
+OK: fonte Curitiba Temperatura Média 14/10/2026 21:00
+OK: fonte Curitiba Temperatura Média 14/10/2026 22:00
+OK: fonte Curitiba Temperatura Média 14/10/2026 23:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 00:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 01:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 02:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 03:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 04:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 05:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 06:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 07:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 08:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 09:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 10:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 11:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 12:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 13:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 14:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 15:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 16:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 17:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 18:00
+OK: fonte Curitiba Temperatura Média 15/10/2026 19:00
+OK: fonte Curitiba Umidade Relativa 14/10/2026 19:00
+OK: fonte Curitiba Umidade Relativa 14/10/2026 20:00
+OK: fonte Curitiba Umidade Relativa 14/10/2026 21:00
+OK: fonte Curitiba Umidade Relativa 14/10/2026 22:00
+OK: fonte Curitiba Umidade Relativa 14/10/2026 23:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 00:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 01:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 02:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 03:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 04:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 05:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 06:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 07:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 08:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 09:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 10:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 11:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 12:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 13:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 14:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 15:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 16:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 17:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 18:00
+OK: fonte Curitiba Umidade Relativa 15/10/2026 19:00
+OK: fonte Curitiba Velocidade do Vento 14/10/2026 19:00
+OK: fonte Curitiba Velocidade do Vento 14/10/2026 20:00
+OK: fonte Curitiba Velocidade do Vento 14/10/2026 21:00
+OK: fonte Curitiba Velocidade do Vento 14/10/2026 22:00
+OK: fonte Curitiba Velocidade do Vento 14/10/2026 23:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 00:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 01:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 02:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 03:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 04:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 05:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 06:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 07:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 08:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 09:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 10:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 11:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 12:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 13:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 14:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 15:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 16:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 17:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 18:00
+OK: fonte Curitiba Velocidade do Vento 15/10/2026 19:00
+OK: fonte Paranaguá Temperatura Média 14/10/2026 19:00
+OK: fonte Paranaguá Temperatura Média 14/10/2026 20:00
+OK: fonte Paranaguá Temperatura Média 14/10/2026 21:00
+OK: fonte Paranaguá Temperatura Média 14/10/2026 22:00
+OK: fonte Paranaguá Temperatura Média 14/10/2026 23:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 00:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 01:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 02:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 03:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 04:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 05:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 06:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 07:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 08:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 09:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 10:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 11:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 12:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 13:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 14:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 15:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 16:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 17:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 18:00
+OK: fonte Paranaguá Temperatura Média 15/10/2026 19:00
+OK: fonte Paranaguá Umidade Relativa 14/10/2026 19:00
+OK: fonte Paranaguá Umidade Relativa 14/10/2026 20:00
+OK: fonte Paranaguá Umidade Relativa 14/10/2026 21:00
+OK: fonte Paranaguá Umidade Relativa 14/10/2026 22:00
+OK: fonte Paranaguá Umidade Relativa 14/10/2026 23:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 00:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 01:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 02:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 03:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 04:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 05:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 06:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 07:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 08:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 09:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 10:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 11:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 12:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 13:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 14:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 15:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 16:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 17:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 18:00
+OK: fonte Paranaguá Umidade Relativa 15/10/2026 19:00
+OK: fonte Paranaguá Velocidade do Vento 14/10/2026 19:00
+OK: fonte Paranaguá Velocidade do Vento 14/10/2026 20:00
+OK: fonte Paranaguá Velocidade do Vento 14/10/2026 21:00
+OK: fonte Paranaguá Velocidade do Vento 14/10/2026 22:00
+OK: fonte Paranaguá Velocidade do Vento 14/10/2026 23:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 00:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 01:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 02:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 03:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 04:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 05:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 06:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 07:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 08:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 09:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 10:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 11:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 12:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 13:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 14:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 15:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 16:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 17:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 18:00
+OK: fonte Paranaguá Velocidade do Vento 15/10/2026 19:00
+OK: fonte Londrina Temperatura Média 14/10/2026 19:00
+OK: fonte Londrina Temperatura Média 14/10/2026 20:00
+OK: fonte Londrina Temperatura Média 14/10/2026 21:00
+OK: fonte Londrina Temperatura Média 14/10/2026 22:00
+OK: fonte Londrina Temperatura Média 14/10/2026 23:00
+OK: fonte Londrina Temperatura Média 15/10/2026 00:00
+OK: fonte Londrina Temperatura Média 15/10/2026 01:00
+OK: fonte Londrina Temperatura Média 15/10/2026 02:00
+OK: fonte Londrina Temperatura Média 15/10/2026 03:00
+OK: fonte Londrina Temperatura Média 15/10/2026 04:00
+OK: fonte Londrina Temperatura Média 15/10/2026 05:00
+OK: fonte Londrina Temperatura Média 15/10/2026 06:00
+OK: fonte Londrina Temperatura Média 15/10/2026 07:00
+OK: fonte Londrina Temperatura Média 15/10/2026 08:00
+OK: fonte Londrina Temperatura Média 15/10/2026 09:00
+OK: fonte Londrina Temperatura Média 15/10/2026 10:00
+OK: fonte Londrina Temperatura Média 15/10/2026 11:00
+OK: fonte Londrina Temperatura Média 15/10/2026 12:00
+OK: fonte Londrina Temperatura Média 15/10/2026 13:00
+OK: fonte Londrina Temperatura Média 15/10/2026 14:00
+OK: fonte Londrina Temperatura Média 15/10/2026 15:00
+OK: fonte Londrina Temperatura Média 15/10/2026 16:00
+OK: fonte Londrina Temperatura Média 15/10/2026 17:00
+OK: fonte Londrina Temperatura Média 15/10/2026 18:00
+OK: fonte Londrina Temperatura Média 15/10/2026 19:00
+OK: fonte Londrina Umidade Relativa 14/10/2026 19:00
+OK: fonte Londrina Umidade Relativa 14/10/2026 20:00
+OK: fonte Londrina Umidade Relativa 14/10/2026 21:00
+OK: fonte Londrina Umidade Relativa 14/10/2026 22:00
+OK: fonte Londrina Umidade Relativa 14/10/2026 23:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 00:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 01:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 02:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 03:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 04:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 05:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 06:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 07:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 08:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 09:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 10:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 11:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 12:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 13:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 14:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 15:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 16:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 17:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 18:00
+OK: fonte Londrina Umidade Relativa 15/10/2026 19:00
+OK: fonte Londrina Velocidade do Vento 14/10/2026 19:00
+OK: fonte Londrina Velocidade do Vento 14/10/2026 20:00
+OK: fonte Londrina Velocidade do Vento 14/10/2026 21:00
+OK: fonte Londrina Velocidade do Vento 14/10/2026 22:00
+OK: fonte Londrina Velocidade do Vento 14/10/2026 23:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 00:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 01:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 02:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 03:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 04:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 05:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 06:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 07:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 08:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 09:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 10:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 11:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 12:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 13:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 14:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 15:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 16:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 17:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 18:00
+OK: fonte Londrina Velocidade do Vento 15/10/2026 19:00
+OK: fonte Maringá Temperatura Média 14/10/2026 19:00
+OK: fonte Maringá Temperatura Média 14/10/2026 20:00
+OK: fonte Maringá Temperatura Média 14/10/2026 21:00
+OK: fonte Maringá Temperatura Média 14/10/2026 23:00
+OK: fonte Maringá Temperatura Média 15/10/2026 00:00
+OK: fonte Maringá Temperatura Média 15/10/2026 01:00
+OK: fonte Maringá Temperatura Média 15/10/2026 02:00
+OK: fonte Maringá Temperatura Média 15/10/2026 03:00
+OK: fonte Maringá Temperatura Média 15/10/2026 04:00
+OK: fonte Maringá Temperatura Média 15/10/2026 06:00
+OK: fonte Maringá Temperatura Média 15/10/2026 07:00
+OK: fonte Maringá Temperatura Média 15/10/2026 08:00
+OK: fonte Maringá Temperatura Média 15/10/2026 09:00
+OK: fonte Maringá Temperatura Média 15/10/2026 10:00
+OK: fonte Maringá Temperatura Média 15/10/2026 11:00
+OK: fonte Maringá Temperatura Média 15/10/2026 12:00
+OK: fonte Maringá Temperatura Média 15/10/2026 14:00
+OK: fonte Maringá Temperatura Média 15/10/2026 15:00
+OK: fonte Maringá Temperatura Média 15/10/2026 16:00
+OK: fonte Maringá Temperatura Média 15/10/2026 17:00
+OK: fonte Maringá Temperatura Média 15/10/2026 18:00
+OK: fonte Maringá Temperatura Média 15/10/2026 19:00
+OK: fonte Maringá Umidade Relativa 14/10/2026 19:00
+OK: fonte Maringá Umidade Relativa 14/10/2026 20:00
+OK: fonte Maringá Umidade Relativa 14/10/2026 21:00
+OK: fonte Maringá Umidade Relativa 14/10/2026 23:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 00:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 01:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 02:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 03:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 04:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 06:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 07:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 08:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 09:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 10:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 11:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 12:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 14:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 15:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 16:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 17:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 18:00
+OK: fonte Maringá Umidade Relativa 15/10/2026 19:00
+OK: fonte Maringá Velocidade do Vento 14/10/2026 19:00
+OK: fonte Maringá Velocidade do Vento 14/10/2026 20:00
+OK: fonte Maringá Velocidade do Vento 14/10/2026 21:00
+OK: fonte Maringá Velocidade do Vento 14/10/2026 23:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 00:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 01:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 02:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 03:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 04:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 06:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 07:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 08:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 09:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 10:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 11:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 12:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 14:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 15:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 16:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 17:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 18:00
+OK: fonte Maringá Velocidade do Vento 15/10/2026 19:00
+OK: fonte Foz do Iguaçu Temperatura Média 14/10/2026 19:00
+OK: fonte Foz do Iguaçu Temperatura Média 14/10/2026 20:00
+OK: fonte Foz do Iguaçu Temperatura Média 14/10/2026 21:00
+OK: fonte Foz do Iguaçu Temperatura Média 14/10/2026 22:00
+OK: fonte Foz do Iguaçu Temperatura Média 14/10/2026 23:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 00:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 01:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 02:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 03:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 04:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 05:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 06:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 07:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 08:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 09:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 10:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 11:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 12:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 13:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 14:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 15:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 16:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 17:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 18:00
+OK: fonte Foz do Iguaçu Temperatura Média 15/10/2026 19:00
+OK: fonte Foz do Iguaçu Umidade Relativa 14/10/2026 19:00
+OK: fonte Foz do Iguaçu Umidade Relativa 14/10/2026 20:00
+OK: fonte Foz do Iguaçu Umidade Relativa 14/10/2026 21:00
+OK: fonte Foz do Iguaçu Umidade Relativa 14/10/2026 22:00
+OK: fonte Foz do Iguaçu Umidade Relativa 14/10/2026 23:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 00:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 01:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 02:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 03:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 04:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 05:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 06:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 07:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 08:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 09:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 10:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 11:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 12:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 13:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 14:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 15:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 16:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 17:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 18:00
+OK: fonte Foz do Iguaçu Umidade Relativa 15/10/2026 19:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 14/10/2026 19:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 14/10/2026 20:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 14/10/2026 21:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 14/10/2026 22:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 14/10/2026 23:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 00:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 01:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 02:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 03:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 04:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 05:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 06:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 07:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 08:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 09:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 10:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 11:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 12:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 13:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 14:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 15:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 16:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 17:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 18:00
+OK: fonte Foz do Iguaçu Velocidade do Vento 15/10/2026 19:00
+OK: amplitude: Curitiba
+OK: vento medio: Curitiba
+OK: titulo do grafico 4 confirmado: Curitiba
+OK: amplitude: Foz do Iguaçu
+OK: vento medio: Foz do Iguaçu
+OK: titulo do grafico 4 confirmado: Foz do Iguaçu
+OK: amplitude: Londrina
+OK: vento medio: Londrina
+OK: titulo do grafico 4 confirmado: Londrina
+OK: amplitude: Maringá
+OK: vento medio: Maringá
+OK: titulo do grafico 4 confirmado: Maringá
+OK: amplitude: Paranaguá
+OK: vento medio: Paranaguá
+OK: titulo do grafico 4 confirmado: Paranaguá
+OK: artefato nao vazio: AV1_frente_verso_A4.pdf
+OK: artefato nao vazio: AV1_frente.png
+OK: artefato nao vazio: AV1_verso.png
