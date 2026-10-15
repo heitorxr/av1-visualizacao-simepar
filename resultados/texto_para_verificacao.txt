@@ -1,0 +1,21 @@
+Escolha e recorte
+Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR.
+Analisei o período de 14/10/2026, 19h a 15/10/2026, 19h, no horário de Brasília.
+Uma observação = uma estação em um horário. Coleta: 122 registros.
+Gráfico 1: todos os valores publicados; tracejados ligam intervalos sem medição.
+Gráficos 2–4: 110 registros nos 22 horários comuns às cinco estações.
+Não preenchi os três horários sem dados de Maringá.
+
+Variáveis
+Quantitativas: temperatura do ar (°C), umidade relativa (%) e velocidade do vento (km/h).
+Qualitativas: estação e turno, definido a partir da hora do registro.
+Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h.
+Análise descritiva: horas dependentes, sem inferência causal ou climática.
+
+Construção e princípios visuais
+As linhas mostram a temperatura ao longo do dia; a dispersão relaciona calor e umidade.
+Pearson reúne as cinco estações (110 pares), sem teste de independência.
+Vento: ponto = média; linha = mínimo–máximo, não intervalo de confiança.
+Matriz: média por estação e turno; n indica horários por estação.
+Cores e símbolos consistentes; escalas com unidades; sem 3D ou eixo duplo.
+Segui Tufte ao retirar enfeites; usei proximidade e similaridade da Gestalt para agrupar.
