@@ -43,7 +43,8 @@ for (i in seq_len(nrow(estacoes))) {
     if (!file.rename(temporario, destino)) stop("Falha ao preservar HTML.")
   }
   html <- paste(readLines(destino, encoding = "UTF-8", warn = FALSE), collapse = "\n")
-  if (!grepl(paste0("Gráficos da Estação ", estacoes$estacao[i]), html, fixed = TRUE)) {
+  # O nome pode conter entidades HTML; o identificador selecionado e inequivoco.
+  if (!grepl(paste0('<option value="', id, '" selected="selected">'), html, fixed = TRUE)) {
     stop("Estacao ou pagina inesperada: ", id)
   }
   temperatura <- extrair_serie(html, "Temperatura Média", "temperatura_c")
