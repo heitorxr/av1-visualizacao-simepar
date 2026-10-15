@@ -46,7 +46,7 @@ frente <- function() {
     texto(xpos[i] + 3, 227, names(cores)[i], 8.5)
   }
   texto(12, 215, "1  Curitiba começa mais fria e varia mais", 11, negrito = TRUE)
-  texto(12, 208, "Temperatura do ar (°C); lacunas não são conectadas.", 8.5, cor = "#596470")
+  texto(12, 208, "Temperatura (°C), 122 registros. Tracejado: intervalo sem dado; pontos: medições.", 8.5, cor = "#596470")
   texto(12, 143, "2  Ar mais quente, em geral menos úmido", 10, negrito = TRUE)
   texto(116, 143, "3  O vento separa as estações", 10, negrito = TRUE)
   texto(12, 136, "Um ponto = uma estação em um horário.", 8, cor = "#596470")
@@ -54,20 +54,24 @@ frente <- function() {
   texto(12, 77, "4  Em todas as estações, a tarde é o turno mais quente", 10.5, negrito = TRUE)
   texto(12, 70, "Temperatura média (°C) por turno; cor e número mostram a mesma medida.", 8.5, cor = "#596470")
   texto(12, 16, "Fonte: SIMEPAR, páginas públicas das estações; coleta em 15/10/2026.", 7.7, cor = "#596470")
-  texto(12, 10, "Recorte do tempo, não do clima. Somente horários comuns; detalhes e códigos no verso.", 7.7, cor = "#596470")
+  texto(12, 10, "G1: 122 registros; G2–G4: 110, nos mesmos 22 horários. Recorte do tempo, não do clima.", 7.7, cor = "#596470")
 
-  # 1. Linhas em uma unica escala; linhas retas, sem suavizacao.
+  # 1. Preserva TODAS as temperaturas publicadas, sem preencher valores ausentes.
+  # Ligacoes tracejadas indicam os intervalos sem observacao; nao sao medicoes.
   painel(c(0.04, 0.97, 0.515, 0.697), c(2.4, 3.2, 0.2, 0.6))
   inicio <- min(obj$dados$instante)
-  x <- as.numeric(difftime(obj$grade$instante, inicio, units = "hours"))
+
   plot(NA, xlim = c(0, 24), ylim = c(14, 28), axes = FALSE, xlab = "", ylab = "")
   abline(h = seq(16, 28, 4), col = "#E8EBEF", lwd = 0.65)
   axis(2, at = seq(16, 28, 4), las = 1, col = NA, col.ticks = NA)
   axis(1, at = c(0, 5, 11, 17, 24), labels = c("14/10 19h", "15/10 00h", "06h", "12h", "19h"), col = NA, col.ticks = "#9BA4AD")
   for (cidade in names(cores)) {
-    z <- obj$grade[obj$grade$estacao == cidade, ]
+    z <- obj$dados[obj$dados$estacao == cidade & is.finite(obj$dados$temperatura_c), ]
+    z <- z[order(z$instante), ]
     h <- as.numeric(difftime(z$instante, inicio, units = "hours"))
-    lines(h, z$temperatura_c, col = cores[cidade], lwd = 1.35)
+    n <- length(h)
+    segments(h[-n], z$temperatura_c[-n], h[-1], z$temperatura_c[-1],
+             col = cores[cidade], lwd = 1.35, lty = ifelse(diff(h) > 1, 2, 1))
     points(h, z$temperatura_c, col = cores[cidade], pch = simbolos[cidade], cex = 0.36)
   }
 

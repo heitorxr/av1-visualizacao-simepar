@@ -18,9 +18,17 @@ ambiente$points <- function(x, y, ...) {
   if (painel_atual == 1L) medicoes <<- c(medicoes, y[is.finite(y)])
   graphics::points(x, y, ...)
 }
-# O dispositivo e nulo: testa o desenho sem substituir o PDF do trabalho.
-grDevices::pdf(NULL)
-tryCatch(ambiente$frente(), finally = grDevices::dev.off())
+# Usa o mesmo dispositivo Cairo da entrega, sem substituir o PDF do trabalho.
+scratch <- if (.Platform$OS.type == "windows") {
+  file.path(Sys.getenv("LOCALAPPDATA"), "hermes", "cache", "scratch")
+} else tempdir()
+dir.create(scratch, recursive = TRUE, showWarnings = FALSE)
+previa <- tempfile("teste_grafico1_", tmpdir = scratch, fileext = ".pdf")
+grDevices::cairo_pdf(previa, width = 210 / 25.4, height = 297 / 25.4)
+tryCatch(ambiente$frente(), finally = {
+  grDevices::dev.off()
+  unlink(previa)
+})
 publicadas <- ambiente$obj$dados$temperatura_c
 stopifnot(length(publicadas) == 122L)
 if (length(medicoes) != length(publicadas)) {
