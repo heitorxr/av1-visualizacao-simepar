@@ -1,0 +1,9 @@
+Publicadas: 122
+Grade esperada: 125
+Incluidas: 110
+Horarios comuns: 22
+Turno e uma categoria derivada do relogio, nao uma variavel medida.
+Fuso adotado: America/Sao_Paulo; a pagina nao declara explicitamente o fuso.
+Analise descritiva de uma janela de 24 horas, com os dois extremos incluidos.
+As horas sucessivas nao sao observacoes independentes. Nao ha teste inferencial.
+Sem interpolacao, suavizacao, exclusao por conveniencia ou generalizacao climatica.
