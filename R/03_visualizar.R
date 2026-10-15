@@ -48,7 +48,7 @@ secoes_verso <- list(
     "stage.simepar.br/prognozweb/simepar/dados_estacoes/{identificador}",
     "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
     "Ara e Zanluca. Introdução à Visualização de Dados Aplicada, seções 2.3, 2.5, 2.6 e 3.",
-    "Reprodução offline: Rscript executar.R tudo. Código e auditoria acompanham a entrega.",
+    "Reprodução offline: Rscript executar.R tudo.",
     "Usei IA como apoio na programação e na revisão."
   ))
 )

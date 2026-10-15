@@ -2,15 +2,21 @@
 
 ## Revisão aplicada
 
-A explicação foi reescrita com frases mais diretas e primeira pessoa onde cabia, preservando a experiência informada pelo aluno, os métodos e as limitações. O PDF mantém a declaração de apoio de IA. Não foram introduzidos erros propositais, experiências inventadas ou alterações nos dados para tentar influenciar classificadores.
+A explicação passou de listas de definições a parágrafos sobre a escolha da base, os horários ausentes e as decisões dos gráficos. A experiência informada pelo aluno, os métodos, o nome completo e a indicação de apoio de IA foram mantidos. Não foram introduzidos erros propositais, experiências inventadas ou alterações nos dados.
 
-## Resultado real das tentativas
+## Resultado fornecido pelo usuário
+
+O usuário apresentou cinco capturas do Pangram sobre a versão anterior do verso, incluindo comandos e referências. A interface indica 327 palavras e informa que há conteúdo gerado por IA ao longo do documento, com quase toda a explicação destacada. As capturas não apresentam uma porcentagem global que permita registrar um escore numérico.
+
+O novo texto ainda não foi avaliado pelo Pangram. A revisão não é apresentada como aprovada pelo detector ou como garantia de menor classificação.
+
+## Tentativas automatizadas anteriores
 
 - **Pangram:** a página pública encaminhou a amostra para o painel e exigiu autenticação. A tentativa de entrada pelo Google foi recusada com a mensagem de navegador ou aplicativo não seguro. A alternativa por e-mail reconheceu o endereço autorizado como vinculado ao Google e exigiu esse mesmo método de entrada. **Nenhum relatório ou escore foi obtido.**
 - **GPTZero:** o botão de análise abriu o painel, que permaneceu na tela de verificação do navegador. **Nenhum relatório ou escore foi obtido.**
 - Nenhuma nova conta Google foi criada, nenhuma assinatura foi contratada e nenhum resultado foi presumido a partir da publicidade dos serviços.
 
-A amostra contém somente a explicação do verso, sem nome, comandos R ou referências: `resultados/texto_para_verificacao.txt`. Pode ser conferida manualmente em uma sessão autenticada. Uma avaliação futura dessa amostra não deve ser descrita como avaliação do PDF completo.
+A amostra atual contém somente os parágrafos da explicação, sem nome, comandos R ou referências: `resultados/texto_para_verificacao.txt`. Agora é gerada pelo próprio script R a partir do mesmo texto usado no PDF; o teste confere a igualdade após normalizar espaços. Pode ser conferida manualmente em uma sessão autenticada. Uma avaliação dessa amostra não deve ser descrita como avaliação do PDF completo.
 
 ## Limites da interpretação
 
