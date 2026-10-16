@@ -69,14 +69,14 @@ secoes_verso <- list(
     "preencher valores ausentes."
   )),
   list(y = 197, titulo = "Como montei os gráficos", linhas = c(
-    "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Spearman",
-    "foi −0,742 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
-    "",
-    "No vento: mediana no ponto; 50% centrais na faixa Q1–Q3; extremos na linha fina.",
-    "Na matriz, comparei as temperaturas médias por estação e turno.",
-    "",
-    "Deixei o fundo branco e reduzi a decoração, como sugere Tufte. As cores e os símbolos das",
-    "estações se repetem nos três primeiros gráficos, aplicando a similaridade da Gestalt."
+    "Usei o gráfico de linhas para acompanhar a temperatura durante o dia. Para comparar temperatura com",
+    "umidade, coloquei cada par de medidas em um gráfico de dispersão. A correlação de Spearman foi de",
+    "−0,742, usando os 110 pares das cinco estações.",
+    "No vento, o ponto mostra a mediana. A faixa entre Q1 e Q3 destaca os primeiro e terceiro quartis,",
+    "respectivamente (mostrando os 50% centrais), enquanto a linha fina vai do mínimo ao máximo. A matriz",
+    "mostra as temperaturas médias por estação e turno com a tonalidade da células controlada pela",
+    "temperatura.",
+    "Mantive o fundo branco e pouca decoração, seguindo Tufte, para facilitar a leitura dos dados."
   )),
   list(y = 149, titulo = "Principais comandos R", codigo = TRUE,
        quebra = length(codigo_esquerda), linhas = c(codigo_esquerda, codigo_direita)),
