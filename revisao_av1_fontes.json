@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://leg.ufpr.br/~ara/teach",
+      "title": "",
+      "accessed": "2026-10-15"
+    },
+    {
+      "id": 2,
+      "url": "https://leg.ufpr.br/~ara/teach/viz2025.html",
+      "title": "",
+      "accessed": "2026-10-15",
+      "quotes": [
+        {
+          "text": "Apague a tinta de dados redundantes.",
+          "added": "2026-10-15"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "url": "https://lists.ime.usp.br/archives/abe/2025-February/011213.html",
+      "title": "",
+      "accessed": "2026-10-15"
+    },
+    {
+      "id": 4,
+      "url": "https://ufpr.br/equipe-de-estatistica-da-ufpr-se-destaca-em-concurso-de-visualizacao-de-dados-do-ibge",
+      "title": "",
+      "accessed": "2026-10-15"
+    },
+    {
+      "id": 5,
+      "url": "https://ufpr.br/wp-content/uploads/2025/04/poster_m-scaled.jpg",
+      "title": "",
+      "accessed": "2026-10-15"
+    }
+  ]
+}
