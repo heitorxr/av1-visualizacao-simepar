@@ -80,7 +80,7 @@ secoes_verso <- list(
     "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
     "Ara e Zanluca. Introdução à Visualização de Dados Aplicada, seções 2.3, 2.5, 2.6 e 3.",
     "Reprodução offline: Rscript executar.R tudo.",
-    "Usei IA como apoio na programação e na revisão."
+    "Usei IA na revisão textual, por ser disléxico, e na programação para corrigir bugs e melhorar programas."
   ))
 )
 
