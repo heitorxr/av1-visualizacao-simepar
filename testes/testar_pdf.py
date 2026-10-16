@@ -12,11 +12,24 @@ import pymupdf
 raiz = Path(__file__).resolve().parents[1]
 with (raiz / "resultados/dados_analisados.csv").open(encoding="utf-8", newline="") as arquivo:
     pares = list(csv.DictReader(arquivo))
+def postos(valores):
+    ordenados = sorted(enumerate(valores), key=lambda x: x[1])
+    resultado = [0.0] * len(valores)
+    inicio = 0
+    while inicio < len(ordenados):
+        fim = inicio + 1
+        while fim < len(ordenados) and ordenados[fim][1] == ordenados[inicio][1]:
+            fim += 1
+        for indice, _ in ordenados[inicio:fim]:
+            resultado[indice] = (inicio + 1 + fim) / 2
+        inicio = fim
+    return resultado
+
 r_esperado = statistics.correlation(
-    [float(x["temperatura_c"]) for x in pares],
-    [float(x["umidade_pct"]) for x in pares],
+    postos([float(x["temperatura_c"]) for x in pares]),
+    postos([float(x["umidade_pct"]) for x in pares]),
 )
-rotulo_correlacao = f"Correlação global de Pearson: {r_esperado:.3f}".replace(".", ",").replace("-", "−")
+rotulo_correlacao = f"Correlação global de Spearman: {r_esperado:.3f}".replace(".", ",").replace("-", "−")
 with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert len(pdf) == 2, "A entrega deve ter frente e verso."
     frente, verso = (" ".join(pagina.get_text().split()) for pagina in pdf)
@@ -55,8 +68,8 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
 with (raiz / "resultados/correlacao_temperatura_umidade.csv").open(encoding="utf-8", newline="") as arquivo:
     resumo = list(csv.DictReader(arquivo))
 assert len(resumo) == 1 and int(resumo[0]["n"]) == len(pares)
-assert math.isclose(float(resumo[0]["r_pearson"]), r_esperado, rel_tol=1e-12)
-print(f"OK: nome completo e Pearson verificado independentemente: {r_esperado:.8f}.")
+assert math.isclose(float(resumo[0]["rho_spearman"]), r_esperado, rel_tol=1e-12)
+print(f"OK: nome completo e Spearman com empates verificado independentemente: {r_esperado:.8f}.")
 with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     pagina = pdf[1].get_text()
     explicacao = pagina[pagina.index("A base e o recorte"):pagina.index("Principais comandos R")]
