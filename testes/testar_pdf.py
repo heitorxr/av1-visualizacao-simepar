@@ -46,7 +46,9 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert "Maringá tem três horários sem dados." in verso, "Falta o relato da organizacao dos dados."
     assert "A base e o recorte" in verso and "Como montei os gráficos" in verso
     assert len(frente.split()) <= 190, "Enxugar o texto da frente sem retirar unidades."
-    assert len(verso.split()) <= 400, "Limitar o verso ampliado, incluindo codigo e amostra."
+    assert len(verso.split()) <= 450, "Limitar o verso com o texto aprovado, codigo e amostra."
+    assert "A correlação de Spearman foi de −0,742, usando os 110 pares das cinco estações." in verso
+    assert "com a tonalidade da células controlada pela temperatura." in verso
     assert "Amostra dos dados" in verso, "Falta a amostra da tabela no verso."
     codigo = verso[verso.index("Principais comandos R"):verso.index("Amostra dos dados")]
     assert "..." not in codigo, "O verso deve mostrar codigo real, sem placeholders."
