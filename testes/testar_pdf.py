@@ -38,6 +38,8 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert "Heitor Cardoso Fernandes" in verso, "Falta o nome completo."
     assert rotulo_correlacao in frente, "Falta a correlacao calculada com os pares do grafico 2."
     assert f"{len(pares)} pares das cinco estações" in frente
+    assert "Ponto: mediana; faixa: Q1–Q3; linha: extremos." in frente
+    assert "50% centrais" in verso and "mediana" in verso
     assert "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR." in verso
     assert "tracejado" in frente.lower() and "122" in frente and "110" in frente
     assert "gráficos 2–4" in verso.lower() and "22 horários comuns" in verso

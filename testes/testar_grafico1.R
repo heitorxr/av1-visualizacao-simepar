@@ -11,16 +11,22 @@ for (expressao in parse(file.path(raiz, "R", "03_visualizar.R"), encoding = "UTF
 painel_atual <- 0L
 medicoes <- numeric()
 ligacoes <- list()
+vento_pontos <- numeric()
+vento_trechos <- list()
 ambiente$plot <- function(...) {
   painel_atual <<- painel_atual + 1L
   graphics::plot(...)
 }
 ambiente$points <- function(x, y, ...) {
   if (painel_atual == 1L) medicoes <<- c(medicoes, y[is.finite(y)])
+  if (painel_atual == 3L) vento_pontos <<- x
   graphics::points(x, y, ...)
 }
 ambiente$segments <- function(x0, y0, x1, y1, ...) {
   estilo <- list(...)
+  if (painel_atual == 3L) {
+    vento_trechos[[length(vento_trechos) + 1L]] <<- data.frame(x0, y0, x1, y1, lwd = estilo$lwd)
+  }
   if (painel_atual == 1L) {
     ligacoes[[length(ligacoes) + 1L]] <<- data.frame(
       x0 = x0, y0 = y0, x1 = x1, y1 = y1,
@@ -54,3 +60,19 @@ stopifnot(sum(trechos$lty == 2) == 3L,
           all((trechos$x1 - trechos$x0 > 1) == (trechos$lty == 2)))
 cat("OK: grafico 1 preserva as 122 temperaturas publicadas.\n")
 cat("OK: somente os tres intervalos ausentes de Maringa sao tracejados.\n")
+grupos <- split(ambiente$a$vento_kmh, ambiente$a$estacao)
+ordem <- order(vapply(grupos, median, numeric(1)))
+grupos <- grupos[ordem]
+medianas <- vapply(grupos, median, numeric(1))
+stopifnot(isTRUE(all.equal(unname(vento_pontos), unname(medianas))))
+stopifnot(length(vento_trechos) == 4L)
+stopifnot(isTRUE(all.equal(vento_trechos[[1]]$x0, unname(vapply(grupos, min, numeric(1))))),
+          isTRUE(all.equal(vento_trechos[[1]]$x1, unname(vapply(grupos, max, numeric(1))))))
+q1 <- unname(vapply(grupos, quantile, numeric(1), probs = 0.25, type = 7, names = FALSE))
+q3 <- unname(vapply(grupos, quantile, numeric(1), probs = 0.75, type = 7, names = FALSE))
+stopifnot(isTRUE(all.equal(vento_trechos[[2]]$x0, q1)),
+          isTRUE(all.equal(vento_trechos[[2]]$x1, q3)),
+          all(vento_trechos[[2]]$lwd > vento_trechos[[1]]$lwd),
+          isTRUE(all.equal(vento_trechos[[3]]$x0, q1)),
+          isTRUE(all.equal(vento_trechos[[4]]$x0, q3)))
+cat("OK: grafico 3 mostra medianas, quartis tipo 7 e todos os extremos.\n")
