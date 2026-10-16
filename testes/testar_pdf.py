@@ -16,7 +16,7 @@ r_esperado = statistics.correlation(
     [float(x["temperatura_c"]) for x in pares],
     [float(x["umidade_pct"]) for x in pares],
 )
-rotulo_correlacao = f"Pearson: r = {r_esperado:.3f} (n = {len(pares)})".replace(".", ",")
+rotulo_correlacao = f"Correlação global de Pearson: {r_esperado:.3f}".replace(".", ",").replace("-", "−")
 with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert len(pdf) == 2, "A entrega deve ter frente e verso."
     frente, verso = (" ".join(pagina.get_text().split()) for pagina in pdf)
@@ -24,6 +24,7 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert "Temperatura, umidade e vento em cinco estações do SIMEPAR" in frente
     assert "Heitor Cardoso Fernandes" in verso, "Falta o nome completo."
     assert rotulo_correlacao in frente, "Falta a correlacao calculada com os pares do grafico 2."
+    assert f"{len(pares)} pares das cinco estações" in frente
     assert "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR." in verso
     assert "tracejado" in frente.lower() and "122" in frente and "110" in frente
     assert "gráficos 2–4" in verso.lower() and "22 horários comuns" in verso
@@ -31,6 +32,15 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert "A base e o recorte" in verso and "Como montei os gráficos" in verso
     assert len(frente.split()) <= 190, "Enxugar o texto da frente sem retirar unidades."
     assert len(verso.split()) <= 300, "Enxugar o verso sem retirar fonte e metodo."
+    codigo = verso[verso.index("Principais comandos R"):verso.index("Fontes e reprodução")]
+    assert "..." not in codigo, "O verso deve mostrar codigo real, sem placeholders."
+    assert "horarios_comuns <- names(contagens)[" in codigo
+    assert 'analise[c("estacao", "turno")], mean)' in codigo
+    assert "correlacao <- cor(pares_correlacao$temperatura_c," in codigo
+    spans_frente = [s for b in pdf[0].get_text("dict")["blocks"]
+                    for l in b.get("lines", []) for s in l["spans"]]
+    titulo_temporal = next(s for s in spans_frente if "Temperatura horária" in s["text"])
+    assert titulo_temporal["bbox"][1] < 165, "Compactar cabecalho para ampliar o grafico temporal."
     for pagina in pdf:
         assert abs(pagina.rect.width * 25.4 / 72 - 210) < 1
         assert abs(pagina.rect.height * 25.4 / 72 - 297) < 1
