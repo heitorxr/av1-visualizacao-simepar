@@ -11,8 +11,8 @@ as faltas com tracejados. Nos gráficos 2–4, usei os 22 horários comuns: 110 
 preencher valores ausentes.
 
 Como montei os gráficos
-Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Pearson
-foi −0,767 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.
+Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Spearman
+foi −0,742 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.
 
 No vento, o ponto mostra a média; a linha liga mínimo e máximo, não limites de confiança.
 Na matriz, comparei as temperaturas médias por estação e turno.

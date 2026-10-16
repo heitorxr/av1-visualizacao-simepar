@@ -4,7 +4,7 @@ a <- obj$analise
 r <- obj$resumo
 pares_correlacao <- a[is.finite(a$temperatura_c) & is.finite(a$umidade_pct), ]
 correlacao <- cor(pares_correlacao$temperatura_c, pares_correlacao$umidade_pct,
-                 method = "pearson")
+                 method = "spearman")
 saida <- file.path(raiz, "resultados")
 cores <- c("Curitiba" = "#0072B2", "Foz do Iguaçu" = "#D55E00", "Londrina" = "#009E73",
            "Maringá" = "#8B5094", "Paranaguá" = "#9A6500")
@@ -27,8 +27,8 @@ secoes_verso <- list(
     "preencher valores ausentes."
   )),
   list(y = 185, titulo = "Como montei os gráficos", linhas = c(
-    "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Pearson",
-    "foi −0,767 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
+    "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Spearman",
+    "foi −0,742 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
     "",
     "No vento, o ponto mostra a média; a linha liga mínimo e máximo, não limites de confiança.",
     "Na matriz, comparei as temperaturas médias por estação e turno.",
@@ -46,7 +46,7 @@ secoes_verso <- list(
     "  analise[c(\"estacao\", \"turno\")], mean)",
     "",
     "correlacao <- cor(pares_correlacao$temperatura_c,",
-    "  pares_correlacao$umidade_pct, method = \"pearson\")"
+    "  pares_correlacao$umidade_pct, method = \"spearman\")"
   )),
   list(y = 67, titulo = "Fontes e reprodução", linhas = c(
     "SIMEPAR, páginas públicas; coleta em 15/10/2026. HTML e URLs preservados no projeto.",
@@ -99,7 +99,7 @@ frente <- function() {
   texto(12, 235, "Pontos: medições; tracejado: intervalo sem dado.", 8.5, cor = "#596470")
   texto(12, 149, "2  Calor e umidade", 11, negrito = TRUE)
   texto(116, 149, "3  Vento entre estações", 11, negrito = TRUE)
-  texto(12, 142, paste0("Correlação global de Pearson: ", sub("-", "−", fmt(correlacao, 3), fixed = TRUE)),
+  texto(12, 142, paste0("Correlação global de Spearman: ", sub("-", "−", fmt(correlacao, 3), fixed = TRUE)),
         8, cor = "#596470")
   texto(12, 136, paste0(nrow(pares_correlacao), " pares das cinco estações"),
         8, cor = "#596470")
@@ -203,7 +203,7 @@ for (nome in c("frente", "verso")) {
   if (nome == "frente") frente() else verso()
   dev.off()
 }
-write.csv(data.frame(n = nrow(pares_correlacao), r_pearson = correlacao,
+write.csv(data.frame(n = nrow(pares_correlacao), rho_spearman = correlacao,
                      amostra = "cinco estacoes nos mesmos 22 horarios"),
           file.path(saida, "correlacao_temperatura_umidade.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
