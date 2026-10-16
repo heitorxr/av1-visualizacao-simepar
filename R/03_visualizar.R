@@ -12,6 +12,42 @@ simbolos <- setNames(c(16, 17, 15, 18, 8), names(cores))
 fmt <- function(x, casas = 1) formatC(x, digits = casas, format = "f", decimal.mark = ",")
 fonte <- "Arial"
 
+# Trechos reais dos scripts, distribuidos em duas colunas no verso.
+codigo_esquerda <- c(
+  "dados <- read.csv(file.path(entrada,",
+  "  \"dados_publicados.csv\"),",
+  "  fileEncoding = \"UTF-8\",",
+  "  colClasses = c(estacao_id = \"character\"))",
+  "",
+  "dados$instante <- as.POSIXct(",
+  "  dados$datahora,",
+  "  format = \"%d/%m/%Y %H:%M\",",
+  "  tz = \"America/Sao_Paulo\")",
+  "",
+  "completo <- apply(dados[variaveis], 1,",
+  "  function(x) all(is.finite(x)))",
+  "",
+  "contagens <- table(",
+  "  dados$datahora[completo])"
+)
+codigo_direita <- c(
+  "horarios_comuns <- names(contagens)[",
+  "  contagens == length(unique(dados$estacao_id))]",
+  "analise <- dados[completo &",
+  "  dados$datahora %in% horarios_comuns, ]",
+  "",
+  "analise$turno <- factor(",
+  "  turnos[hora %/% 6 + 1],",
+  "  levels = turnos, ordered = TRUE)",
+  "",
+  "por_turno <- aggregate(analise[variaveis],",
+  "  analise[c(\"estacao\", \"turno\")], mean)",
+  "",
+  "correlacao <- cor(pares_correlacao$temperatura_c,",
+  "  pares_correlacao$umidade_pct,",
+  "  method = \"spearman\")"
+)
+
 # A explicacao e a amostra para revisao saem da mesma fonte, sem copias manuais.
 secoes_verso <- list(
   list(y = 254, titulo = "A base e o recorte", linhas = c(
@@ -26,7 +62,7 @@ secoes_verso <- list(
     "as faltas com tracejados. Nos gráficos 2–4, usei os 22 horários comuns: 110 registros, sem",
     "preencher valores ausentes."
   )),
-  list(y = 185, titulo = "Como montei os gráficos", linhas = c(
+  list(y = 197, titulo = "Como montei os gráficos", linhas = c(
     "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Spearman",
     "foi −0,742 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
     "",
@@ -36,19 +72,9 @@ secoes_verso <- list(
     "Deixei o fundo branco e reduzi a decoração, como sugere Tufte. As cores e os símbolos das",
     "estações se repetem nos três primeiros gráficos, aplicando a similaridade da Gestalt."
   )),
-  list(y = 128, titulo = "Principais comandos R", codigo = TRUE, linhas = c(
-    "horarios_comuns <- names(contagens)[",
-    "  contagens == length(unique(dados$estacao_id))]",
-    "analise <- dados[",
-    "  completo & dados$datahora %in% horarios_comuns, ]",
-    "",
-    "por_turno <- aggregate(analise[variaveis],",
-    "  analise[c(\"estacao\", \"turno\")], mean)",
-    "",
-    "correlacao <- cor(pares_correlacao$temperatura_c,",
-    "  pares_correlacao$umidade_pct, method = \"spearman\")"
-  )),
-  list(y = 67, titulo = "Fontes e reprodução", linhas = c(
+  list(y = 149, titulo = "Principais comandos R", codigo = TRUE,
+       quebra = length(codigo_esquerda), linhas = c(codigo_esquerda, codigo_direita)),
+  list(y = 38, titulo = "Fontes e reprodução", compacto = TRUE, linhas = c(
     "SIMEPAR, páginas públicas; coleta em 15/10/2026. HTML e URLs preservados no projeto.",
     "stage.simepar.br/prognozweb/simepar/dados_estacoes/{identificador}",
     "IDs: 25264916, 25534852, 23185109, 23275159 e 25435458.",
@@ -178,18 +204,49 @@ verso <- function() {
   texto(14, 284, "Escolha dos dados e construção", 20, negrito = TRUE)
   texto(14, 274, "CE303 — AV1 | UFPR | 2026.2", 10)
   texto(14, 266, "Heitor Cardoso Fernandes", 12, negrito = TRUE)
-  bloco <- function(y, titulo, linhas, codigo = FALSE) {
+  bloco <- function(y, titulo, linhas, codigo = FALSE, quebra = Inf, compacto = FALSE) {
     texto(14, y, titulo, 12, negrito = TRUE)
     for (i in seq_along(linhas)) {
       if (codigo) {
-        text(14, y - 8 - (i - 1) * 4.4, linhas[i], adj = c(0, 0.5),
-             cex = 9.3 / 12, family = "mono")
+        direita <- i > quebra
+        indice <- if (direita) i - quebra else i
+        text(if (direita) 112 else 14, y - 8 - (indice - 1) * 3.7,
+             linhas[i], adj = c(0, 0.5), cex = 8.5 / 12, family = "mono")
       } else {
-        texto(14, y - 8 - (i - 1) * 5.2, linhas[i], 9.3)
+        texto(14, y - 7 - (i - 1) * if (compacto) 3.7 else 4.2,
+              linhas[i], if (compacto) 8.2 else 9.3)
       }
     }
   }
-  for (secao in secoes_verso) bloco(secao$y, secao$titulo, secao$linhas, isTRUE(secao$codigo))
+  for (secao in secoes_verso[1:3]) {
+    bloco(secao$y, secao$titulo, secao$linhas, isTRUE(secao$codigo),
+          if (is.null(secao$quebra)) Inf else secao$quebra)
+  }
+
+  # Cinco registros reais do primeiro horario comum, sem identificador da estacao.
+  amostra <- a[a$instante == min(a$instante),
+               c("estacao", "instante", "temperatura_c", "umidade_pct", "vento_kmh", "turno")]
+  texto(14, 80, "Amostra dos dados — primeiro horário comum", 12, negrito = TRUE)
+  posicoes <- c(14, 51, 110, 139, 166, 178)
+  cabecalhos <- c("Estação", "Data/hora", "T (°C)", "UR (%)", "Vento (km/h)", "Turno")
+  alinhamentos <- c(0, 0, 1, 1, 1, 0)
+  for (j in seq_along(cabecalhos)) {
+    text(posicoes[j], 72, cabecalhos[j], adj = c(alinhamentos[j], 0.5),
+         cex = 8.5 / 12, font = 2)
+  }
+  segments(14, 69.5, 196, 69.5, col = "#C9D1D8", lwd = 0.6)
+  for (i in seq_len(nrow(amostra))) {
+    valores <- c(amostra$estacao[i],
+                 format(amostra$instante[i], "%d/%m/%Y %Hh", tz = "America/Sao_Paulo"),
+                 fmt(amostra$temperatura_c[i]), fmt(amostra$umidade_pct[i]),
+                 fmt(amostra$vento_kmh[i]), as.character(amostra$turno[i]))
+    for (j in seq_along(valores)) {
+      text(posicoes[j], 67 - (i - 1) * 4.5, valores[j],
+           adj = c(alinhamentos[j], 0.5), cex = 8.5 / 12)
+    }
+  }
+  secao <- secoes_verso[[4]]
+  bloco(secao$y, secao$titulo, secao$linhas, compacto = TRUE)
 }
 
 cairo_pdf(file.path(saida, "AV1_frente_verso_A4.pdf"), width = 210 / 25.4, height = 297 / 25.4,

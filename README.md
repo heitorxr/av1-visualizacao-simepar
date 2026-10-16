@@ -27,7 +27,7 @@ Commits correspondem às etapas reais de organização, coleta, análise e compo
 
 - `resultados/AV1_frente_verso_A4.pdf`: duas páginas para impressão frente e verso **na mesma folha**, colorida, em A4 retrato. Use tamanho real/100% e virada pela borda longa; não use duas páginas por face. Nome completo incluído no verso.
 - `resultados/AV1_frente.png` e `AV1_verso.png`: prévias.
-- Cabeçalho compacto com datas à direita e mais área para o gráfico temporal. O verso mostra trechos reais da seleção dos horários, das médias e da correlação, sem comandos com `...`.
+- Cabeçalho compacto com datas à direita e mais área para o gráfico temporal. O verso mostra nove expressões reais em duas colunas (leitura, datas, seleção, turnos, médias e correlação), sem comandos com `...`, e uma amostra de cinco registros do primeiro horário comum, sem ID da estação. A amostra é extraída automaticamente dos dados analisados.
 - `GUIA_DO_CODIGO.md`: explicação para estudar antes da apresentação.
 - `resultados/texto_para_verificacao.txt`: parágrafos do verso, gerados a partir da mesma fonte do PDF, sem nome, código e referências. Uma nova redação não implica aprovação em detector; o resultado fornecido pelo usuário se refere à versão anterior, conforme `REVISAO_TEXTO.md`.
 - `dados/brutos/`: cinco HTMLs originais, sem alteração ou preenchimento de medidas.
