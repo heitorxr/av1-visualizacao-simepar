@@ -14,9 +14,8 @@ Como montei os gráficos
 Usei o gráfico de linhas para acompanhar a temperatura durante o dia. Para comparar temperatura com
 umidade, coloquei cada par de medidas em um gráfico de dispersão. A correlação de Spearman foi de
 −0,742, usando os 110 pares das cinco estações.
-No vento, o ponto mostra a mediana. A faixa entre Q1 e Q3 destaca os primeiro e terceiro quartis,
-respectivamente (mostrando os 50% centrais), enquanto a linha fina vai do mínimo ao máximo. A matriz
-mostra as temperaturas médias por estação e turno com a tonalidade da células controlada pela
-temperatura.
+No vento, o ponto mostra a mediana. A faixa entre o primeiro quartil (Q1) e o terceiro quartil (Q3)
+mostra os 50% centrais. A linha fina vai do mínimo ao máximo. A matriz mostra as temperaturas médias
+por estação e turno com a tonalidade das células controlada pela temperatura.
 Mantive o fundo branco e pouca decoração, seguindo Tufte, para facilitar a leitura dos dados.
 

@@ -72,10 +72,9 @@ secoes_verso <- list(
     "Usei o gráfico de linhas para acompanhar a temperatura durante o dia. Para comparar temperatura com",
     "umidade, coloquei cada par de medidas em um gráfico de dispersão. A correlação de Spearman foi de",
     "−0,742, usando os 110 pares das cinco estações.",
-    "No vento, o ponto mostra a mediana. A faixa entre Q1 e Q3 destaca os primeiro e terceiro quartis,",
-    "respectivamente (mostrando os 50% centrais), enquanto a linha fina vai do mínimo ao máximo. A matriz",
-    "mostra as temperaturas médias por estação e turno com a tonalidade da células controlada pela",
-    "temperatura.",
+    "No vento, o ponto mostra a mediana. A faixa entre o primeiro quartil (Q1) e o terceiro quartil (Q3)",
+    "mostra os 50% centrais. A linha fina vai do mínimo ao máximo. A matriz mostra as temperaturas médias",
+    "por estação e turno com a tonalidade das células controlada pela temperatura.",
     "Mantive o fundo branco e pouca decoração, seguindo Tufte, para facilitar a leitura dos dados."
   )),
   list(y = 149, titulo = "Principais comandos R", codigo = TRUE,
@@ -129,7 +128,7 @@ frente <- function() {
   }
   texto(12, 242, "1  Temperatura horária (°C)", 11, negrito = TRUE)
   texto(12, 235, "Pontos: medições; tracejado: intervalo sem dado.", 8.5, cor = "#596470")
-  texto(12, 149, "2  Calor e umidade", 11, negrito = TRUE)
+  texto(12, 149, "2  Temperatura e umidade", 11, negrito = TRUE)
   texto(116, 149, "3  Vento entre estações", 11, negrito = TRUE)
   texto(12, 142, paste0("Correlação global de Spearman: ", sub("-", "−", fmt(correlacao, 3), fixed = TRUE)),
         8, cor = "#596470")
