@@ -14,7 +14,7 @@ fonte <- "Arial"
 
 # A explicacao e a amostra para revisao saem da mesma fonte, sem copias manuais.
 secoes_verso <- list(
-  list(y = 242, titulo = "A base e o recorte", linhas = c(
+  list(y = 254, titulo = "A base e o recorte", linhas = c(
     "Escolhi esta base porque já a utilizava quando trabalhava no SIMEPAR. Usei o recorte",
     "de 14/10/2026, 19h, a 15/10/2026, 19h, adotando o horário de Brasília.",
     "",
@@ -26,8 +26,8 @@ secoes_verso <- list(
     "as faltas com tracejados. Nos gráficos 2–4, usei os 22 horários comuns: 110 registros, sem",
     "preencher valores ausentes."
   )),
-  list(y = 173, titulo = "Como montei os gráficos", linhas = c(
-    "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação de Pearson",
+  list(y = 185, titulo = "Como montei os gráficos", linhas = c(
+    "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Pearson",
     "foi −0,767 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
     "",
     "No vento, o ponto mostra a média; a linha liga mínimo e máximo, não limites de confiança.",
@@ -36,12 +36,17 @@ secoes_verso <- list(
     "Deixei o fundo branco e reduzi a decoração, como sugere Tufte. As cores e os símbolos das",
     "estações se repetem nos três primeiros gráficos, aplicando a similaridade da Gestalt."
   )),
-  list(y = 111, titulo = "Principais comandos R", linhas = c(
-    "download.file(url, destino); jsonlite::fromJSON(trecho)  # coleta e leitura",
-    "as.POSIXct(datahora, format=\"%d/%m/%Y %H:%M\")           # datas",
-    "aggregate(..., mean); cor(x, y, method=\"pearson\")       # médias e correlação",
-    "plot(...); points(...); segments(...); rect(...)         # gráficos",
-    "cairo_pdf(..., width=210/25.4, height=297/25.4)            # A4 vetorial"
+  list(y = 128, titulo = "Principais comandos R", codigo = TRUE, linhas = c(
+    "horarios_comuns <- names(contagens)[",
+    "  contagens == length(unique(dados$estacao_id))]",
+    "analise <- dados[",
+    "  completo & dados$datahora %in% horarios_comuns, ]",
+    "",
+    "por_turno <- aggregate(analise[variaveis],",
+    "  analise[c(\"estacao\", \"turno\")], mean)",
+    "",
+    "correlacao <- cor(pares_correlacao$temperatura_c,",
+    "  pares_correlacao$umidade_pct, method = \"pearson\")"
   )),
   list(y = 67, titulo = "Fontes e reprodução", linhas = c(
     "SIMEPAR, páginas públicas; coleta em 15/10/2026. HTML e URLs preservados no projeto.",
@@ -76,26 +81,29 @@ eixos <- function(x, y) {
 frente <- function() {
   pagina()
   texto(12, 284, "Paraná em 24 horas", 26, negrito = TRUE)
-  texto(12, 272, "Temperatura, umidade e vento em cinco estações do SIMEPAR", 10.5)
-  texto(12, 262, "14/10/2026, 19h a 15/10/2026, 19h", 9.5, cor = "#596470")
+  text(198, 284, "14/10/2026, 19h a 15/10/2026, 19h", adj = c(1, 0.5),
+       cex = 8.5 / 12, col = "#596470")
+  texto(12, 273, "Temperatura, umidade e vento em cinco estações do SIMEPAR", 10.5)
   maior_amplitude <- r[which.max(r$amplitude_c), ]
   maior_vento <- r[which.max(r$vento_medio), ]
-  texto(12, 250, paste0(maior_amplitude$estacao, ": maior amplitude (", fmt(maior_amplitude$amplitude_c),
+  texto(12, 263, paste0(maior_amplitude$estacao, ": maior amplitude (", fmt(maior_amplitude$amplitude_c),
                         " °C)  |  ", maior_vento$estacao, ": maior vento médio (", fmt(maior_vento$vento_medio), " km/h)"),
         10, negrito = TRUE)
   # A mesma cor e o mesmo simbolo sempre identificam a mesma estacao.
   xpos <- c(12, 47, 97, 131, 165)
   for (i in seq_along(cores)) {
-    points(xpos[i], 238, pch = simbolos[i], col = cores[i], cex = 0.7)
-    texto(xpos[i] + 3, 238, names(cores)[i], 8.5)
+    points(xpos[i], 253, pch = simbolos[i], col = cores[i], cex = 0.7)
+    texto(xpos[i] + 3, 253, names(cores)[i], 8.5)
   }
-  texto(12, 224, "1  Temperatura horária (°C)", 11, negrito = TRUE)
-  texto(12, 217, "Pontos: medições; tracejado: intervalo sem dado.", 8.5, cor = "#596470")
-  texto(12, 143, "2  Calor e umidade", 11, negrito = TRUE)
-  texto(116, 143, "3  Vento entre estações", 11, negrito = TRUE)
-  texto(12, 136, paste0("Pearson: r = ", fmt(correlacao, 3),
-                        " (n = ", nrow(pares_correlacao), ")"), 8, cor = "#596470")
-  texto(116, 136, "Ponto: média; linha: mínimo–máximo.", 8, cor = "#596470")
+  texto(12, 242, "1  Temperatura horária (°C)", 11, negrito = TRUE)
+  texto(12, 235, "Pontos: medições; tracejado: intervalo sem dado.", 8.5, cor = "#596470")
+  texto(12, 149, "2  Calor e umidade", 11, negrito = TRUE)
+  texto(116, 149, "3  Vento entre estações", 11, negrito = TRUE)
+  texto(12, 142, paste0("Correlação global de Pearson: ", sub("-", "−", fmt(correlacao, 3), fixed = TRUE)),
+        8, cor = "#596470")
+  texto(12, 136, paste0(nrow(pares_correlacao), " pares das cinco estações"),
+        8, cor = "#596470")
+  texto(116, 142, "Ponto: média; linha: mínimo–máximo.", 8, cor = "#596470")
   texto(12, 77, "4  A tarde foi o turno mais quente", 11, negrito = TRUE)
   texto(12, 70, "Temperatura média (°C); n = horários por estação.", 8.5, cor = "#596470")
   texto(12, 16, "SIMEPAR | coleta: 15/10/2026 | G1: 122 registros; G2–G4: 110 em 22 horários comuns.", 7.7, cor = "#596470")
@@ -103,7 +111,7 @@ frente <- function() {
 
   # 1. Preserva TODAS as temperaturas publicadas, sem preencher valores ausentes.
   # Ligacoes tracejadas indicam os intervalos sem observacao; nao sao medicoes.
-  painel(c(0.04, 0.97, 0.505, 0.72), c(2.4, 3.2, 0.2, 0.6))
+  painel(c(0.04, 0.97, 0.525, 0.775), c(2.4, 3.2, 0.2, 0.6))
   inicio <- min(obj$dados$instante)
 
   plot(NA, xlim = c(0, 24), ylim = c(14, 28), axes = FALSE, xlab = "", ylab = "")
@@ -167,14 +175,21 @@ frente <- function() {
 # Verso na mesma folha, com a identificacao informada pelo aluno.
 verso <- function() {
   pagina()
-  texto(14, 282, "Escolha dos dados e construção", 20, negrito = TRUE)
-  texto(14, 269, "CE303 — AV1 | UFPR | 2026.2", 10)
-  texto(14, 256, "Heitor Cardoso Fernandes", 12, negrito = TRUE)
-  bloco <- function(y, titulo, linhas) {
+  texto(14, 284, "Escolha dos dados e construção", 20, negrito = TRUE)
+  texto(14, 274, "CE303 — AV1 | UFPR | 2026.2", 10)
+  texto(14, 266, "Heitor Cardoso Fernandes", 12, negrito = TRUE)
+  bloco <- function(y, titulo, linhas, codigo = FALSE) {
     texto(14, y, titulo, 12, negrito = TRUE)
-    for (i in seq_along(linhas)) texto(14, y - 8 - (i - 1) * 5.2, linhas[i], 9.3)
+    for (i in seq_along(linhas)) {
+      if (codigo) {
+        text(14, y - 8 - (i - 1) * 4.4, linhas[i], adj = c(0, 0.5),
+             cex = 9.3 / 12, family = "mono")
+      } else {
+        texto(14, y - 8 - (i - 1) * 5.2, linhas[i], 9.3)
+      }
+    }
   }
-  for (secao in secoes_verso) bloco(secao$y, secao$titulo, secao$linhas)
+  for (secao in secoes_verso) bloco(secao$y, secao$titulo, secao$linhas, isTRUE(secao$codigo))
 }
 
 cairo_pdf(file.path(saida, "AV1_frente_verso_A4.pdf"), width = 210 / 25.4, height = 297 / 25.4,
