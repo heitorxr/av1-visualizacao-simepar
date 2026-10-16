@@ -2,6 +2,12 @@
 obj <- readRDS(file.path(raiz, "resultados", "analise.rds"))
 a <- obj$analise
 r <- obj$resumo
+vento_quartis <- do.call(rbind, lapply(split(a$vento_kmh, a$estacao), function(x) {
+  q <- quantile(x, c(0.25, 0.5, 0.75), names = FALSE, type = 7)
+  data.frame(n = length(x), minimo = min(x), q1 = q[1], mediana = q[2],
+             q3 = q[3], maximo = max(x))
+}))
+vento_quartis$estacao <- rownames(vento_quartis)
 pares_correlacao <- a[is.finite(a$temperatura_c) & is.finite(a$umidade_pct), ]
 correlacao <- cor(pares_correlacao$temperatura_c, pares_correlacao$umidade_pct,
                  method = "spearman")
@@ -66,7 +72,7 @@ secoes_verso <- list(
     "Usei linhas para temperatura e dispersão para compará-la à umidade. A correlação global de Spearman",
     "foi −0,742 nos 110 pares das cinco estações. É um resumo do conjunto, não uma explicação causal.",
     "",
-    "No vento, o ponto mostra a média; a linha liga mínimo e máximo, não limites de confiança.",
+    "No vento: mediana no ponto; 50% centrais na faixa Q1–Q3; extremos na linha fina.",
     "Na matriz, comparei as temperaturas médias por estação e turno.",
     "",
     "Deixei o fundo branco e reduzi a decoração, como sugere Tufte. As cores e os símbolos das",
@@ -111,9 +117,9 @@ frente <- function() {
        cex = 8.5 / 12, col = "#596470")
   texto(12, 273, "Temperatura, umidade e vento em cinco estações do SIMEPAR", 10.5)
   maior_amplitude <- r[which.max(r$amplitude_c), ]
-  maior_vento <- r[which.max(r$vento_medio), ]
+  maior_vento <- vento_quartis[which.max(vento_quartis$mediana), ]
   texto(12, 263, paste0(maior_amplitude$estacao, ": maior amplitude (", fmt(maior_amplitude$amplitude_c),
-                        " °C)  |  ", maior_vento$estacao, ": maior vento médio (", fmt(maior_vento$vento_medio), " km/h)"),
+                        " °C)  |  ", maior_vento$estacao, ": maior vento mediano (", fmt(maior_vento$mediana), " km/h)"),
         10, negrito = TRUE)
   # A mesma cor e o mesmo simbolo sempre identificam a mesma estacao.
   xpos <- c(12, 47, 97, 131, 165)
@@ -129,7 +135,7 @@ frente <- function() {
         8, cor = "#596470")
   texto(12, 136, paste0(nrow(pares_correlacao), " pares das cinco estações"),
         8, cor = "#596470")
-  texto(116, 142, "Ponto: média; linha: mínimo–máximo.", 8, cor = "#596470")
+  texto(116, 142, "Ponto: mediana; faixa: Q1–Q3; linha: extremos.", 8, cor = "#596470")
   texto(12, 77, "4  A tarde foi o turno mais quente", 11, negrito = TRUE)
   texto(12, 70, "Temperatura média (°C); n = horários por estação.", 8.5, cor = "#596470")
   texto(12, 16, "SIMEPAR | coleta: 15/10/2026 | G1: 122 registros; G2–G4: 110 em 22 horários comuns.", 7.7, cor = "#596470")
@@ -166,18 +172,22 @@ frente <- function() {
            col = adjustcolor(cores[cidade], alpha.f = 0.72), cex = 0.54)
   }
 
-  # 3. Intervalo observado, nao intervalo de confianca nem rajada.
+  # 3. Mediana e 50% centrais; extremos preservados, nao intervalos de confianca.
   painel(c(0.52, 0.97, 0.282, 0.445), c(3, 5.1, 0.1, 0.9))
-  ord <- order(r$vento_medio)
-  z <- r[ord, ]
+  ord <- order(vento_quartis$mediana)
+  z <- vento_quartis[ord, ]
   plot(NA, xlim = c(0, 17), ylim = c(0.5, 5.5), axes = FALSE,
        xlab = "Velocidade do vento (km/h)", ylab = "")
   abline(v = c(0, 5, 10, 15), col = "#E8EBEF", lwd = 0.6)
   axis(1, at = c(0, 5, 10, 15), col = NA, col.ticks = "#9BA4AD")
   axis(2, at = 1:5, labels = z$estacao, las = 1, col = NA, col.ticks = NA, cex.axis = 0.62)
-  segments(z$vento_min, 1:5, z$vento_max, 1:5, col = cores[z$estacao], lwd = 1.8)
-  points(z$vento_medio, 1:5, pch = simbolos[z$estacao], col = cores[z$estacao], cex = 0.85)
-  text(z$vento_medio, (1:5) + 0.3, labels = fmt(z$vento_medio), cex = 0.65, col = "#243240")
+  segments(z$minimo, 1:5, z$maximo, 1:5,
+           col = adjustcolor(cores[z$estacao], alpha.f = 0.5), lwd = 0.8)
+  segments(z$q1, 1:5, z$q3, 1:5, col = cores[z$estacao], lwd = 3.5)
+  segments(z$q1, (1:5) - 0.1, z$q1, (1:5) + 0.1, col = cores[z$estacao], lwd = 1)
+  segments(z$q3, (1:5) - 0.1, z$q3, (1:5) + 0.1, col = cores[z$estacao], lwd = 1)
+  points(z$mediana, 1:5, pch = simbolos[z$estacao], col = cores[z$estacao], cex = 0.85)
+  text(z$mediana, (1:5) + 0.3, labels = fmt(z$mediana), cex = 0.65, col = "#243240")
 
   # 4. Matriz estacao x turno: categorias explicitas, mesma escala de cor.
   painel(c(0.04, 0.97, 0.082, 0.222), c(1.8, 6, 0.1, 0.2))
@@ -260,6 +270,8 @@ for (nome in c("frente", "verso")) {
   if (nome == "frente") frente() else verso()
   dev.off()
 }
+write.csv(vento_quartis, file.path(saida, "quartis_vento.csv"),
+          row.names = FALSE, fileEncoding = "UTF-8")
 write.csv(data.frame(n = nrow(pares_correlacao), rho_spearman = correlacao,
                      amostra = "cinco estacoes nos mesmos 22 horarios"),
           file.path(saida, "correlacao_temperatura_umidade.csv"),

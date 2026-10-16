@@ -37,6 +37,7 @@ No gráfico 1, as quatro estações completas mantêm suas 25 temperaturas e Mar
 ## Como ler os cálculos
 
 - **`mean(x)`**: soma os valores e divide pela quantidade de observações. A média de vento resume os 22 horários comuns de cada estação.
+- **Gráfico 3 atualizado:** o ponto e seu rótulo mostram a mediana, não a média. `quantile(x, c(0.25, 0.5, 0.75), type = 7)` calcula Q1, mediana e Q3. A faixa grossa Q1–Q3 contém os 50% centrais; traços verticais marcam seus limites e a linha fina preserva mínimo–máximo. Nenhum valor extremo foi removido; não é intervalo de confiança. As estações são ordenadas pela mediana. Valores em `resultados/quartis_vento.csv`; a média continua preservada no resumo por estação.
 - **`min(x)` e `max(x)`**: menor e maior valor observados no recorte analisado.
 - **Amplitude**: máximo menos mínimo de temperatura. Não é desvio-padrão nem amplitude climatológica.
 - **Spearman**: `cor(pares_correlacao$temperatura_c, pares_correlacao$umidade_pct, method = "spearman")` mede a associação entre as posições ordenadas dos valores, atribuindo postos médios aos empates. No gráfico 2, rho = −0,742: temperaturas mais altas tendem a acompanhar umidades menores nos 110 pares. É uma correlação global das cinco estações, não uma estimativa separada por cidade; não foi acrescentado teste de significância nem interpretação causal.
@@ -53,8 +54,8 @@ O R cria um dispositivo de saída: `cairo_pdf()` para PDF vetorial ou `png()` pa
 - `par(fig=...)` reserva um retângulo da página para um gráfico.
 - `plot()` cria o sistema de eixos.
 - `segments()` liga os pontos observados do gráfico 1: linha contínua entre horas consecutivas; tracejada quando há um intervalo sem dado, sem calcular observações intermediárias.
-- `points()` representa observações ou médias.
-- `segments()` mostra o intervalo mínimo–máximo do vento — **não um intervalo de confiança**.
+- `points()` representa observações ou, no gráfico 3, medianas.
+- `segments()` mostra os extremos do vento com linha fina, os quartis com faixa grossa e pequenos traços — **não um intervalo de confiança**.
 - `rect()` colore cada célula da matriz estação–turno.
 - `text()` acrescenta títulos, unidades e valores.
 - `dev.off()` fecha e grava o arquivo.
