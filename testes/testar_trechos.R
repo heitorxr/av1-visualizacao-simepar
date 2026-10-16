@@ -13,8 +13,8 @@ stopifnot(!any(grepl("...", linhas, fixed = TRUE)))
 impressos <- parse(text = linhas, keep.source = FALSE)
 originais <- c(as.list(parse(file.path(raiz, "R", "02_analisar.R"), keep.source = FALSE)),
                as.list(visualizacao))
-stopifnot(length(impressos) == 4L)
+stopifnot(length(impressos) == 9L)
 for (expressao in impressos) {
   stopifnot(any(vapply(originais, function(original) identical(expressao, original), logical(1))))
 }
-message("OK: quatro expressoes do verso correspondem ao codigo real, sem placeholders.")
+message("OK: nove expressoes do verso correspondem ao codigo real, sem placeholders.")

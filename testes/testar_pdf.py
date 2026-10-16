@@ -44,12 +44,27 @@ with pymupdf.open(raiz / "resultados/AV1_frente_verso_A4.pdf") as pdf:
     assert "Maringá tem três horários sem dados." in verso, "Falta o relato da organizacao dos dados."
     assert "A base e o recorte" in verso and "Como montei os gráficos" in verso
     assert len(frente.split()) <= 190, "Enxugar o texto da frente sem retirar unidades."
-    assert len(verso.split()) <= 300, "Enxugar o verso sem retirar fonte e metodo."
-    codigo = verso[verso.index("Principais comandos R"):verso.index("Fontes e reprodução")]
+    assert len(verso.split()) <= 400, "Limitar o verso ampliado, incluindo codigo e amostra."
+    assert "Amostra dos dados" in verso, "Falta a amostra da tabela no verso."
+    codigo = verso[verso.index("Principais comandos R"):verso.index("Amostra dos dados")]
     assert "..." not in codigo, "O verso deve mostrar codigo real, sem placeholders."
     assert "horarios_comuns <- names(contagens)[" in codigo
     assert 'analise[c("estacao", "turno")], mean)' in codigo
     assert "correlacao <- cor(pares_correlacao$temperatura_c," in codigo
+    assert "dados <- read.csv(file.path(entrada," in codigo
+    assert "dados$instante <- as.POSIXct(" in codigo
+    assert "completo <- apply(dados[variaveis], 1," in codigo
+    assert "analise$turno <- factor(" in codigo
+    amostra_tabela = verso[verso.index("Amostra dos dados"):verso.index("Fontes e reprodução")]
+    primeiro_horario = min(pares, key=lambda x: x["instante"])["datahora"]
+    linhas_amostra = [x for x in pares if x["datahora"] == primeiro_horario]
+    assert len(linhas_amostra) == 5
+    assert "estacao_id" not in amostra_tabela
+    for linha in linhas_amostra:
+        assert linha["estacao"] in amostra_tabela
+        assert linha["estacao_id"] not in amostra_tabela
+        for coluna in ("temperatura_c", "umidade_pct", "vento_kmh"):
+            assert f'{float(linha[coluna]):.1f}'.replace(".", ",") in amostra_tabela
     spans_frente = [s for b in pdf[0].get_text("dict")["blocks"]
                     for l in b.get("lines", []) for s in l["spans"]]
     titulo_temporal = next(s for s in spans_frente if "Temperatura horária" in s["text"])
