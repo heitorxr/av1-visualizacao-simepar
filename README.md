@@ -4,6 +4,11 @@ Projeto da disciplina CE303 (UFPR, 2026.2), baseado em `AV1.pdf` e no material d
 
 Autor: Heitor Cardoso Fernandes.
 
+## Acesso público
+
+- Código, dados da coleta preservada e resultados: https://github.com/heitorxr/av1-visualizacao-simepar
+- PDF final: https://github.com/heitorxr/av1-visualizacao-simepar/blob/main/resultados/AV1_frente_verso_A4.pdf
+
 ## Escopo
 
 - Uma observação: uma estação em um horário publicado pelo SIMEPAR.
@@ -60,4 +65,4 @@ Regressão do gráfico temporal: `Rscript testes/testar_grafico1.R`. Fidelidade 
 
 ## Git
 
-Repositório **local**, com commits das etapas efetivas e correções reais. Nenhum remoto foi criado nem houve publicação no GitHub. Antes de alterar código, confira `git status`; preserve a versão anterior e faça um novo commit descritivo depois de executar e verificar a atualização. Não alterar datas ou fabricar uma sequência retrospectiva de commits.
+Repositório publicado no GitHub por solicitação do autor, com commits das etapas efetivas e correções reais. Antes de alterar código, confira `git status`; preserve a versão anterior e faça um novo commit descritivo depois de executar e verificar a atualização. Não alterar datas ou fabricar uma sequência retrospectiva de commits.
