@@ -4,6 +4,8 @@ pasta_interface <- if (exists("raiz_global")) file.path(raiz_global, "R") else {
 }
 css_global <- file.path(dirname(pasta_interface), "estilo.css")
 
+`%||%` <- function(x, y) if (is.null(x)) y else x
+
 hora_global <- function(x) {
   if (!length(x) || all(is.na(x))) return("não disponível")
   format(x, "%d/%m/%Y %H:%M", tz = "America/Sao_Paulo")
@@ -39,14 +41,14 @@ criar_ui_global <- function(inicial, cadastro) {
     div(class = "conteudo", uiOutput("metricas"), uiOutput("legenda"),
       tabsetPanel(
         tabPanel("Explorar", div(class = "grade-graficos",
-          div(class = "painel", h3(textOutput("titulo_serie")), plotOutput("serie", height = "300px", hover = hoverOpts("hover_serie", delay = 80)),
-              div(class = "detalhe", textOutput("detalhe_serie")), p(class = "nota", "Último boletim de cada estação dentro de cada hora. O eixo marca a hora de referência; o hover informa o horário do boletim. Lacunas interrompem as linhas.")),
+          div(class = "painel", h3(textOutput("titulo_serie")), checkboxInput("diaria", "Resumir por dia (média das horas disponíveis)", TRUE), plotOutput("serie", height = "300px", click = "click_serie", hover = hoverOpts("hover_serie", delay = 80)),
+              div(class = "detalhe", textOutput("detalhe_serie")), p(class = "nota", "Média diária por cidade; o hover informa n e mínimo–máximo. Desmarque para ver cada hora original. Dias/horas sem observações interrompem as linhas; dias parciais não representam 24 horas. Tabela e CSV mantêm as horas originais.")),
           div(class = "painel", h3("Medianas e dispersão"), plotOutput("comparacao", height = "300px", hover = hoverOpts("hover_comparacao", delay = 80)),
               div(class = "detalhe", textOutput("detalhe_comparacao")), p(class = "nota", "Ponto: mediana. Faixa grossa: Q1–Q3. Linha fina: mínimo e máximo; não é intervalo de confiança.")),
-          div(class = "painel", h3("Temperatura e umidade derivada"), plotOutput("associacao", height = "280px", hover = hoverOpts("hover_associacao", delay = 80)),
-              div(class = "detalhe", textOutput("detalhe_associacao")), p(class = "nota", "Correlação descreve associação, não causalidade. A umidade deriva de temperatura e ponto de orvalho; há dependência matemática entre as variáveis.")),
-          div(class = "painel", h3("Médias por turno"), plotOutput("turnos", height = "280px", hover = hoverOpts("hover_turnos", delay = 80)),
-              div(class = "detalhe", textOutput("detalhe_turnos")), p(class = "nota", "Turnos de Brasília: madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h. Ausência de boletim não é zero.")))),
+          div(class = "painel", h3("Temperatura e umidade derivada"), checkboxInput("frequencias", "Agrupar em células de frequência", TRUE), plotOutput("associacao", height = "360px", click = "click_associacao", hover = hoverOpts("hover_associacao", delay = 80)),
+              div(class = "detalhe", textOutput("detalhe_associacao")), p(class = "nota", "Células de 1 °C × 5 pontos percentuais: azul mais escuro = maior frequência (escala log). Branco = nenhuma. Números aparecem quando cabem. Toque/clique ou passe o mouse para ver n, faixas e cidades. Desmarque para ver os pontos originais, sem deslocamento. Correlação descreve associação, não causalidade. A umidade deriva de temperatura e ponto de orvalho; há dependência matemática entre as variáveis.")),
+          div(class = "painel", h3(textOutput("titulo_turnos")), plotOutput("turnos", height = "280px", click = "click_turnos", hover = hoverOpts("hover_turnos", delay = 80)),
+              div(class = "detalhe", textOutput("detalhe_turnos")), p(class = "nota", "Cada célula mostra média e n das horas disponíveis da variável, independentemente do filtro de horas comuns. Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h (Brasília). Sem obs., n=0: média ausente (NA), nunca zero. Vento zero é uma leitura válida.")))),
         tabPanel("Atualização e fontes", div(class = "painel", h3("Último boletim por estação · Brasília"), div(class = "dados-tabela", tableOutput("ultimos")),
             p(class = "nota", "Recente: boletim com até duas horas de idade. A data da consulta não substitui a data da observação. Uma estação pode deixar de emitir boletins à noite.")),
           div(class = "painel", h3("Fontes e transformações"),
@@ -99,7 +101,9 @@ criar_servidor_global <- function(raiz, inicial, buscar, agrupar, cadastro, inte
     })
     serie <- reactive({ z <- analise()$serie; validate(need(nrow(z) > 0, "Sem observações nesse período.")); z })
     comparaveis <- reactive({ z <- analise()$comparaveis; validate(need(nrow(z) > 0, "Sem horas comuns completas; amplie o período ou desmarque a comparação por horas comuns.")); z })
-    por_turno <- reactive({ comparaveis(); z <- analise()$turnos; z$.x <- as.numeric(z$turno); z$.y <- z$media; z })
+    serie_visual <- reactive(preparar_serie_visual(serie(), input$variavel, isTRUE(input$diaria)))
+    frequencias <- reactive(preparar_frequencias(comparaveis()))
+    por_turno <- reactive({ serie(); analise()$turnos })
     output$situacao <- renderUI({
       b <- base(); s <- situacao_estacoes(b$dados, cadastro$estacao)
       recentes <- sum(s$status == "Recente")
@@ -112,7 +116,7 @@ criar_servidor_global <- function(raiz, inicial, buscar, agrupar, cadastro, inte
           if (!is.null(b$erro)) p(b$erro)))
     })
     output$metricas <- renderUI({
-      z <- serie(); c <- comparaveis()
+      z <- serie(); c <- analise()$comparaveis
       div(class = "metricas",
         div(class = "metrica", strong(nrow(z)), span("boletins selecionados na série horária")),
         div(class = "metrica", strong(nrow(c)), span("observações comparáveis"), tags$small(paste(length(unique(c$instante)), "horas de referência"))),
@@ -120,29 +124,42 @@ criar_servidor_global <- function(raiz, inicial, buscar, agrupar, cadastro, inte
     })
     output$legenda <- renderUI(div(class = "legenda", lapply(input$cidades, function(cidade)
       tags$span(class = "legenda-item", tags$span(class = "simbolo", style = paste0("color:", cores_av2[[cidade]]), simbolos_av2[[cidade]]), cidade))))
-    output$titulo_serie <- renderText(paste(rotulos_av2[[input$variavel]], "· último boletim por hora"))
+    output$titulo_serie <- renderText(paste(rotulos_av2[[input$variavel]], if (isTRUE(input$diaria)) "· médias diárias" else "· último boletim por hora"))
+    output$titulo_turnos <- renderText(paste("Médias por turno ·", rotulos_av2[[input$variavel]]))
     largura <- function(id) max(320, session$clientData[[paste0("output_", id, "_width")]], na.rm = TRUE)
-    output$serie <- renderPlot(plotar_serie(serie(), input$cidades, input$variavel), width = function() largura("serie"), res = 100)
-    output$comparacao <- renderPlot({ comparaveis(); plotar_comparacao(analise()$resumo, input$variavel) }, width = function() largura("comparacao"), res = 100)
-    output$associacao <- renderPlot(plotar_associacao(comparaveis()), width = function() largura("associacao"), res = 100)
-    output$turnos <- renderPlot(plotar_turnos(por_turno(), input$variavel), width = function() largura("turnos"), res = 100)
+    output$serie <- renderPlot(plotar_serie(serie(), input$cidades, input$variavel, isTRUE(input$diaria)), width = function() largura("serie"), res = 100, execOnResize = TRUE)
+    output$comparacao <- renderPlot({ comparaveis(); plotar_comparacao(analise()$resumo, input$variavel) }, width = function() largura("comparacao"), res = 100, execOnResize = TRUE)
+    output$associacao <- renderPlot(plotar_associacao(comparaveis(), isTRUE(input$frequencias)), width = function() largura("associacao"), res = 100, execOnResize = TRUE)
+    output$turnos <- renderPlot(plotar_turnos(por_turno(), input$variavel), width = function() largura("turnos"), res = 100, execOnResize = TRUE)
     leitura <- function(z) {
       if (!nrow(z)) return("Passe o mouse perto de um ponto.")
       paste(z$estacao[1], "· boletim", hora_global(z$observado_em[1]), "·",
         numero_global(z$temperatura_c), "°C ·", numero_global(z$umidade_pct), "% (derivada) ·", numero_global(z$vento_kmh), "km/h")
     }
-    output$detalhe_serie <- renderText({ z <- serie(); z$.x <- as.numeric(z$instante); z$.y <- z[[input$variavel]];
-      leitura(nearPoints(z, input$hover_serie, xvar = ".x", yvar = ".y", threshold = 15, maxpoints = 1)) })
-    output$detalhe_associacao <- renderText(leitura(nearPoints(comparaveis(), input$hover_associacao, xvar = "temperatura_c", yvar = "umidade_pct", threshold = 15, maxpoints = 1)))
+    output$detalhe_serie <- renderText({
+      z <- nearPoints(serie_visual(), input$hover_serie %||% input$click_serie, xvar = ".x", yvar = ".y", threshold = 15, maxpoints = 1)
+      if (!isTRUE(input$diaria)) return(leitura(z))
+      if (!nrow(z)) return("Médias diárias · passe o mouse perto de um ponto; horas originais na tabela e no CSV.")
+      paste(z$estacao[1], "·", format(z$instante[1], "%d/%m/%Y", tz = "America/Sao_Paulo"),
+        "· média", numero_global(z$.y), "· n =", z$n[1], "· mín–máx", numero_global(z$minimo), "a", numero_global(z$maximo))
+    })
+    output$detalhe_associacao <- renderText({
+      if (!isTRUE(input$frequencias)) return(leitura(nearPoints(comparaveis(), input$hover_associacao %||% input$click_associacao, xvar = "temperatura_c", yvar = "umidade_pct", threshold = 15, maxpoints = 1)))
+      z <- frequencias(); h <- input$hover_associacao %||% input$click_associacao
+      if (is.null(h)) return(paste(sum(z$n), "observações em", nrow(z), "células ocupadas · toque/clique ou passe o mouse sobre uma célula."))
+      z <- z[h$x >= z$t_min & h$x < z$t_max & h$y >= z$u_min & (h$y < z$u_max | (h$y == 100 & z$u_max == 100)), , drop = FALSE]
+      if (!nrow(z)) return("Nenhuma observação nesta faixa.")
+      paste("n =", z$n[1], "· temperatura [", z$t_min[1], ",", z$t_max[1], ") °C · umidade [", z$u_min[1], ",", z$u_max[1], if (z$u_max[1] == 100) "] % ·" else ") % ·", z$cidades[1])
+    })
     output$detalhe_comparacao <- renderText({
       comparaveis(); z <- nearPoints(analise()$resumo, input$hover_comparacao, xvar = ".x", yvar = ".y", threshold = 18, maxpoints = 1)
       if (!nrow(z)) return("Passe o mouse perto de uma mediana.")
       paste(z$estacao[1], "· mediana", numero_global(z$mediana), "· Q1", numero_global(z$q1), "· Q3", numero_global(z$q3), "· n =", z$n[1])
     })
     output$detalhe_turnos <- renderText({
-      z <- nearPoints(por_turno(), input$hover_turnos, xvar = ".x", yvar = ".y", threshold = 18, maxpoints = 1)
-      if (!nrow(z)) return("Passe o mouse perto de uma média.")
-      paste(z$estacao[1], "·", z$turno[1], "· média", numero_global(z$media), "· n =", z$n[1])
+      z <- nearPoints(por_turno(), input$hover_turnos %||% input$click_turnos, xvar = ".x", yvar = ".y", threshold = 18, maxpoints = 1)
+      if (!nrow(z)) return("Média e n em cada célula · sem obs. = NA, n=0. Passe o mouse para identificar a cidade e o turno.")
+      paste(z$estacao[1], "·", z$turno[1], "· média", if (z$n[1] == 0) "NA (sem observações)" else numero_global(z$media), "· n =", z$n[1])
     })
     output$qualidade <- renderText({
       z <- serie()

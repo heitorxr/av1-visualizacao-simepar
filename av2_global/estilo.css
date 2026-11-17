@@ -53,6 +53,7 @@ input[type=checkbox] { accent-color: var(--azul); }
 .painel { min-width: 0; background: white; border: 1px solid var(--borda); border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; }
 .grade-graficos > .painel { margin-bottom: 0; }
 .shiny-plot-output { max-width: 100%; }
+.shiny-plot-output img { max-width: 100%; height: auto; }
 .detalhe { min-height: 36px; background: #edf3fa; color: #213d5f; border-radius: 4px; padding: 8px 10px; font-size: 12px; }
 .nota { font-size: 12px; line-height: 1.45; color: var(--secundario); margin: 5px 0 0; }
 .dados-tabela { overflow: auto; max-height: 480px; }

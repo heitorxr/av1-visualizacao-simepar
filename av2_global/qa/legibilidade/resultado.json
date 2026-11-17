@@ -1,0 +1,51 @@
+{
+  "desktop": {
+    "metrics": "3488\nboletins selecionados na série horária\n1755\nobservações comparáveis\n351 horas de referência\n-0,656\ncorrelação global de Spearman\ntemperatura × umidade derivada",
+    "association": "1755 observações em 142 células ocupadas · toque/clique ou passe o mouse sobre uma célula.",
+    "overflow": false,
+    "plots": 4
+  },
+  "errors": [],
+  "hover_turno": "Guarujá · Madrugada · média NA (sem observações) · n = 0",
+  "hover_serie": "São Paulo · 18/10/2026 · média 17,5 · n = 24 · mín–máx 15,0 a 22,0",
+  "hover_frequencia": "n = 53 · temperatura [ 25 , 26 ) °C · umidade [ 65 , 70 ) % · Campinas, Guarujá, Guarulhos, São José dos Campos, São Paulo",
+  "hourly_title": "Temperatura (°C) · último boletim por hora",
+  "raw_errors": [],
+  "data_rows": 3488,
+  "data_table_text": "Cidade\tICAO\tHora de referência\tBoletim observado\tTemperatura °C\tUmidade derivada %\tVento km/h\nGuarulhos\tSBGR\t14/10 19:00\t14/10 19:00\t22.0\t73.3\t11.1\nCampinas\tSBKP\t14/10 19:00\t14/10 19:00\t20.0\t94.0\t13.0\nSão José dos Campos\tSBSJ\t14/10 19:00\t14/10 19:30\t",
+  "csv_rows": 3488,
+  "csv_zero_wind": 54,
+  "mobile": {
+    "overflow": false,
+    "errors": [],
+    "plots": 4,
+    "plot_sizes": [
+      {
+        "id": "serie",
+        "natural": 344,
+        "display": 344
+      },
+      {
+        "id": "comparacao",
+        "natural": 344,
+        "display": 344
+      },
+      {
+        "id": "associacao",
+        "natural": 344,
+        "display": 344
+      },
+      {
+        "id": "turnos",
+        "natural": 344,
+        "display": 344
+      }
+    ]
+  },
+  "mobile_click_frequencia": "n = 53 · temperatura [ 25 , 26 ) °C · umidade [ 65 , 70 ) % · Campinas, Guarujá, Guarulhos, São José dos Campos, São Paulo",
+  "mobile360": {
+    "overflow": false,
+    "errors": []
+  },
+  "mobile360_click_frequencia": "n = 53 · temperatura [ 25 , 26 ) °C · umidade [ 65 , 70 ) % · Campinas, Guarujá, Guarulhos, São José dos Campos, São Paulo"
+}
