@@ -1,0 +1,5 @@
+cache/
+dados/coletas/
+*.log
+.Rhistory
+.RData

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel meteorológico no chat</title></head>
+<body>
+<span style="display:block;width:1060px;max-width:100%;color:var(--foreground,#223550)">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:4px 0 10px">
+    <strong>São Paulo em observação · serviço local interativo</strong>
+    <a href="http://127.0.0.1:7446/" target="painel_meteorologia" style="color:var(--accent,#1465c0)">Recarregar janela</a>
+    <a href="http://127.0.0.1:7446/" target="_blank" rel="noopener" style="color:var(--accent,#1465c0)">Abrir separadamente</a>
+  </div>
+  <iframe name="painel_meteorologia" title="Dashboard R e Shiny com observações meteorológicas reais" src="http://127.0.0.1:7446/" style="display:block;width:100%;height:850px;border:1px solid var(--border,#cfd9e5);border-radius:8px"></iframe>
+  <p style="color:var(--muted-foreground,#43556c);font-size:12px">Use os filtros dentro da janela. O serviço precisa continuar ativo neste computador; esta incorporação não é uma publicação na internet.</p>
+</span>
+</body>
+</html>

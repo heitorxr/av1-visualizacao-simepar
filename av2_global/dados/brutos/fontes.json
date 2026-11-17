@@ -1,0 +1,16 @@
+[
+  {
+    "arquivo": "noaa_20261117.json",
+    "url": "https://aviationweather.gov/api/data/metar?ids=SBSP,SBGR,SBKP,SBST,SBSJ&format=json",
+    "sha256": "aa462225596158d3190e946a955234faa6a39d914a87bb98abb573d1f4cf106f",
+    "bytes": 2183,
+    "recebido_utc": "2026-11-17T14:45:16.279688+00:00"
+  },
+  {
+    "arquivo": "iem_20261117.csv",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SBSP,SBGR,SBKP,SBST,SBSJ&data=tmpf,dwpf,relh,sknt,metar&sts=2026-10-14T22:00:00Z&ets=2026-11-17T15:00:00Z&tz=UTC&format=onlycomma&report_type=3,4&latlon=yes",
+    "sha256": "432060c4cf7b14aaa81376b928d1e88e7f0f9b416d899619354cc3a7b8d8fd42",
+    "bytes": 464755,
+    "recebido_utc": "2026-11-17T14:46:05.780757+00:00"
+  }
+]
