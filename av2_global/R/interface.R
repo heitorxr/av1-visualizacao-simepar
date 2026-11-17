@@ -48,7 +48,7 @@ criar_ui_global <- function(inicial, cadastro) {
           div(class = "painel", h3("Temperatura e umidade derivada"), checkboxInput("frequencias", "Agrupar em células de frequência", TRUE), plotOutput("associacao", height = "360px", click = "click_associacao", hover = hoverOpts("hover_associacao", delay = 80)),
               div(class = "detalhe", textOutput("detalhe_associacao")), p(class = "nota", "Células de 1 °C × 5 pontos percentuais: azul mais escuro = maior frequência (escala log). Branco = nenhuma. Números aparecem quando cabem. Toque/clique ou passe o mouse para ver n, faixas e cidades. Desmarque para ver os pontos originais, sem deslocamento. Correlação descreve associação, não causalidade. A umidade deriva de temperatura e ponto de orvalho; há dependência matemática entre as variáveis.")),
           div(class = "painel", h3(textOutput("titulo_turnos")), plotOutput("turnos", height = "280px", click = "click_turnos", hover = hoverOpts("hover_turnos", delay = 80)),
-              div(class = "detalhe", textOutput("detalhe_turnos")), p(class = "nota", "Cada célula mostra média e n das horas disponíveis da variável, independentemente do filtro de horas comuns. Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h (Brasília). Sem obs., n=0: média ausente (NA), nunca zero. Vento zero é uma leitura válida.")))),
+              div(class = "detalhe", textOutput("detalhe_turnos")), p(class = "nota", "Cada linha representa uma cidade; os pontos são médias das horas disponíveis da variável, independentemente do filtro de horas comuns. Toque/clique ou passe o mouse em um ponto para ver a média e n. Madrugada 00–05h; manhã 06–11h; tarde 12–17h; noite 18–23h (Brasília). Turno sem observações fica sem ponto e interrompe a linha; não usamos zero para ausência. Vento zero é uma leitura válida.")))),
         tabPanel("Atualização e fontes", div(class = "painel", h3("Último boletim por estação · Brasília"), div(class = "dados-tabela", tableOutput("ultimos")),
             p(class = "nota", "Recente: boletim com até duas horas de idade. A data da consulta não substitui a data da observação. Uma estação pode deixar de emitir boletins à noite.")),
           div(class = "painel", h3("Fontes e transformações"),
@@ -158,7 +158,7 @@ criar_servidor_global <- function(raiz, inicial, buscar, agrupar, cadastro, inte
     })
     output$detalhe_turnos <- renderText({
       z <- nearPoints(por_turno(), input$hover_turnos %||% input$click_turnos, xvar = ".x", yvar = ".y", threshold = 18, maxpoints = 1)
-      if (!nrow(z)) return("Média e n em cada célula · sem obs. = NA, n=0. Passe o mouse para identificar a cidade e o turno.")
+      if (!nrow(z)) return("Uma linha por cidade · toque/clique ou passe o mouse em um ponto para ver turno, média e n. Turnos sem observações ficam sem ponto.")
       paste(z$estacao[1], "·", z$turno[1], "· média", if (z$n[1] == 0) "NA (sem observações)" else numero_global(z$media), "· n =", z$n[1])
     })
     output$qualidade <- renderText({

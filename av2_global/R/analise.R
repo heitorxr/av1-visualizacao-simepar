@@ -33,13 +33,13 @@ preparar_turnos_visuais <- function(dados, cidades, variavel) {
   grade <- expand.grid(estacao = cidades, turno = turnos, stringsAsFactors = FALSE)
   resumo <- resumir_turnos(dados, variavel)
   resumo$turno <- as.character(resumo$turno)
-  # O quadro usa as horas disponíveis da variável, não a interseção entre cidades.
+  # Usa as horas disponíveis da variável, não a interseção entre cidades.
   z <- merge(grade, resumo, by = c("estacao", "turno"), all.x = TRUE, sort = FALSE)
   z$n[is.na(z$n)] <- 0L
   z$turno <- factor(z$turno, levels = turnos, ordered = TRUE)
   z$.x <- as.numeric(z$turno)
-  z$.y <- match(z$estacao, rev(cidades))
-  z[order(z$.y, z$.x), ]
+  z$.y <- z$media
+  z[order(match(z$estacao, cidades), z$.x), ]
 }
 
 preparar_serie_visual <- function(dados, variavel, diaria = TRUE) {

@@ -92,18 +92,18 @@ plotar_comparacao <- function(resumo, variavel) {
 }
 
 plotar_turnos <- function(resumo, variavel) {
-  # Quadro de valores: não sobrepõe cidades nem deixa ausência invisível.
-  estilo_grafico(esquerda = 6.2)
-  cidades <- unique(resumo$estacao[order(resumo$.y)])
-  plot(NA, xlim = c(0.5, 4.5), ylim = c(0.5, length(cidades) + 0.5),
-    xaxt = "n", yaxt = "n", xlab = "Turno · Brasília", ylab = "", bty = "n")
+  estilo_grafico()
+  cidades <- unique(resumo$estacao)
+  plot(resumo$.x, resumo$media, type = "n", xlim = c(0.7, 4.3), ylim = limites_av2(resumo$media),
+    xaxt = "n", xlab = "Turno · Brasília", ylab = rotulos_av2[[variavel]], bty = "n")
+  abline(h = axTicks(2), col = "#edf0f3", lwd = 0.8)
   axis(1, at = 1:4, labels = c("Madr.\n00–05h", "Manhã\n06–11h", "Tarde\n12–17h", "Noite\n18–23h"), cex.axis = 0.75, gap.axis = -1)
-  nomes <- c("São Paulo" = "S. Paulo", "São José dos Campos" = "S. J. Campos")
-  rotulos <- ifelse(cidades %in% names(nomes), nomes[cidades], cidades)
-  axis(2, at = seq_along(cidades), labels = rotulos, tick = FALSE, cex.axis = 0.75)
-  rect(resumo$.x - 0.48, resumo$.y - 0.46, resumo$.x + 0.48, resumo$.y + 0.46,
-    col = ifelse(resumo$n == 0, "#f1f1f1", adjustcolor(cores_av2[resumo$estacao], alpha.f = 0.12)), border = "white")
-  rotulos <- ifelse(resumo$n == 0, "Sem obs.\nn=0", paste0(formatC(resumo$media, format = "f", digits = 1, decimal.mark = ","), "\nn=", resumo$n))
-  text(resumo$.x, resumo$.y, rotulos, cex = 0.73, col = "#182b43")
+  for (cidade in cidades) {
+    z <- resumo[resumo$estacao == cidade, ]
+    z <- z[order(z$.x), ]
+    # Mantém os NA na sequência: não liga pontos através de um turno faltante.
+    lines(z$.x, z$media, col = cores_av2[[cidade]], lwd = 2)
+    points(z$.x, z$media, col = cores_av2[[cidade]], pch = pontos_av2[[cidade]], cex = 1)
+  }
   invisible(resumo)
 }
